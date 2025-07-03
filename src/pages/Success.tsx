@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Star, TrendingUp, Calendar } from "lucide-react";
+import { CheckCircle, Star, TrendingUp, Calendar, Loader2 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 export const Success = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { signIn, user } = useAuth();
+  const { toast } = useToast();
+  
   const sessionId = searchParams.get('session_id');
+  const email = searchParams.get('email');
+  const tempPassword = searchParams.get('temp_password');
+  
   const [countdown, setCountdown] = useState(14);
+  const [isSigningIn, setIsSigningIn] = useState(false);
+  const [autoLoginAttempted, setAutoLoginAttempted] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -18,13 +29,60 @@ export const Success = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Auto-login effect
+  useEffect(() => {
+    const attemptAutoLogin = async () => {
+      if (email && tempPassword && !user && !autoLoginAttempted) {
+        setAutoLoginAttempted(true);
+        setIsSigningIn(true);
+        
+        try {
+          const { error } = await signIn(email, tempPassword);
+          if (error) {
+            console.error('Auto-login failed:', error);
+            toast({
+              title: "Welcome!",
+              description: "Your account has been created. You can sign in using your email and the password we sent you.",
+              duration: 8000
+            });
+          } else {
+            toast({
+              title: "Successfully signed in!",
+              description: "Welcome to your trial. Let's get you set up.",
+              duration: 5000
+            });
+            // Small delay to let the toast show, then redirect
+            setTimeout(() => {
+              navigate('/onboarding');
+            }, 2000);
+          }
+        } catch (error) {
+          console.error('Auto-login error:', error);
+          toast({
+            title: "Account created successfully",
+            description: "Please check your email for login instructions.",
+            duration: 8000
+          });
+        } finally {
+          setIsSigningIn(false);
+        }
+      }
+    };
+
+    attemptAutoLogin();
+  }, [email, tempPassword, user, autoLoginAttempted, signIn, navigate, toast]);
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="max-w-2xl mx-auto text-center">
         <div className="mb-8">
-          <CheckCircle className="h-16 w-16 text-success mx-auto mb-4" />
+          {isSigningIn ? (
+            <Loader2 className="h-16 w-16 text-primary mx-auto mb-4 animate-spin" />
+          ) : (
+            <CheckCircle className="h-16 w-16 text-success mx-auto mb-4" />
+          )}
           <h1 className="text-4xl font-bold text-foreground mb-4">
-            Welcome to Your 14-Day Free Trial!
+            {isSigningIn ? 'Setting up your account...' : 'Welcome to Your 14-Day Free Trial!'}
           </h1>
           <Badge className="bg-success text-success-foreground mb-4">
             £97/Month Rate Locked Forever
@@ -100,21 +158,33 @@ export const Success = () => {
         </div>
 
         <div className="mt-8 space-y-4">
-          <Button 
-            size="lg"
-            onClick={() => window.location.href = '/onboarding'}
-            className="btn-hover-effect w-full"
-          >
-            Start Client Onboarding
-          </Button>
-          <Button 
-            variant="outline"
-            size="lg"
-            onClick={() => window.location.href = '/'}
-            className="w-full"
-          >
-            Return to Homepage
-          </Button>
+          {user ? (
+            <Button 
+              size="lg"
+              onClick={() => navigate('/onboarding')}
+              className="btn-hover-effect w-full"
+            >
+              Continue to Onboarding
+            </Button>
+          ) : (
+            <>
+              <Button 
+                size="lg"
+                onClick={() => navigate('/auth')}
+                className="btn-hover-effect w-full"
+              >
+                Sign In to Continue
+              </Button>
+              <Button 
+                variant="outline"
+                size="lg"
+                onClick={() => navigate('/')}
+                className="w-full"
+              >
+                Return to Homepage
+              </Button>
+            </>
+          )}
         </div>
 
         <div className="mt-6 text-xs text-muted-foreground">
