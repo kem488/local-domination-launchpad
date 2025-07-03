@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -31,6 +32,8 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
+
+    const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
     const { type, clientId, recipientEmail, businessName, accessUrl }: EmailRequest = await req.json();
 
@@ -105,13 +108,20 @@ serve(async (req) => {
 
     const emailContent = getEmailContent(type);
 
-    // In a real implementation, you would integrate with an email service like Resend
-    // For now, we'll simulate the email sending and log the content
-    console.log('Email content prepared:', {
+    console.log('Sending real email via Resend:', {
       to: recipientEmail,
-      subject: emailContent.subject,
-      html: emailContent.html
+      subject: emailContent.subject
     });
+
+    // Send actual email using Resend
+    const emailResponse = await resend.emails.send({
+      from: `${AGENCY_CONFIG.companyName} <onboarding@resend.dev>`,
+      to: [recipientEmail],
+      subject: emailContent.subject,
+      html: emailContent.html,
+    });
+
+    console.log('Email sent successfully via Resend:', emailResponse);
 
     // Create email sequence record
     const { data: emailRecord, error: emailError } = await supabase
