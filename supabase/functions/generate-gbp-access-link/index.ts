@@ -13,6 +13,13 @@ interface RequestBody {
   agencyEmail: string;
 }
 
+// Hardcoded agency configuration
+const AGENCY_CONFIG = {
+  organizationId: "256083320097",
+  agencyEmail: "admin@gudmedia.co.uk",
+  companyName: "GUD Media",
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -24,9 +31,9 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    const { clientId, businessName, ownerEmail, agencyEmail }: RequestBody = await req.json();
+    const { clientId, businessName, ownerEmail }: RequestBody = await req.json();
 
-    console.log('Generating GBP access link for:', { clientId, businessName, ownerEmail, agencyEmail });
+    console.log('Generating GBP access link for:', { clientId, businessName, ownerEmail, agencyEmail: AGENCY_CONFIG.agencyEmail });
 
     // Create the Google Business Profile access request URL
     // This is a simplified version - in practice, you'd generate a proper Google Business Profile access request

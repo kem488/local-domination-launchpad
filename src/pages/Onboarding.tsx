@@ -5,15 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, ArrowRight, ArrowLeft, Building, Mail } from "lucide-react";
+import { CheckCircle, ArrowRight, ArrowLeft, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-
-interface AgencySettings {
-  company_name: string;
-  agency_email: string;
-  organization_id: string;
-}
+import { AGENCY_CONFIG } from "@/lib/constants";
 
 interface ClientData {
   business_name: string;
@@ -29,12 +24,6 @@ export const Onboarding = () => {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  
-  const [agencySettings, setAgencySettings] = useState<AgencySettings>({
-    company_name: "",
-    agency_email: "",
-    organization_id: ""
-  });
 
   const [clientData, setClientData] = useState<ClientData>({
     business_name: "",
@@ -44,46 +33,6 @@ export const Onboarding = () => {
     address: "",
     postcode: ""
   });
-
-  const handleAgencySubmit = async () => {
-    setLoading(true);
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast({
-          title: "Authentication required",
-          description: "Please log in to continue",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      const { error } = await supabase
-        .from('agency_settings')
-        .upsert({
-          user_id: user.id,
-          company_name: agencySettings.company_name,
-          agency_email: agencySettings.agency_email,
-          organization_id: agencySettings.organization_id
-        });
-
-      if (error) throw error;
-
-      toast({
-        title: "Agency settings saved",
-        description: "Moving to client information step"
-      });
-      setCurrentStep(2);
-    } catch (error: any) {
-      toast({
-        title: "Error saving settings",
-        description: error.message,
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleClientSubmit = async () => {
     setLoading(true);
@@ -122,7 +71,7 @@ export const Onboarding = () => {
           clientId: clientRecord.id,
           businessName: clientData.business_name,
           ownerEmail: clientData.owner_email,
-          agencyEmail: agencySettings.agency_email
+          agencyEmail: AGENCY_CONFIG.agencyEmail
         }
       });
 
@@ -144,7 +93,7 @@ export const Onboarding = () => {
         description: "Access request sent and welcome email delivered"
       });
       
-      setCurrentStep(3);
+      setCurrentStep(2);
     } catch (error: any) {
       toast({
         title: "Error creating client",
@@ -157,57 +106,6 @@ export const Onboarding = () => {
   };
 
   const renderStep1 = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Building className="h-5 w-5" />
-          Agency Information
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div>
-          <Label htmlFor="company_name">Company Name</Label>
-          <Input
-            id="company_name"
-            value={agencySettings.company_name}
-            onChange={(e) => setAgencySettings(prev => ({ ...prev, company_name: e.target.value }))}
-            placeholder="Your agency name"
-            required
-          />
-        </div>
-        <div>
-          <Label htmlFor="agency_email">Agency Email</Label>
-          <Input
-            id="agency_email"
-            type="email"
-            value={agencySettings.agency_email}
-            onChange={(e) => setAgencySettings(prev => ({ ...prev, agency_email: e.target.value }))}
-            placeholder="agency@example.com"
-            required
-          />
-        </div>
-        <div>
-          <Label htmlFor="organization_id">Organization ID (Optional)</Label>
-          <Input
-            id="organization_id"
-            value={agencySettings.organization_id}
-            onChange={(e) => setAgencySettings(prev => ({ ...prev, organization_id: e.target.value }))}
-            placeholder="Your Google organization ID"
-          />
-        </div>
-        <Button 
-          onClick={handleAgencySubmit} 
-          disabled={!agencySettings.company_name || !agencySettings.agency_email || loading}
-          className="w-full"
-        >
-          Continue to Client Information
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </CardContent>
-    </Card>
-  );
-
-  const renderStep2 = () => (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
@@ -277,29 +175,19 @@ export const Onboarding = () => {
             />
           </div>
         </div>
-        <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            onClick={() => setCurrentStep(1)}
-            className="flex-1"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
-          </Button>
-          <Button 
-            onClick={handleClientSubmit}
-            disabled={!clientData.business_name || !clientData.owner_name || !clientData.owner_email || loading}
-            className="flex-1"
-          >
-            Generate Access Request
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
+        <Button 
+          onClick={handleClientSubmit}
+          disabled={!clientData.business_name || !clientData.owner_name || !clientData.owner_email || loading}
+          className="w-full"
+        >
+          Generate Access Request
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
       </CardContent>
     </Card>
   );
 
-  const renderStep3 = () => (
+  const renderStep2 = () => (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
@@ -321,7 +209,7 @@ export const Onboarding = () => {
           <Button 
             variant="outline" 
             onClick={() => {
-              setCurrentStep(2);
+              setCurrentStep(1);
               setClientData({
                 business_name: "",
                 owner_name: "",
@@ -349,7 +237,7 @@ export const Onboarding = () => {
           
           {/* Progress indicator */}
           <div className="flex items-center justify-center mt-6 space-x-4">
-            {[1, 2, 3].map((step) => (
+            {[1, 2].map((step) => (
               <div key={step} className="flex items-center">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                   currentStep >= step 
@@ -358,7 +246,7 @@ export const Onboarding = () => {
                 }`}>
                   {currentStep > step ? <CheckCircle className="h-4 w-4" /> : step}
                 </div>
-                {step < 3 && (
+                {step < 2 && (
                   <div className={`w-12 h-px mx-2 ${
                     currentStep > step ? 'bg-primary' : 'bg-muted'
                   }`} />
@@ -370,7 +258,6 @@ export const Onboarding = () => {
 
         {currentStep === 1 && renderStep1()}
         {currentStep === 2 && renderStep2()}
-        {currentStep === 3 && renderStep3()}
       </div>
     </div>
   );

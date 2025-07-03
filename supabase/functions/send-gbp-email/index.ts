@@ -14,6 +14,13 @@ interface EmailRequest {
   accessUrl?: string;
 }
 
+// Hardcoded agency configuration
+const AGENCY_CONFIG = {
+  organizationId: "256083320097",
+  agencyEmail: "admin@gudmedia.co.uk",
+  companyName: "GUD Media",
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -44,8 +51,8 @@ serve(async (req) => {
                 <a href="${accessUrl}" style="display: inline-block; background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">
                   Set Up Google Business Profile
                 </a>
-                <p>If you have any questions, please don't hesitate to contact us.</p>
-                <p>Best regards,<br>Your Marketing Team</p>
+                <p>If you have any questions, please don't hesitate to contact us at ${AGENCY_CONFIG.agencyEmail}</p>
+                <p>Best regards,<br>The ${AGENCY_CONFIG.companyName} Team</p>
               </div>
             `
           };
@@ -84,7 +91,7 @@ serve(async (req) => {
                   <li>Monitor and improve your local SEO</li>
                 </ul>
                 <p>You should start seeing improvements in your local search visibility within the next few weeks.</p>
-                <p>Best regards,<br>Your Marketing Team</p>
+                <p>Best regards,<br>The ${AGENCY_CONFIG.companyName} Team</p>
               </div>
             `
           };
