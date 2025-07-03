@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock } from "lucide-react";
 import { SavingsCalculator } from "@/components/ui/savings-calculator";
+import { TrialPopup } from "./TrialPopup";
 
 export const Pricing = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -64,10 +65,10 @@ export const Pricing = () => {
             Limited Time Offer Ends July 31st
           </Badge>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Lock In £97/Month Rate For Life (Normally £247/Month)
+            Start Free Trial & Lock £97/Month Rate For Life
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Get the same system big agencies charge £400+/month for. Pay just £97/month with your rate locked forever, even when we increase prices to £300-400+.
+            Try our system free for 14 days, then pay just £97/month locked forever. No risk, all reward - and you'll save £1,800/year vs our regular £247/month price.
           </p>
         </div>
 
@@ -106,8 +107,9 @@ export const Pricing = () => {
                 <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-success text-success-foreground">
                   LIMITED TIME ONLY
                 </Badge>
-                <CardTitle className="text-3xl mt-4">Locked Monthly Rate</CardTitle>
+                <CardTitle className="text-3xl mt-4">Free Trial + Locked Rate</CardTitle>
                 <div className="text-center py-4">
+                  <div className="text-2xl font-bold text-success mb-2">14 Days FREE</div>
                   <div className="text-5xl font-bold text-primary">£97<span className="text-lg">/month</span></div>
                   <div className="text-muted-foreground line-through text-xl">£247/month</div>
                   <div className="text-success font-semibold">Save £{savings.monthlySavings}/month (£{savings.yearlySavings.toLocaleString()}/year)</div>
@@ -123,12 +125,14 @@ export const Pricing = () => {
                   ))}
                 </div>
                 
-                <Button 
-                  size="lg" 
-                  className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground text-lg py-4 btn-hover-effect"
-                >
-                  Lock In £97/Month Rate
-                </Button>
+                <TrialPopup>
+                  <Button 
+                    size="lg" 
+                    className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground text-lg py-4 btn-hover-effect"
+                  >
+                    Start Free Trial & Lock Rate
+                  </Button>
+                </TrialPopup>
                 
                 <div className="text-center mt-4 text-sm text-muted-foreground">
                   <p>✓ 90-Day Money-Back Guarantee</p>

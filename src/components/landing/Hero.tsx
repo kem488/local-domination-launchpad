@@ -25,23 +25,22 @@ export const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <LeadCaptureForm variant="rate-lock">
+            <TrialPopup>
               <Button 
                 size="lg" 
                 className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
               >
-                Lock In £97/Month Rate Before July 31st
-              </Button>
-            </LeadCaptureForm>
-            <TrialPopup>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="px-8 py-4 text-lg btn-hover-effect"
-              >
-                Start 14-Day Free Trial
+                Start Free Trial & Lock £97 Rate
               </Button>
             </TrialPopup>
+            <Button 
+              variant="outline" 
+              size="lg"
+              className="px-8 py-4 text-lg btn-hover-effect"
+              onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              See Full Details
+            </Button>
           </div>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-muted-foreground">

@@ -19,10 +19,29 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
     businessType: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Trial signup:", formData);
+    
+    try {
+      const response = await fetch('/api/create-trial-rate-lock-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      
+      if (data.url) {
+        // Redirect to Stripe checkout
+        window.location.href = data.url;
+      } else {
+        console.error('No checkout URL received');
+      }
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+    }
   };
 
   return (
@@ -35,13 +54,13 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
           <div className="text-center mb-4">
             <Badge variant="secondary" className="bg-success/10 text-success border-success/20 mb-3">
               <Clock className="h-4 w-4 mr-2" />
-              Limited Access - 14 Day Free Trial
+              Free Trial + Lock £97 Rate Before July 31st
             </Badge>
             <DialogTitle className="text-2xl font-bold text-foreground">
-              Test Drive Our System Risk-Free
+              Start Your 14-Day Free Trial & Lock Your Rate
             </DialogTitle>
             <p className="text-muted-foreground mt-2">
-              See exactly how we'll transform your online presence before paying anything
+              Try our system risk-free for 14 days, then pay just £97/month locked forever (normally £247/month)
             </p>
           </div>
         </DialogHeader>
@@ -49,15 +68,19 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
         <div className="space-y-4 mb-6">
           <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
             <CheckCircle className="h-5 w-5 text-success" />
-            <span className="text-sm">Full system access for 14 days</span>
+            <span className="text-sm">14 days completely free - no payment required</span>
           </div>
           <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
             <CheckCircle className="h-5 w-5 text-success" />
-            <span className="text-sm">Review automation setup included</span>
+            <span className="text-sm">£97/month locked rate for life after trial</span>
           </div>
           <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
             <CheckCircle className="h-5 w-5 text-success" />
-            <span className="text-sm">Personal onboarding session</span>
+            <span className="text-sm">Cancel anytime during trial with no charge</span>
+          </div>
+          <div className="flex items-center gap-3 p-3 bg-brand-orange/10 rounded-lg border border-brand-orange/20">
+            <Clock className="h-5 w-5 text-brand-orange" />
+            <span className="text-sm font-medium">Rate lock expires July 31st - secure yours now!</span>
           </div>
         </div>
 
@@ -124,12 +147,12 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
             size="lg" 
             className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground"
           >
-            Start My 14-Day Free Trial
+            Start Free Trial & Lock £97 Rate
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">
-            No payment required. Cancel anytime during trial.
-            After trial: £97/month locked rate (usually £247/month)
+            14 days free, then £97/month locked forever. Cancel anytime during trial.
+            <br />Rate lock expires July 31st (normally £247/month)
           </p>
         </form>
       </DialogContent>

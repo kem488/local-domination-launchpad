@@ -20,7 +20,7 @@ export const CTA = () => {
         
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
           Join 200+ UK tradespeople who've transformed from "Google Who?" to market leaders. 
-          Lock in your £97 lifetime rate before it goes to £247/month on July 31st.
+          Try free for 14 days, then lock your £97/month rate forever before July 31st.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -39,23 +39,22 @@ export const CTA = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <LeadCaptureForm variant="rate-lock">
+            <TrialPopup>
               <Button 
                 size="lg" 
                 className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-xl btn-hover-effect"
               >
-                Lock In £97/Month Before July 31st
-              </Button>
-            </LeadCaptureForm>
-            <TrialPopup>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="px-8 py-4 text-xl border-2 btn-hover-effect"
-              >
-                Start 14-Day Free Trial
+                Start Free Trial & Lock £97 Rate
               </Button>
             </TrialPopup>
+            <Button 
+              variant="outline" 
+              size="lg"
+              className="px-8 py-4 text-xl border-2 btn-hover-effect"
+              onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              See Full Details
+            </Button>
         </div>
 
         <Card className="max-w-2xl mx-auto">
