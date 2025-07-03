@@ -40,16 +40,16 @@ export const BusinessScanSection = () => {
     setScanState('scanning');
     setProgress(0);
 
-    // Simulate progress updates
+    // Simulate progress updates with AI generation phase
     const progressInterval = setInterval(() => {
       setProgress(prev => {
-        if (prev >= 90) {
+        if (prev >= 95) {
           clearInterval(progressInterval);
-          return 90;
+          return 95;
         }
-        return prev + Math.random() * 15;
+        return prev + Math.random() * 10;
       });
-    }, 500);
+    }, 800);
 
     try {
       // Capture lead data first
@@ -84,7 +84,7 @@ export const BusinessScanSection = () => {
       if (result.success) {
         setProgress(100);
         setScanData(result);
-        setTimeout(() => setScanState('results'), 500);
+        setTimeout(() => setScanState('results'), 1000);
       } else {
         throw new Error(result.error || 'Scan failed');
       }

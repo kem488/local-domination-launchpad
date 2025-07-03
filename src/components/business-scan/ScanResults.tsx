@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ScanData } from "./BusinessScanSection";
+import { AIRecommendations } from "./AIRecommendations";
 import { AlertTriangle, CheckCircle, Star, Users, Camera, FileText, ArrowRight } from "lucide-react";
 
 interface ScanResultsProps {
@@ -140,24 +141,27 @@ export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) =>
         </div>
       </Card>
 
+      {/* AI Recommendations */}
+      <AIRecommendations scanId={scanData.scanId} />
+
       {/* CTA */}
       <div className="text-center space-y-4">
         <h4 className="text-xl font-semibold text-foreground">
-          Want to see how to fix these issues?
+          Want our team to implement these improvements?
         </h4>
         <p className="text-muted-foreground">
-          Get your detailed report with AI-powered recommendations and action plan
+          Get your complete business transformation with our done-for-you service
         </p>
         <Button
           onClick={onViewFullReport}
           size="lg"
           className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
         >
-          Get My Full Report (Free)
+          Get Done-For-You Service
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
         <div className="text-xs text-muted-foreground">
-          Includes personalized action plan • Competitor analysis • Revenue impact projections
+          Full implementation • Competitor analysis • Guaranteed results in 90 days
         </div>
       </div>
     </div>

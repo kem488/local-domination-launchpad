@@ -134,6 +134,30 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Scan completed for ${businessName} with overall score: ${scores.overall}`);
 
+    // Generate AI recommendations
+    console.log(`Generating AI recommendations for scan ${scanData.id}`);
+    try {
+      const recommendationsResponse = await fetch(`${supabaseUrl}/functions/v1/generate-recommendations`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          scanId: scanData.id
+        })
+      });
+
+      if (recommendationsResponse.ok) {
+        console.log(`AI recommendations generated successfully for scan ${scanData.id}`);
+      } else {
+        console.error(`Failed to generate AI recommendations: ${recommendationsResponse.status}`);
+      }
+    } catch (error) {
+      console.error('Error generating AI recommendations:', error);
+      // Continue without recommendations - non-blocking
+    }
+
     return new Response(JSON.stringify({
       success: true,
       scanId: scanData.id,
