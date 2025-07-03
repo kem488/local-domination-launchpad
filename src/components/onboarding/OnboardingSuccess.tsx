@@ -15,10 +15,9 @@ interface ClientData {
 
 interface OnboardingSuccessProps {
   clientData: any;
-  onAddAnother: () => void;
 }
 
-export const OnboardingSuccess = ({ clientData, onAddAnother }: OnboardingSuccessProps) => {
+export const OnboardingSuccess = ({ clientData }: OnboardingSuccessProps) => {
   const navigate = useNavigate();
 
   return (
@@ -29,25 +28,34 @@ export const OnboardingSuccess = ({ clientData, onAddAnother }: OnboardingSucces
           Onboarding Complete!
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 text-center">
+      <CardContent className="space-y-6 text-center">
         <Badge className="bg-success text-success-foreground">
           Google Business Profile Access Request Sent
         </Badge>
-        <p className="text-muted-foreground">
-          We've sent an access request email to {clientData.owner_email} and will follow up automatically.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Button onClick={() => navigate('/dashboard')} className="flex-1">
-            Go to Dashboard
-          </Button>
-          <Button 
-            variant="outline" 
-            onClick={onAddAnother}
-            className="flex-1"
-          >
-            Add Another Client
-          </Button>
+        
+        <div className="space-y-4">
+          <div className="bg-muted p-4 rounded-lg">
+            <h4 className="font-semibold mb-2">Client Summary</h4>
+            <div className="text-sm text-muted-foreground space-y-1">
+              <p><strong>Business:</strong> {clientData.business_name}</p>
+              <p><strong>Owner:</strong> {clientData.owner_name}</p>
+              <p><strong>Email:</strong> {clientData.owner_email}</p>
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <p className="text-muted-foreground">
+              We've sent an access request email to {clientData.owner_email} and will follow up automatically.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              <strong>Next steps:</strong> Check your email for the Google Business Profile access request, then we'll begin optimization within 24-48 hours.
+            </p>
+          </div>
         </div>
+        
+        <Button onClick={() => navigate('/dashboard')} className="w-full">
+          Go to Dashboard
+        </Button>
       </CardContent>
     </Card>
   );

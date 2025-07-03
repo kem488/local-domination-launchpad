@@ -79,6 +79,12 @@ const handler = async (req: Request): Promise<Response> => {
             // Map Google business types to our industry categories
             const industry = mapGoogleTypesToIndustry(details.types);
             
+            // Extract services from business types
+            const suggestedServices = mapGoogleTypesToServices(details.types);
+            
+            // Extract postcode from address
+            const postcode = extractPostcodeFromAddress(details.formatted_address);
+            
             // Format business hours for our system
             const businessHours = formatBusinessHours(details.opening_hours);
             
@@ -86,15 +92,18 @@ const handler = async (req: Request): Promise<Response> => {
               place_id: details.place_id,
               name: details.name,
               address: details.formatted_address,
+              postcode,
               phone: details.formatted_phone_number,
               website: details.website,
               rating: details.rating,
               review_count: details.user_ratings_total,
               industry,
+              suggested_services: suggestedServices,
               business_hours: businessHours,
               types: details.types,
               has_photos: !!(details.photos && details.photos.length > 0),
-              confidence_score: calculateConfidenceScore(details, query)
+              confidence_score: calculateConfidenceScore(details, query),
+              gbp_url: `https://www.google.com/maps/place/?q=place_id:${details.place_id}`
             };
           }
           return null;
@@ -158,6 +167,39 @@ function mapGoogleTypesToIndustry(types: string[]): string {
   // Default mappings for common business types
   if (types.includes('establishment')) return 'other';
   return 'other';
+}
+
+function mapGoogleTypesToServices(types: string[]): string[] {
+  const serviceMapping: { [key: string]: string[] } = {
+    'plumber': ['Emergency plumbing', 'Boiler repair', 'Leak detection', 'Pipe installation'],
+    'electrician': ['Electrical installation', 'Rewiring', 'Emergency repairs', 'PAT testing'],
+    'heating_contractor': ['Boiler installation', 'Central heating', 'Radiator repair', 'Gas safety'],
+    'hvac_contractor': ['Air conditioning', 'Ventilation', 'Heat pumps', 'System maintenance'],
+    'landscaping': ['Garden design', 'Lawn maintenance', 'Tree surgery', 'Patio installation'],
+    'roofing_contractor': ['Roof repairs', 'New roofs', 'Guttering', 'Chimney work'],
+    'painter': ['Interior painting', 'Exterior painting', 'Wallpapering', 'Decorating'],
+    'general_contractor': ['Home extensions', 'Renovations', 'Building work', 'Property maintenance'],
+    'car_repair': ['MOT testing', 'Servicing', 'Brake repair', 'Engine diagnostics'],
+    'auto_repair': ['Vehicle servicing', 'Bodywork', 'Electrical repairs', 'Tyres'],
+    'cleaning_service': ['Office cleaning', 'Domestic cleaning', 'Carpet cleaning', 'Window cleaning']
+  };
+
+  const services: string[] = [];
+  for (const type of types) {
+    if (serviceMapping[type]) {
+      services.push(...serviceMapping[type]);
+      break; // Take first match to avoid duplicates
+    }
+  }
+
+  return services.length > 0 ? services : ['General services'];
+}
+
+function extractPostcodeFromAddress(address: string): string | null {
+  // UK postcode regex pattern
+  const postcodeRegex = /([A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2})/i;
+  const match = address.match(postcodeRegex);
+  return match ? match[1].toUpperCase() : null;
 }
 
 function formatBusinessHours(openingHours?: any): any {

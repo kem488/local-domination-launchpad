@@ -11,14 +11,17 @@ interface BusinessResult {
   place_id: string;
   name: string;
   address: string;
+  postcode?: string;
   phone?: string;
   website?: string;
   rating?: number;
   review_count?: number;
   industry: string;
+  suggested_services: string[];
   business_hours: any;
   confidence_score: number;
   has_photos: boolean;
+  gbp_url: string;
 }
 
 interface BusinessSearchProps {

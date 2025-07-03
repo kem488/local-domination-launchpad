@@ -58,30 +58,26 @@ export const Step4GoogleBusiness = ({ data, onDataChange, onNext, onPrevious }: 
           </RadioGroup>
         </div>
 
-        {data.has_existing_gbp && (
+        {data.has_existing_gbp && data.existing_gbp_url && (
           <div>
-            <Label htmlFor="existing_gbp_url">Google Business Profile URL</Label>
+            <Label>Google Business Profile URL</Label>
             <div className="flex gap-2 mt-2">
               <Input
-                id="existing_gbp_url"
-                type="url"
-                value={data.existing_gbp_url || ""}
-                onChange={(e) => onDataChange({ ...data, existing_gbp_url: e.target.value })}
-                placeholder="https://www.google.com/maps/place/..."
+                value={data.existing_gbp_url}
+                readOnly
+                className="bg-muted"
               />
-              {data.existing_gbp_url && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => window.open(data.existing_gbp_url, '_blank')}
-                >
-                  <ExternalLink className="h-4 w-4" />
-                </Button>
-              )}
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => window.open(data.existing_gbp_url, '_blank')}
+              >
+                <ExternalLink className="h-4 w-4" />
+              </Button>
             </div>
             <p className="text-sm text-muted-foreground mt-1">
-              Copy the URL from your Google Business Profile or Google Maps listing
+              {isAutoDetected ? 'Auto-detected from your business search' : 'We\'ll help you find and verify this URL'}
             </p>
           </div>
         )}

@@ -44,10 +44,15 @@ export const Step1BusinessBasics = ({ data, onDataChange, onNext }: Step1Busines
       website_url: business.website || "",
       industry: business.industry,
       address: business.address,
+      postcode: business.postcode || "",
       business_hours: business.business_hours,
+      services_offered: business.suggested_services || [],
       has_existing_gbp: true,
-      existing_gbp_url: `https://www.google.com/maps/place/?q=place_id:${business.place_id}`
+      existing_gbp_url: business.gbp_url
     };
+    
+    // Update services state to reflect auto-populated services
+    setServices(business.suggested_services || []);
     
     onDataChange(businessData);
     setIsAutoPopulated(true);

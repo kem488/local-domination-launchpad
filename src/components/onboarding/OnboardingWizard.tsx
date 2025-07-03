@@ -354,7 +354,6 @@ export const OnboardingWizard = () => {
     return (
       <OnboardingSuccess 
         clientData={wizardData}
-        onAddAnother={handleAddAnother}
       />
     );
   }
