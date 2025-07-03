@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { X, Plus } from "lucide-react";
+import { X, Plus, Search, CheckCircle } from "lucide-react";
+import { BusinessSearch } from "../BusinessSearch";
 
 interface Step1BusinessBasicsProps {
   data: any;
@@ -17,6 +18,8 @@ interface Step1BusinessBasicsProps {
 export const Step1BusinessBasics = ({ data, onDataChange, onNext }: Step1BusinessBasicsProps) => {
   const [services, setServices] = useState<string[]>(data.services_offered || []);
   const [newService, setNewService] = useState("");
+  const [showBusinessSearch, setShowBusinessSearch] = useState(!data.business_name);
+  const [isAutoPopulated, setIsAutoPopulated] = useState(false);
 
   const addService = () => {
     if (newService.trim()) {
@@ -33,10 +36,74 @@ export const Step1BusinessBasics = ({ data, onDataChange, onNext }: Step1Busines
     onDataChange({ ...data, services_offered: updatedServices });
   };
 
+  const handleBusinessSelect = (business: any) => {
+    const businessData = {
+      ...data,
+      business_name: business.name,
+      phone: business.phone || "",
+      website_url: business.website || "",
+      industry: business.industry,
+      address: business.address,
+      business_hours: business.business_hours,
+      has_existing_gbp: true,
+      existing_gbp_url: `https://www.google.com/maps/place/?q=place_id:${business.place_id}`
+    };
+    
+    onDataChange(businessData);
+    setIsAutoPopulated(true);
+    setShowBusinessSearch(false);
+  };
+
+  const handleSearchSkip = () => {
+    setShowBusinessSearch(false);
+  };
+
+  const handleShowSearch = () => {
+    setShowBusinessSearch(true);
+  };
+
+  if (showBusinessSearch) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Step 1: Business Basics</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <BusinessSearch
+            onBusinessSelect={handleBusinessSelect}
+            onSkip={handleSearchSkip}
+            initialQuery={data.business_name || ""}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Step 1: Business Basics</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2">
+            Step 1: Business Basics
+            {isAutoPopulated && (
+              <Badge variant="secondary" className="bg-success/10 text-success">
+                <CheckCircle className="h-3 w-3 mr-1" />
+                Auto-populated
+              </Badge>
+            )}
+          </CardTitle>
+          {!showBusinessSearch && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleShowSearch}
+              className="flex items-center gap-2"
+            >
+              <Search className="h-4 w-4" />
+              Find My Business
+            </Button>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

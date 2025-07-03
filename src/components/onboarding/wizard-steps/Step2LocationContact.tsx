@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle } from "lucide-react";
 
 interface Step2LocationContactProps {
   data: any;
@@ -12,6 +14,7 @@ interface Step2LocationContactProps {
 }
 
 export const Step2LocationContact = ({ data, onDataChange, onNext, onPrevious }: Step2LocationContactProps) => {
+  const isAutoPopulated = !!(data.address && data.business_hours && Object.keys(data.business_hours).length > 0);
   const handleBusinessHoursChange = (day: string, field: 'open' | 'close' | 'closed', value: string | boolean) => {
     const hours = data.business_hours || {};
     const dayHours = hours[day] || {};
@@ -44,7 +47,15 @@ export const Step2LocationContact = ({ data, onDataChange, onNext, onPrevious }:
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Step 2: Location & Contact Details</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          Step 2: Location & Contact Details
+          {isAutoPopulated && (
+            <Badge variant="secondary" className="bg-success/10 text-success">
+              <CheckCircle className="h-3 w-3 mr-1" />
+              Auto-populated
+            </Badge>
+          )}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div>

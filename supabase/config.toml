@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.test-google-api]
 verify_jwt = false
+
+[functions.search-business-details]
+verify_jwt = false

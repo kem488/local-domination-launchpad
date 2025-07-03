@@ -15,10 +15,19 @@ interface Step4GoogleBusinessProps {
 }
 
 export const Step4GoogleBusiness = ({ data, onDataChange, onNext, onPrevious }: Step4GoogleBusinessProps) => {
+  const isAutoDetected = !!(data.has_existing_gbp && data.existing_gbp_url);
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Step 4: Google Business Profile</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          Step 4: Google Business Profile
+          {isAutoDetected && (
+            <Badge variant="secondary" className="bg-success/10 text-success">
+              <CheckCircle className="h-3 w-3 mr-1" />
+              Auto-detected
+            </Badge>
+          )}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
