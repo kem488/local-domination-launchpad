@@ -13,12 +13,12 @@ export const CTA = () => {
         </Badge>
         
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-          Ready to Dominate Your Local Market?
+          Stop the Feast-or-Famine Cycle Forever
         </h2>
         
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-          Join 3,000+ UK businesses that have transformed their online presence. 
-          Get 25+ reviews, 4.5+ stars, and 2x profile views in 90 days - guaranteed.
+          Join 200+ UK tradespeople who've transformed from "Google Who?" to market leaders. 
+          Lock in your £97 lifetime rate before it goes to £247/month on July 31st.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -37,19 +37,19 @@ export const CTA = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-          <Button 
-            size="lg" 
-            className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-xl"
-          >
-            Secure My £97 Lifetime Rate Now
-          </Button>
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="px-8 py-4 text-xl border-2"
-          >
-            Get My Free Business Scan
-          </Button>
+            <Button 
+              size="lg" 
+              className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-xl"
+            >
+              Lock In Before July 31st
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg"
+              className="px-8 py-4 text-xl border-2"
+            >
+              See If I Qualify
+            </Button>
         </div>
 
         <Card className="max-w-2xl mx-auto">

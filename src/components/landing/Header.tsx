@@ -31,13 +31,13 @@ export const Header = () => {
               size="sm"
               className="hidden sm:inline-flex"
             >
-              Get My Business Scan
+              See If I Qualify
             </Button>
             <Button 
               size="sm"
               className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground"
             >
-              Secure My £97 Rate
+              Lock In £97 Rate
             </Button>
           </div>
         </div>

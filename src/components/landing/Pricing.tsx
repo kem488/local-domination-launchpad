@@ -13,7 +13,7 @@ export const Pricing = () => {
   });
 
   useEffect(() => {
-    const targetDate = new Date('2024-07-31T23:59:59').getTime();
+    const targetDate = new Date('2025-07-31T23:59:59').getTime();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -49,9 +49,9 @@ export const Pricing = () => {
 
   const savings = {
     lifetime: 97,
-    monthly: 297,
-    yearly: 297 * 12,
-    totalSavings: (297 * 12) - 97
+    monthly: 247,
+    yearly: 247 * 12,
+    totalSavings: (247 * 12) - 97
   };
 
   return (
@@ -63,10 +63,10 @@ export const Pricing = () => {
             Limited Time Offer Ends July 31st
           </Badge>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Lifetime Access for Just £97
+            Lock In £97 Lifetime Rate (Normally £247/Month)
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Get everything you need to dominate your local market. No monthly fees, no hidden costs.
+            Get the same system big agencies charge £400+/month for. One payment, lifetime access. Rate locked forever, even when we increase prices.
           </p>
         </div>
 
@@ -107,7 +107,7 @@ export const Pricing = () => {
               <CardTitle className="text-3xl mt-4">Lifetime Access</CardTitle>
               <div className="text-center py-4">
                 <div className="text-5xl font-bold text-primary">£97</div>
-                <div className="text-muted-foreground line-through text-xl">£297/month</div>
+                <div className="text-muted-foreground line-through text-xl">£247/month</div>
                 <div className="text-success font-semibold">You Save £{savings.totalSavings.toLocaleString()}</div>
               </div>
             </CardHeader>
@@ -145,7 +145,7 @@ export const Pricing = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-4 bg-muted rounded-lg">
                   <span>Regular Monthly Price:</span>
-                  <span className="font-semibold">£297/month</span>
+                  <span className="font-semibold">£247/month</span>
                 </div>
                 <div className="flex justify-between items-center p-4 bg-muted rounded-lg">
                   <span>Annual Cost (Regular):</span>
@@ -162,10 +162,9 @@ export const Pricing = () => {
               </div>
 
               <div className="mt-8 p-4 bg-brand-blue-light rounded-lg">
-                <h4 className="font-semibold text-brand-blue mb-2">Why This Pricing?</h4>
+                <h4 className="font-semibold text-brand-blue mb-2">Why Offer This Rate?</h4>
                 <p className="text-sm text-muted-foreground">
-                  We're offering lifetime access at this price to quickly build our case study database. 
-                  After July 31st, this system will only be available as a monthly subscription.
+                  We're building our case study database across different UK trades. After July 31st, this will only be available at £247/month. Even if we increase to £300-400+ in future, your rate stays locked at £97.
                 </p>
               </div>
 

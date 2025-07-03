@@ -14,14 +14,14 @@ export const WhoWeHelp = () => {
   ];
 
   const painPoints = [
-    "Struggling to get enough Google reviews to compete locally",
-    "Spending hours chasing customers for feedback with little response",
-    "Losing jobs to competitors with higher ratings and more reviews", 
-    "Google Business Profile not showing up in local searches",
-    "No system in place to manage online reputation",
-    "Negative reviews damaging your business image",
-    "Customers can't find your business when searching locally",
-    "Wasting money on ads while competitors dominate organic search"
+    "Inconsistent lead flow - feast one month, famine the next",
+    "Spending 2-3 hours weekly chasing customers for reviews with no system",
+    "Watching competitors with worse work steal your customers online",
+    "Your Google Business Profile barely shows up in local searches",
+    "Losing £1,000s in potential work to businesses with better online presence",
+    "One negative review can destroy weeks of reputation building",
+    "Customers can't find you when they search for your services",
+    "Wasting ad spend while competitors dominate free organic listings"
   ];
 
   return (
@@ -29,10 +29,10 @@ export const WhoWeHelp = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Built for UK Local Service Businesses
+            Built for UK Tradespeople Who Want Consistent Work
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            If you're a tradesperson or local service provider struggling with online visibility, we've got you covered.
+            Average age 49, 1-9 employees, £70k-£530k turnover. If you believe good work should speak for itself but are tired of the feast-or-famine cycle, this is for you.
           </p>
         </div>
 
@@ -72,10 +72,10 @@ export const WhoWeHelp = () => {
         <div className="text-center mt-12">
           <Card className="inline-block p-6 bg-gradient-to-r from-success/10 to-primary/10 border-success/20">
             <p className="text-lg font-semibold text-foreground mb-2">
-              Sound familiar? You're not alone.
+              Sound familiar? You're discovering what 90% of tradespeople don't know...
             </p>
             <p className="text-muted-foreground">
-              Over 3,000 UK local businesses have transformed their online presence with our system.
+              Online reputation is now more important than word-of-mouth. 200+ UK businesses have already broken the feast-or-famine cycle with our enterprise-level tools.
             </p>
           </Card>
         </div>

@@ -13,14 +13,13 @@ export const Hero = () => {
           </Badge>
           
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Get 25+ Google Reviews &amp; 
-            <span className="text-primary"> 2x Profile Views</span>
-            <br />
+            End the Feast-or-Famine Cycle:<br />
+            <span className="text-primary">25+ Reviews, 4.5+ Stars</span><br />
             in 90 Days - Guaranteed
           </h1>
           
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Our AI-powered Local Market Domination System automates review generation and optimizes your Google Business Profile to attract more customers. Built specifically for UK tradespeople and local service businesses.
+            Stop chasing customers for reviews and worrying about your next job. Our AI-powered automation system generates consistent 5-star reviews and doubles your Google visibility - so you never run out of leads again.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -28,14 +27,14 @@ export const Hero = () => {
               size="lg" 
               className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg"
             >
-              Get My Free Business Scan
+              Lock In My £97 Rate Before July 31st
             </Button>
             <Button 
               variant="outline" 
               size="lg"
               className="px-8 py-4 text-lg"
             >
-              Secure My £97 Lifetime Rate
+              See If I Qualify
             </Button>
           </div>
           
@@ -57,18 +56,22 @@ export const Hero = () => {
         
         <div className="mt-16">
           <Card className="p-8 bg-gradient-to-r from-brand-blue-light to-background border-brand-blue/10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
                 <div className="text-3xl font-bold text-brand-blue mb-2">25+</div>
-                <div className="text-muted-foreground">New Google Reviews</div>
+                <div className="text-muted-foreground">New Reviews</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-brand-blue mb-2">4.5+</div>
-                <div className="text-muted-foreground">Star Rating Guarantee</div>
+                <div className="text-muted-foreground">Star Average</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-brand-blue mb-2">2x</div>
-                <div className="text-muted-foreground">More Profile Views</div>
+                <div className="text-muted-foreground">Profile Views</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-brand-blue mb-2">50+</div>
+                <div className="text-muted-foreground">Directory Listings</div>
               </div>
             </div>
           </Card>

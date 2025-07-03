@@ -8,9 +8,9 @@ export const Strategy = () => {
   const phases = [
     {
       id: "audit",
-      title: "Business Audit",
+      title: "Business Scan",
       subtitle: "Week 1",
-      description: "Complete analysis of your current online presence and local market positioning",
+      description: "We analyze exactly why customers can't find you and what your competitors are doing better",
       features: [
         "Google Business Profile optimization assessment",
         "Competitor analysis and gap identification", 
@@ -21,9 +21,9 @@ export const Strategy = () => {
     },
     {
       id: "setup",
-      title: "AI System Setup", 
+      title: "Automation Setup", 
       subtitle: "Week 2",
-      description: "Implementation of our proprietary review automation and monitoring system",
+      description: "We install the same AI-powered review system that enterprise companies pay £1,000s for",
       features: [
         "Automated review request sequences",
         "Smart timing based on customer behavior",
@@ -34,9 +34,9 @@ export const Strategy = () => {
     },
     {
       id: "optimization",
-      title: "Profile Optimization",
+      title: "Google Domination",
       subtitle: "Week 3-4", 
-      description: "Complete Google Business Profile transformation for maximum local visibility",
+      description: "We optimize your Google Business Profile so you show up first when customers search locally",
       features: [
         "Professional business description writing",
         "Strategic keyword integration",
@@ -47,9 +47,9 @@ export const Strategy = () => {
     },
     {
       id: "activation",
-      title: "Review Generation",
+      title: "Review Automation",
       subtitle: "Week 5-8",
-      description: "Launch of systematic review acquisition campaigns",
+      description: "The system automatically asks happy customers for reviews at the perfect moment",
       features: [
         "Automated customer outreach sequences",
         "SMS and email review requests",
@@ -60,9 +60,9 @@ export const Strategy = () => {
     },
     {
       id: "scaling",
-      title: "Performance Scaling",
+      title: "Lead Multiplication",
       subtitle: "Week 9-12",
-      description: "Advanced strategies to accelerate growth and maintain momentum",
+      description: "Advanced strategies that turn your reputation into a lead-generating machine",
       features: [
         "Advanced local SEO implementation",
         "Content marketing automation",
@@ -73,9 +73,9 @@ export const Strategy = () => {
     },
     {
       id: "domination",
-      title: "Market Domination",
+      title: "Competitive Fortress",
       subtitle: "Ongoing",
-      description: "Continuous optimization to maintain competitive advantage",
+      description: "Ongoing monitoring ensures competitors can never catch up to your online dominance",
       features: [
         "Ongoing monitoring and adjustments",
         "Competitive intelligence tracking",
@@ -91,10 +91,10 @@ export const Strategy = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            The 6-Phase Local Market Domination System
+            How We Break Your Feast-or-Famine Cycle
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Our proven methodology that transforms local businesses from invisible to industry-leading in just 90 days.
+            Our 6-phase methodology transforms you from "Google Who?" to the go-to business customers find first - using the same tools big agencies charge £400+ monthly for.
           </p>
         </div>
 

@@ -10,7 +10,7 @@ export const FAQ = () => {
   const faqs = [
     {
       question: "How quickly will I see results?",
-      answer: "Most clients see their first new reviews within 7-14 days of implementation. Our system is designed to generate 25+ reviews and double your profile views within 90 days, with many clients achieving these results much faster."
+      answer: "Most clients see their first automated review requests within 7 days. Expect 25+ reviews, 4.5+ star average, and 2x profile views within 90 days. Many tradespeople see dramatic improvements in 30 days - our system works fast because it targets the exact moments when customers are most likely to leave positive reviews."
     },
     {
       question: "Is this compliant with Google's guidelines?",
@@ -18,15 +18,15 @@ export const FAQ = () => {
     },
     {
       question: "What if I'm not tech-savvy?",
-      answer: "No technical knowledge required! Our team handles the complete setup and implementation for you. You'll get a simple dashboard to monitor your progress, and we provide full training and support."
+      answer: "Perfect - this is designed for busy tradespeople, not tech experts. We handle 100% of the setup. You just keep doing great work, and the system automatically asks your happy customers for reviews. Simple dashboard shows your progress. If you can use WhatsApp, you can use this."
     },
     {
-      question: "How does the 90-day guarantee work?",
-      answer: "If you don't achieve at least 25 new reviews and a 4.5+ star average within 90 days of implementation, we'll refund your investment in full. No questions asked."
+      question: "How does the guarantee work?",
+      answer: "Simple: If you don't hit 25+ reviews, 4.5+ stars, 2x profile views, and 100% profile completion within 90 days, we work for free until you do. If we still can't deliver, full refund. We're that confident because this system works for every type of local business."
     },
     {
       question: "Why offer lifetime access for £97?",
-      answer: "We're building our case study database and want to prove our system works with a wide variety of UK businesses. After July 31st, this will only be available as a £297/month subscription."
+      answer: "We're building case studies across different UK trades to prove our system works universally. After July 31st, this goes to £247/month minimum. Your £97 rate is locked forever - even if we increase to £300-400+ later. This offer lets us quickly gather diverse success stories."
     },
     {
       question: "Will this work for my specific trade?",
@@ -42,7 +42,7 @@ export const FAQ = () => {
     },
     {
       question: "How is this different from other review tools?",
-      answer: "Most tools just send review requests. Our system includes complete Google Business Profile optimization, local SEO, automated follow-up sequences, reputation monitoring, and ongoing strategic support."
+      answer: "Basic tools cost £70-130 and just send review requests. Enterprise solutions cost £400+ monthly. We bridge that gap - giving you enterprise-level AI automation, complete Google optimization, 50+ directory listings, reputation monitoring, and customer journey automation, specifically designed for UK tradespeople."
     },
     {
       question: "What if I already have some reviews?",
