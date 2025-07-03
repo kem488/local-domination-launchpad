@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock } from "lucide-react";
+import { SavingsCalculator } from "@/components/ui/savings-calculator";
 
 export const Pricing = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -72,23 +73,23 @@ export const Pricing = () => {
 
         {/* Countdown Timer */}
         <div className="flex justify-center mb-12">
-          <Card className="p-6 bg-gradient-to-r from-destructive/10 to-warning/10 border-destructive/20">
+          <Card className="p-6 bg-gradient-to-r from-destructive/10 to-warning/10 border-destructive/20 animate-pulse-glow">
             <div className="text-center">
               <h3 className="text-lg font-semibold text-foreground mb-4">Offer Expires In:</h3>
               <div className="grid grid-cols-4 gap-4 text-center">
-                <div className="bg-destructive text-destructive-foreground rounded-lg p-3">
+                <div className="bg-destructive text-destructive-foreground rounded-lg p-3 animate-bounce-subtle">
                   <div className="text-2xl font-bold">{timeLeft.days}</div>
                   <div className="text-sm">Days</div>
                 </div>
-                <div className="bg-destructive text-destructive-foreground rounded-lg p-3">
+                <div className="bg-destructive text-destructive-foreground rounded-lg p-3 animate-bounce-subtle" style={{ animationDelay: '0.1s' }}>
                   <div className="text-2xl font-bold">{timeLeft.hours}</div>
                   <div className="text-sm">Hours</div>
                 </div>
-                <div className="bg-destructive text-destructive-foreground rounded-lg p-3">
+                <div className="bg-destructive text-destructive-foreground rounded-lg p-3 animate-bounce-subtle" style={{ animationDelay: '0.2s' }}>
                   <div className="text-2xl font-bold">{timeLeft.minutes}</div>
                   <div className="text-sm">Minutes</div>
                 </div>
-                <div className="bg-destructive text-destructive-foreground rounded-lg p-3">
+                <div className="bg-destructive text-destructive-foreground rounded-lg p-3 animate-bounce-subtle" style={{ animationDelay: '0.3s' }}>
                   <div className="text-2xl font-bold">{timeLeft.seconds}</div>
                   <div className="text-sm">Seconds</div>
                 </div>
@@ -97,46 +98,55 @@ export const Pricing = () => {
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Pricing Card */}
-          <Card className="relative border-primary/50 shadow-lg">
-            <CardHeader className="text-center">
-              <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-success text-success-foreground">
-                LIMITED TIME ONLY
-              </Badge>
-              <CardTitle className="text-3xl mt-4">Locked Monthly Rate</CardTitle>
-              <div className="text-center py-4">
-                <div className="text-5xl font-bold text-primary">£97<span className="text-lg">/month</span></div>
-                <div className="text-muted-foreground line-through text-xl">£247/month</div>
-                <div className="text-success font-semibold">Save £{savings.monthlySavings}/month (£{savings.yearlySavings.toLocaleString()}/year)</div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3 mb-8">
-                {features.map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-success mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground">{feature}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <Button 
-                size="lg" 
-                className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground text-lg py-4"
-              >
-                Lock In £97/Month Rate
-              </Button>
-              
-              <div className="text-center mt-4 text-sm text-muted-foreground">
-                <p>✓ 90-Day Money-Back Guarantee</p>
-                <p>✓ Secure Payment Processing</p>
-                <p>✓ Instant Access After Payment</p>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="lg:col-span-2">
+            <Card className="relative border-primary/50 shadow-lg">
+              <CardHeader className="text-center">
+                <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-success text-success-foreground">
+                  LIMITED TIME ONLY
+                </Badge>
+                <CardTitle className="text-3xl mt-4">Locked Monthly Rate</CardTitle>
+                <div className="text-center py-4">
+                  <div className="text-5xl font-bold text-primary">£97<span className="text-lg">/month</span></div>
+                  <div className="text-muted-foreground line-through text-xl">£247/month</div>
+                  <div className="text-success font-semibold">Save £{savings.monthlySavings}/month (£{savings.yearlySavings.toLocaleString()}/year)</div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-8">
+                  {features.map((feature, index) => (
+                    <div key={index} className="flex items-start gap-3 animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
+                      <CheckCircle className="h-5 w-5 text-success mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <Button 
+                  size="lg" 
+                  className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground text-lg py-4 btn-hover-effect"
+                >
+                  Lock In £97/Month Rate
+                </Button>
+                
+                <div className="text-center mt-4 text-sm text-muted-foreground">
+                  <p>✓ 90-Day Money-Back Guarantee</p>
+                  <p>✓ Secure Payment Processing</p>
+                  <p>✓ Instant Access After Payment</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
           {/* Savings Calculator */}
+          <div className="lg:col-span-1">
+            <SavingsCalculator />
+          </div>
+        </div>
+
+        {/* Why Offer This Rate */}
+        <div className="mt-12 max-w-4xl mx-auto">
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl">Your Investment Breakdown</CardTitle>
@@ -171,7 +181,7 @@ export const Pricing = () => {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="w-full mt-6"
+                className="w-full mt-6 btn-hover-effect"
               >
                 Get My Free Business Scan First
               </Button>

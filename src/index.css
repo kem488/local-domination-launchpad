@@ -65,7 +65,33 @@ All colors MUST be HSL.
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced button hover effects */
+.btn-hover-effect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+}
+
+.btn-hover-effect:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-hover-effect:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Smooth animations for all interactive elements */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 
   .dark {
     --background: 222.2 84% 4.9%;

@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, TrendingUp } from "lucide-react";
 import { TrialPopup } from "./TrialPopup";
+import { LeadCaptureForm } from "./LeadCaptureForm";
 
 export const CTA = () => {
   return (
@@ -38,17 +39,19 @@ export const CTA = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Button 
-              size="lg" 
-              className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-xl"
-            >
-              Lock In £97/Month Before July 31st
-            </Button>
+            <LeadCaptureForm variant="rate-lock">
+              <Button 
+                size="lg" 
+                className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-xl btn-hover-effect"
+              >
+                Lock In £97/Month Before July 31st
+              </Button>
+            </LeadCaptureForm>
             <TrialPopup>
               <Button 
                 variant="outline" 
                 size="lg"
-                className="px-8 py-4 text-xl border-2"
+                className="px-8 py-4 text-xl border-2 btn-hover-effect"
               >
                 Start 14-Day Free Trial
               </Button>

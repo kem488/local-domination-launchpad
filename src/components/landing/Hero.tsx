@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, CheckCircle, TrendingUp } from "lucide-react";
 import { TrialPopup } from "./TrialPopup";
+import { LeadCaptureForm } from "./LeadCaptureForm";
 
 export const Hero = () => {
   return (
@@ -24,17 +25,19 @@ export const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button 
-              size="lg" 
-              className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg"
-            >
-              Lock In £97/Month Rate Before July 31st
-            </Button>
+            <LeadCaptureForm variant="rate-lock">
+              <Button 
+                size="lg" 
+                className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
+              >
+                Lock In £97/Month Rate Before July 31st
+              </Button>
+            </LeadCaptureForm>
             <TrialPopup>
               <Button 
                 variant="outline" 
                 size="lg"
-                className="px-8 py-4 text-lg"
+                className="px-8 py-4 text-lg btn-hover-effect"
               >
                 Start 14-Day Free Trial
               </Button>

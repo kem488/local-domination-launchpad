@@ -1,9 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { TrialPopup } from "./TrialPopup";
+import { useScrollPosition, smoothScrollTo } from "@/hooks/useScrollPosition";
 
 export const Header = () => {
+  const { scrollPosition } = useScrollPosition();
+  const isScrolled = scrollPosition > 100;
+
+  const handleNavClick = (sectionId: string) => {
+    smoothScrollTo(sectionId);
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-b border-border z-50">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-sm py-2' 
+        : 'bg-background/95 backdrop-blur-sm border-b border-border py-4'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -14,15 +26,24 @@ export const Header = () => {
           
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#how-it-works" className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+              <button 
+                onClick={() => handleNavClick('how-it-works')}
+                className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
                 How It Works
-              </a>
-              <a href="#pricing" className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+              </button>
+              <button 
+                onClick={() => handleNavClick('pricing')}
+                className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
                 Pricing
-              </a>
-              <a href="#faq" className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+              </button>
+              <button 
+                onClick={() => handleNavClick('faq')}
+                className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
                 FAQ
-              </a>
+              </button>
             </div>
           </div>
           
@@ -30,17 +51,17 @@ export const Header = () => {
             <TrialPopup>
               <Button 
                 variant="outline" 
-                size="sm"
-                className="hidden sm:inline-flex"
+                size={isScrolled ? "sm" : "sm"}
+                className={`hidden sm:inline-flex btn-hover-effect ${isScrolled ? 'text-xs' : ''}`}
               >
                 Free Trial
               </Button>
             </TrialPopup>
             <Button 
-              size="sm"
-              className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground"
+              size={isScrolled ? "sm" : "sm"}
+              className={`bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground btn-hover-effect ${isScrolled ? 'text-xs px-3' : ''}`}
             >
-              Lock £97/Month
+              {isScrolled ? 'Lock £97' : 'Lock £97/Month'}
             </Button>
           </div>
         </div>
