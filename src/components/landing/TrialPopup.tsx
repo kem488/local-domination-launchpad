@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface TrialPopupProps {
   children: React.ReactNode;
@@ -23,17 +24,15 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/api/create-trial-rate-lock-checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      const { data, error } = await supabase.functions.invoke('create-trial-rate-lock-checkout', {
+        body: formData,
       });
 
-      const data = await response.json();
+      if (error) {
+        throw error;
+      }
       
-      if (data.url) {
+      if (data?.url) {
         // Redirect to Stripe checkout
         window.location.href = data.url;
       } else {
