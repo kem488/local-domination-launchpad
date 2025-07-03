@@ -2,26 +2,28 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Search, MapPin, TestTube } from "lucide-react";
+import { Search, MapPin, TestTube, User, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ScanFormProps {
-  onScanStart: (businessName: string, businessLocation: string) => void;
+  onScanStart: (businessName: string, businessLocation: string, name: string, email: string) => void;
 }
 
 export const ScanForm = ({ onScanStart }: ScanFormProps) => {
   const [businessName, setBusinessName] = useState("");
   const [businessLocation, setBusinessLocation] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTesting, setIsTesting] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!businessName.trim() || !businessLocation.trim()) return;
+    if (!businessName.trim() || !businessLocation.trim() || !name.trim() || !email.trim()) return;
     
     setIsSubmitting(true);
-    await onScanStart(businessName.trim(), businessLocation.trim());
+    await onScanStart(businessName.trim(), businessLocation.trim(), name.trim(), email.trim());
     setIsSubmitting(false);
   };
 
@@ -108,11 +110,47 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
           </div>
         </div>
 
+        <div className="space-y-2 text-left">
+          <Label htmlFor="name" className="text-sm font-medium">
+            Your Name *
+          </Label>
+          <div className="relative">
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              id="name"
+              type="text"
+              placeholder="e.g. John Smith"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="pl-10"
+              required
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2 text-left">
+          <Label htmlFor="email" className="text-sm font-medium">
+            Email Address *
+          </Label>
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              id="email"
+              type="email"
+              placeholder="e.g. john@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="pl-10"
+              required
+            />
+          </div>
+        </div>
+
         <Button
           type="submit"
           size="lg"
           className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
-          disabled={isSubmitting || !businessName.trim() || !businessLocation.trim()}
+          disabled={isSubmitting || !businessName.trim() || !businessLocation.trim() || !name.trim() || !email.trim()}
         >
           {isSubmitting ? 'Starting Scan...' : 'Get My Free Business Scan'}
         </Button>

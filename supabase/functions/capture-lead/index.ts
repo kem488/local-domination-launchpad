@@ -7,8 +7,11 @@ const corsHeaders = {
 };
 
 interface LeadCaptureRequest {
-  scanId: string;
+  scanId?: string;
   email: string;
+  name?: string;
+  businessName?: string;
+  businessLocation?: string;
   phone?: string;
   postcode?: string;
   source?: string;
@@ -20,56 +23,87 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { scanId, email, phone, postcode, source }: LeadCaptureRequest = await req.json();
+    const { scanId, email, name, businessName, businessLocation, phone, postcode, source }: LeadCaptureRequest = await req.json();
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Update scan with lead information
-    const { data: updatedScan, error: updateError } = await supabase
-      .from('business_scans')
-      .update({ 
-        email,
-        phone,
-        postcode
-      })
-      .eq('id', scanId)
-      .select()
-      .single();
+    if (scanId) {
+      // Update existing scan with lead information
+      const { data: updatedScan, error: updateError } = await supabase
+        .from('business_scans')
+        .update({ 
+          email,
+          phone,
+          postcode
+        })
+        .eq('id', scanId)
+        .select()
+        .single();
 
-    if (updateError) {
-      throw updateError;
-    }
+      if (updateError) {
+        throw updateError;
+      }
 
-    // Create detailed report entry
-    const { error: reportError } = await supabase
-      .from('scan_reports')
-      .insert({
-        scan_id: scanId,
-        report_type: 'detailed_analysis',
-        report_data: {
-          leadCaptured: true,
-          captureTime: new Date().toISOString(),
-          contactInfo: { email, phone, postcode },
-          source: source || 'unknown'
-        }
+      // Create detailed report entry
+      const { error: reportError } = await supabase
+        .from('scan_reports')
+        .insert({
+          scan_id: scanId,
+          report_type: 'detailed_analysis',
+          report_data: {
+            leadCaptured: true,
+            captureTime: new Date().toISOString(),
+            contactInfo: { email, phone, postcode },
+            source: source || 'unknown'
+          }
+        });
+
+      if (reportError) {
+        console.error('Error creating report:', reportError);
+      }
+
+      console.log(`Lead captured for scan ${scanId}: ${email}`);
+
+      return new Response(JSON.stringify({
+        success: true,
+        message: 'Lead captured successfully',
+        scanData: updatedScan
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
+    } else {
+      // Create new scan record for initial lead capture
+      const { data: newScan, error: createError } = await supabase
+        .from('business_scans')
+        .insert({
+          business_name: businessName || '',
+          business_location: businessLocation || '',
+          email,
+          phone,
+          postcode,
+          scan_status: 'pending',
+          lead_qualified: true
+        })
+        .select()
+        .single();
 
-    if (reportError) {
-      console.error('Error creating report:', reportError);
+      if (createError) {
+        throw createError;
+      }
+
+      console.log(`Initial lead captured: ${email} for ${businessName}`);
+
+      return new Response(JSON.stringify({
+        success: true,
+        message: 'Lead captured successfully',
+        scanId: newScan.id
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
-
-    console.log(`Lead captured for scan ${scanId}: ${email}`);
-
-    return new Response(JSON.stringify({
-      success: true,
-      message: 'Lead captured successfully',
-      scanData: updatedScan
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
 
   } catch (error: any) {
     console.error('Error in capture-lead function:', error);

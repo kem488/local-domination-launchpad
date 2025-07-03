@@ -29,14 +29,14 @@ export interface ScanData {
   };
 }
 
-type ScanState = 'form' | 'scanning' | 'email-capture' | 'trial-signup' | 'results' | 'leadgate' | 'report';
+type ScanState = 'form' | 'scanning' | 'results' | 'trial-signup' | 'leadgate' | 'report';
 
 export const BusinessScanSection = () => {
   const [scanState, setScanState] = useState<ScanState>('form');
   const [scanData, setScanData] = useState<ScanData | null>(null);
   const [progress, setProgress] = useState(0);
 
-  const handleScanStart = async (businessName: string, businessLocation: string) => {
+  const handleScanStart = async (businessName: string, businessLocation: string, name: string, email: string) => {
     setScanState('scanning');
     setProgress(0);
 
@@ -52,6 +52,22 @@ export const BusinessScanSection = () => {
     }, 500);
 
     try {
+      // Capture lead data first
+      const leadResponse = await fetch('https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/capture-lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          businessName,
+          businessLocation,
+          name,
+          email,
+          source: 'initial-scan'
+        })
+      });
+
+      // Perform the business scan
       const response = await fetch('https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/scan-business', {
         method: 'POST',
         headers: {
@@ -68,7 +84,7 @@ export const BusinessScanSection = () => {
       if (result.success) {
         setProgress(100);
         setScanData(result);
-        setTimeout(() => setScanState('email-capture'), 500);
+        setTimeout(() => setScanState('results'), 500);
       } else {
         throw new Error(result.error || 'Scan failed');
       }
@@ -195,13 +211,6 @@ export const BusinessScanSection = () => {
               <ScanProgress progress={progress} />
             )}
             
-            {scanState === 'email-capture' && scanData && (
-              <EmailCapture 
-                scanData={scanData}
-                onFixThisForMe={handleFixThisForMe}
-                onGetFreeReport={handleGetFreeReport}
-              />
-            )}
             
             {scanState === 'trial-signup' && scanData && (
               <LeadGate 
