@@ -1,13 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { TrialPopup } from "./TrialPopup";
 import { useScrollPosition, smoothScrollTo } from "@/hooks/useScrollPosition";
+import { useAuth } from "@/contexts/AuthContext";
+import { LogOut, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const { scrollPosition } = useScrollPosition();
   const isScrolled = scrollPosition > 100;
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const handleNavClick = (sectionId: string) => {
     smoothScrollTo(sectionId);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
   };
 
   return (
@@ -48,21 +58,47 @@ export const Header = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <TrialPopup>
-              <Button 
-                variant="outline" 
-                size={isScrolled ? "sm" : "sm"}
-                className={`hidden sm:inline-flex btn-hover-effect ${isScrolled ? 'text-xs' : ''}`}
-              >
-                Free Trial
-              </Button>
-            </TrialPopup>
-            <Button 
-              size={isScrolled ? "sm" : "sm"}
-              className={`bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground btn-hover-effect ${isScrolled ? 'text-xs px-3' : ''}`}
-            >
-              {isScrolled ? 'Lock £97' : 'Lock £97/Month'}
-            </Button>
+            {user ? (
+              <>
+                <Button 
+                  variant="outline"
+                  size={isScrolled ? "sm" : "sm"}
+                  onClick={() => navigate('/dashboard')}
+                  className={`hidden sm:inline-flex btn-hover-effect ${isScrolled ? 'text-xs' : ''}`}
+                >
+                  <User className="h-4 w-4 mr-1" />
+                  Dashboard
+                </Button>
+                <Button 
+                  variant="ghost"
+                  size={isScrolled ? "sm" : "sm"}
+                  onClick={handleSignOut}
+                  className={`btn-hover-effect ${isScrolled ? 'text-xs px-3' : ''}`}
+                >
+                  <LogOut className="h-4 w-4 mr-1" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="outline"
+                  size={isScrolled ? "sm" : "sm"}
+                  onClick={() => navigate('/auth')}
+                  className={`hidden sm:inline-flex btn-hover-effect ${isScrolled ? 'text-xs' : ''}`}
+                >
+                  Sign In
+                </Button>
+                <TrialPopup>
+                  <Button 
+                    size={isScrolled ? "sm" : "sm"}
+                    className={`bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground btn-hover-effect ${isScrolled ? 'text-xs px-3' : ''}`}
+                  >
+                    {isScrolled ? 'Lock £97' : 'Lock £97/Month'}
+                  </Button>
+                </TrialPopup>
+              </>
+            )}
           </div>
         </div>
       </div>
