@@ -5,6 +5,7 @@ import { ScanForm } from "./ScanForm";
 import { ScanProgress } from "./ScanProgress";
 import { ScanResults } from "./ScanResults";
 import { LeadGate } from "./LeadGate";
+import { EmailCapture } from "./EmailCapture";
 import { CheckCircle, TrendingUp, AlertTriangle } from "lucide-react";
 
 export interface ScanData {
@@ -28,7 +29,7 @@ export interface ScanData {
   };
 }
 
-type ScanState = 'form' | 'scanning' | 'results' | 'leadgate' | 'report';
+type ScanState = 'form' | 'scanning' | 'email-capture' | 'trial-signup' | 'results' | 'leadgate' | 'report';
 
 export const BusinessScanSection = () => {
   const [scanState, setScanState] = useState<ScanState>('form');
@@ -67,7 +68,7 @@ export const BusinessScanSection = () => {
       if (result.success) {
         setProgress(100);
         setScanData(result);
-        setTimeout(() => setScanState('results'), 500);
+        setTimeout(() => setScanState('email-capture'), 500);
       } else {
         throw new Error(result.error || 'Scan failed');
       }
@@ -95,6 +96,54 @@ export const BusinessScanSection = () => {
 
   const handleViewFullReport = () => {
     setScanState('leadgate');
+  };
+
+  const handleFixThisForMe = async (email: string) => {
+    // Store email in database and proceed to trial signup
+    try {
+      const response = await fetch('https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/capture-lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          scanId: scanData?.scanId,
+          email,
+          source: 'fix-this-for-me'
+        })
+      });
+
+      if (response.ok) {
+        setScanState('trial-signup');
+      }
+    } catch (error) {
+      console.error('Error capturing lead:', error);
+      throw error;
+    }
+  };
+
+  const handleGetFreeReport = async (email: string) => {
+    // Store email and send report
+    try {
+      const response = await fetch('https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/capture-lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          scanId: scanData?.scanId,
+          email,
+          source: 'free-report'
+        })
+      });
+
+      if (response.ok) {
+        setScanState('report');
+      }
+    } catch (error) {
+      console.error('Error capturing lead:', error);
+      throw error;
+    }
   };
 
   const handleLeadCaptured = () => {
@@ -144,6 +193,21 @@ export const BusinessScanSection = () => {
             
             {scanState === 'scanning' && (
               <ScanProgress progress={progress} />
+            )}
+            
+            {scanState === 'email-capture' && scanData && (
+              <EmailCapture 
+                scanData={scanData}
+                onFixThisForMe={handleFixThisForMe}
+                onGetFreeReport={handleGetFreeReport}
+              />
+            )}
+            
+            {scanState === 'trial-signup' && scanData && (
+              <LeadGate 
+                scanData={scanData}
+                onLeadCaptured={handleLeadCaptured}
+              />
             )}
             
             {scanState === 'results' && scanData && (

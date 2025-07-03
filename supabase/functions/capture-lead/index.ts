@@ -11,6 +11,7 @@ interface LeadCaptureRequest {
   email: string;
   phone?: string;
   postcode?: string;
+  source?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -19,7 +20,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { scanId, email, phone, postcode }: LeadCaptureRequest = await req.json();
+    const { scanId, email, phone, postcode, source }: LeadCaptureRequest = await req.json();
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -51,7 +52,8 @@ const handler = async (req: Request): Promise<Response> => {
         report_data: {
           leadCaptured: true,
           captureTime: new Date().toISOString(),
-          contactInfo: { email, phone, postcode }
+          contactInfo: { email, phone, postcode },
+          source: source || 'unknown'
         }
       });
 

@@ -189,7 +189,12 @@ function calculateBusinessScores(place: GooglePlaceDetails) {
   // Photos & Media Score (15% weight)
   let photosScore = 0;
   if (place.photos && place.photos.length > 0) {
-    photosScore = Math.min((place.photos.length / 10) * 100, 100);
+    // Enhanced photo scoring based on quantity and variety
+    const photoCount = place.photos.length;
+    photosScore = Math.min((photoCount / 15) * 100, 100);
+    
+    // Bonus for having sufficient photos
+    if (photoCount >= 10) photosScore = Math.min(photosScore + 10, 100);
   }
 
   // Profile Completeness Score (15% weight)
