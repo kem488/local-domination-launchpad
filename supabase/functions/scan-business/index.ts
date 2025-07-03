@@ -36,19 +36,62 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const googleApiKey = Deno.env.get('GOOGLE_PLACES_API_KEY')!;
     
+    if (!googleApiKey) {
+      console.error('Google Places API key not configured');
+      throw new Error('API configuration error');
+    }
+    
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    console.log(`Starting scan for: ${businessName} in ${businessLocation}`);
+    console.log(`Starting scan for: "${businessName}" in "${businessLocation}"`);
 
-    // Search for the business using Google Places Text Search
-    const searchQuery = `${businessName} ${businessLocation}`;
-    const searchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(searchQuery)}&key=${googleApiKey}`;
+    // Try multiple search strategies
+    const searchQueries = [
+      `${businessName} ${businessLocation}`,
+      `${businessName} near ${businessLocation}`,
+      `${businessName}, ${businessLocation}`,
+      businessLocation // fallback to location only
+    ];
+
+    let searchData = null;
+    let searchQuery = '';
     
-    const searchResponse = await fetch(searchUrl);
-    const searchData = await searchResponse.json();
+    for (const query of searchQueries) {
+      searchQuery = query;
+      console.log(`Trying search query: "${searchQuery}"`);
+      
+      const searchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(searchQuery)}&key=${googleApiKey}`;
+      
+      try {
+        const searchResponse = await fetch(searchUrl);
+        searchData = await searchResponse.json();
+        
+        console.log(`Google API response status: ${searchResponse.status}`);
+        console.log(`Google API response:`, JSON.stringify(searchData, null, 2));
+        
+        if (searchData.status && searchData.status !== 'OK') {
+          console.error(`Google Places API error: ${searchData.status} - ${searchData.error_message || 'Unknown error'}`);
+          if (searchData.status === 'REQUEST_DENIED') {
+            throw new Error('Google Places API access denied - check API key and permissions');
+          }
+          continue; // Try next query
+        }
+        
+        if (searchData.results && searchData.results.length > 0) {
+          console.log(`Found ${searchData.results.length} results for query: "${searchQuery}"`);
+          break; // Success, exit loop
+        }
+        
+        console.log(`No results for query: "${searchQuery}"`);
+      } catch (fetchError) {
+        console.error(`Error fetching from Google Places API:`, fetchError);
+        continue; // Try next query
+      }
+    }
 
-    if (!searchData.results || searchData.results.length === 0) {
-      throw new Error('Business not found on Google');
+    if (!searchData || !searchData.results || searchData.results.length === 0) {
+      console.error('No business found after trying all search strategies');
+      throw new Error(`Sorry, we couldn't find "${businessName}" in "${businessLocation}". Try checking the spelling or using a more specific location.`);
     }
 
     const place = searchData.results[0];

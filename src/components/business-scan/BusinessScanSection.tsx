@@ -75,8 +75,19 @@ export const BusinessScanSection = () => {
       console.error('Scan error:', error);
       setProgress(0);
       setScanState('form');
-      // Show user-friendly error message
-      alert('Sorry, we couldn\'t scan your business at the moment. Please try again or contact support if the issue persists.');
+      
+      // Show more specific error messages
+      let errorMessage = 'Sorry, we couldn\'t scan your business at the moment.';
+      
+      if (error instanceof Error) {
+        if (error.message.includes('couldn\'t find')) {
+          errorMessage = error.message;
+        } else if (error.message.includes('API')) {
+          errorMessage = 'There was an issue with our scanning service. Please try again in a moment.';
+        }
+      }
+      
+      alert(errorMessage + ' If the issue persists, try using a more specific business name or location.');
     } finally {
       clearInterval(progressInterval);
     }
