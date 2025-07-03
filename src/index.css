@@ -17,8 +17,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 216 87% 59%;  /* Soft blue #3B82F6 */
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -34,7 +34,19 @@ All colors MUST be HSL.
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 216 87% 59%;
+
+    /* Custom brand colors */
+    --brand-orange: 16 90% 60%;  /* Orange CTA #FF6B35 */
+    --brand-orange-foreground: 0 0% 100%;
+    --brand-blue: 216 87% 59%;   /* Primary blue #3B82F6 */
+    --brand-blue-light: 216 87% 97%;
+    
+    /* Additional semantic colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 43 96% 56%;
+    --warning-foreground: 0 0% 0%;
 
     --radius: 0.5rem;
 
