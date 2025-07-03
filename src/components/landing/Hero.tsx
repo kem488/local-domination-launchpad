@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, CheckCircle, TrendingUp } from "lucide-react";
+import { TrialPopup } from "./TrialPopup";
 
 export const Hero = () => {
   return (
@@ -9,7 +10,7 @@ export const Hero = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
           <Badge variant="secondary" className="mb-6 bg-brand-blue-light text-brand-blue border-brand-blue/20">
-            Limited Time: Lifetime Access Only £97 (Usually £297/month)
+            Limited Time: Lock £97/Month Rate For Life (Usually £247/month)
           </Badge>
           
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
@@ -27,15 +28,17 @@ export const Hero = () => {
               size="lg" 
               className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg"
             >
-              Lock In My £97 Rate Before July 31st
+              Lock In £97/Month Rate Before July 31st
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="px-8 py-4 text-lg"
-            >
-              See If I Qualify
-            </Button>
+            <TrialPopup>
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="px-8 py-4 text-lg"
+              >
+                Start 14-Day Free Trial
+              </Button>
+            </TrialPopup>
           </div>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-muted-foreground">

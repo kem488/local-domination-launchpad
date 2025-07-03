@@ -48,10 +48,10 @@ export const Pricing = () => {
   ];
 
   const savings = {
-    lifetime: 97,
-    monthly: 247,
-    yearly: 247 * 12,
-    totalSavings: (247 * 12) - 97
+    lockedRate: 97,
+    regularRate: 247,
+    yearlySavings: (247 - 97) * 12,
+    monthlySavings: 247 - 97
   };
 
   return (
@@ -63,10 +63,10 @@ export const Pricing = () => {
             Limited Time Offer Ends July 31st
           </Badge>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Lock In £97 Lifetime Rate (Normally £247/Month)
+            Lock In £97/Month Rate For Life (Normally £247/Month)
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Get the same system big agencies charge £400+/month for. One payment, lifetime access. Rate locked forever, even when we increase prices.
+            Get the same system big agencies charge £400+/month for. Pay just £97/month with your rate locked forever, even when we increase prices to £300-400+.
           </p>
         </div>
 
@@ -104,11 +104,11 @@ export const Pricing = () => {
               <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-success text-success-foreground">
                 LIMITED TIME ONLY
               </Badge>
-              <CardTitle className="text-3xl mt-4">Lifetime Access</CardTitle>
+              <CardTitle className="text-3xl mt-4">Locked Monthly Rate</CardTitle>
               <div className="text-center py-4">
-                <div className="text-5xl font-bold text-primary">£97</div>
+                <div className="text-5xl font-bold text-primary">£97<span className="text-lg">/month</span></div>
                 <div className="text-muted-foreground line-through text-xl">£247/month</div>
-                <div className="text-success font-semibold">You Save £{savings.totalSavings.toLocaleString()}</div>
+                <div className="text-success font-semibold">Save £{savings.monthlySavings}/month (£{savings.yearlySavings.toLocaleString()}/year)</div>
               </div>
             </CardHeader>
             <CardContent>
@@ -125,7 +125,7 @@ export const Pricing = () => {
                 size="lg" 
                 className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground text-lg py-4"
               >
-                Secure My £97 Lifetime Rate
+                Lock In £97/Month Rate
               </Button>
               
               <div className="text-center mt-4 text-sm text-muted-foreground">
@@ -149,22 +149,22 @@ export const Pricing = () => {
                 </div>
                 <div className="flex justify-between items-center p-4 bg-muted rounded-lg">
                   <span>Annual Cost (Regular):</span>
-                  <span className="font-semibold">£{savings.yearly.toLocaleString()}</span>
+                  <span className="font-semibold">£{(savings.regularRate * 12).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center p-4 bg-success/10 rounded-lg border border-success/20">
-                  <span className="font-semibold">Your Lifetime Cost:</span>
-                  <span className="font-bold text-success text-xl">£97</span>
+                  <span className="font-semibold">Your Annual Cost:</span>
+                  <span className="font-bold text-success text-xl">£{(savings.lockedRate * 12).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center p-4 bg-brand-orange/10 rounded-lg border border-brand-orange/20">
-                  <span className="font-semibold text-lg">Total Savings:</span>
-                  <span className="font-bold text-brand-orange text-2xl">£{savings.totalSavings.toLocaleString()}</span>
+                  <span className="font-semibold text-lg">Annual Savings:</span>
+                  <span className="font-bold text-brand-orange text-2xl">£{savings.yearlySavings.toLocaleString()}</span>
                 </div>
               </div>
 
               <div className="mt-8 p-4 bg-brand-blue-light rounded-lg">
                 <h4 className="font-semibold text-brand-blue mb-2">Why Offer This Rate?</h4>
                 <p className="text-sm text-muted-foreground">
-                  We're building our case study database across different UK trades. After July 31st, this will only be available at £247/month. Even if we increase to £300-400+ in future, your rate stays locked at £97.
+                  We're building our case study database across different UK trades. After July 31st, this will only be available at £247/month. Even if we increase to £300-400+ in future, your monthly rate stays locked at £97.
                 </p>
               </div>
 

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { TrialPopup } from "./TrialPopup";
 
 export const Header = () => {
   return (
@@ -26,18 +27,20 @@ export const Header = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="hidden sm:inline-flex"
-            >
-              See If I Qualify
-            </Button>
+            <TrialPopup>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="hidden sm:inline-flex"
+              >
+                Free Trial
+              </Button>
+            </TrialPopup>
             <Button 
               size="sm"
               className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground"
             >
-              Lock In £97 Rate
+              Lock £97/Month
             </Button>
           </div>
         </div>

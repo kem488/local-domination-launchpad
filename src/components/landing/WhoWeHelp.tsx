@@ -32,7 +32,7 @@ export const WhoWeHelp = () => {
             Built for UK Tradespeople Who Want Consistent Work
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Average age 49, 1-9 employees, £70k-£530k turnover. If you believe good work should speak for itself but are tired of the feast-or-famine cycle, this is for you.
+            If you believe good work should speak for itself but are tired of the feast-or-famine cycle, this is for you.
           </p>
         </div>
 

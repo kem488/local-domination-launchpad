@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, TrendingUp } from "lucide-react";
+import { TrialPopup } from "./TrialPopup";
 
 export const CTA = () => {
   return (
@@ -41,15 +42,17 @@ export const CTA = () => {
               size="lg" 
               className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-xl"
             >
-              Lock In Before July 31st
+              Lock In £97/Month Before July 31st
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="px-8 py-4 text-xl border-2"
-            >
-              See If I Qualify
-            </Button>
+            <TrialPopup>
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="px-8 py-4 text-xl border-2"
+              >
+                Start 14-Day Free Trial
+              </Button>
+            </TrialPopup>
         </div>
 
         <Card className="max-w-2xl mx-auto">
@@ -60,12 +63,12 @@ export const CTA = () => {
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                 <div className="p-3 bg-muted/50 rounded-lg">
-                  <div className="font-semibold text-primary mb-1">1. Secure Payment</div>
-                  <div className="text-muted-foreground">One-time £97 payment</div>
+                  <div className="font-semibold text-primary mb-1">1. Start Trial</div>
+                  <div className="text-muted-foreground">14 days completely free</div>
                 </div>
                 <div className="p-3 bg-muted/50 rounded-lg">
-                  <div className="font-semibold text-primary mb-1">2. Instant Access</div>
-                  <div className="text-muted-foreground">Immediate system access</div>
+                  <div className="font-semibold text-primary mb-1">2. Subscribe</div>
+                  <div className="text-muted-foreground">£97/month locked rate</div>
                 </div>
                 <div className="p-3 bg-muted/50 rounded-lg">
                   <div className="font-semibold text-primary mb-1">3. Results</div>
@@ -77,7 +80,7 @@ export const CTA = () => {
         </Card>
 
         <div className="mt-8 text-center text-sm text-muted-foreground">
-          <p>✓ No setup fees ✓ No monthly charges ✓ 90-day money-back guarantee</p>
+          <p>✓ No setup fees ✓ 14-day free trial ✓ 90-day money-back guarantee</p>
           <p className="mt-2">Secure SSL encrypted payment processing</p>
         </div>
       </div>
