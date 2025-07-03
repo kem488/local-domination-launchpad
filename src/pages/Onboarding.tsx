@@ -83,6 +83,32 @@ export const Onboarding = () => {
         }
       });
 
+      // Send data to Make.com webhook
+      await supabase.functions.invoke('send-to-make-webhook', {
+        body: {
+          event_type: 'client_onboarding',
+          timestamp: new Date().toISOString(),
+          client_id: clientRecord.id,
+          business_data: {
+            business_name: clientData.business_name,
+            owner_name: clientData.owner_name,
+            owner_email: clientData.owner_email,
+            phone: clientData.phone,
+            address: clientData.address,
+            postcode: clientData.postcode
+          },
+          status_data: {
+            onboarding_status: 'complete',
+            gbp_status: 'sent',
+            last_follow_up: null
+          },
+          agency_data: {
+            user_id: user.id,
+            agency_email: AGENCY_CONFIG.agencyEmail
+          }
+        }
+      });
+
       toast({
         title: "Client onboarded successfully!",
         description: "Access request sent and welcome email delivered"

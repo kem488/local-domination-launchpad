@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Users, Plus, RefreshCw, Mail, Clock, CheckCircle, XCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { AGENCY_CONFIG } from "@/lib/constants";
 
 interface ClientRecord {
   id: string;
@@ -84,6 +85,13 @@ export const Dashboard = () => {
 
   const handleResendRequest = async (clientId: string, businessName: string, ownerEmail: string) => {
     try {
+      // Get client data for webhook
+      const { data: clientData } = await supabase
+        .from('client_onboarding')
+        .select('*')
+        .eq('id', clientId)
+        .single();
+
       await supabase.functions.invoke('send-gbp-email', {
         body: {
           type: 'follow_up',
@@ -93,16 +101,44 @@ export const Dashboard = () => {
         }
       });
 
-      toast({
-        title: "Follow-up sent",
-        description: `Reminder email sent to ${ownerEmail}`
-      });
-
       // Update last follow-up timestamp
       await supabase
         .from('gbp_access_requests')
         .update({ last_follow_up: new Date().toISOString() })
         .eq('client_id', clientId);
+
+      // Send follow-up event to Make.com webhook
+      if (clientData) {
+        await supabase.functions.invoke('send-to-make-webhook', {
+          body: {
+            event_type: 'follow_up_sent',
+            timestamp: new Date().toISOString(),
+            client_id: clientId,
+            business_data: {
+              business_name: clientData.business_name,
+              owner_name: clientData.owner_name,
+              owner_email: clientData.owner_email,
+              phone: clientData.phone,
+              address: clientData.address,
+              postcode: clientData.postcode
+            },
+            status_data: {
+              onboarding_status: clientData.status,
+              gbp_status: 'sent',
+              last_follow_up: new Date().toISOString()
+            },
+            agency_data: {
+              user_id: clientData.user_id,
+              agency_email: AGENCY_CONFIG.agencyEmail
+            }
+          }
+        });
+      }
+
+      toast({
+        title: "Follow-up sent",
+        description: `Reminder email sent to ${ownerEmail}`
+      });
 
       fetchClients();
     } catch (error: any) {
