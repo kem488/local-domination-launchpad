@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Search, MapPin } from "lucide-react";
+import { Search, MapPin, TestTube } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface ScanFormProps {
   onScanStart: (businessName: string, businessLocation: string) => void;
@@ -12,6 +13,8 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
   const [businessName, setBusinessName] = useState("");
   const [businessLocation, setBusinessLocation] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTesting, setIsTesting] = useState(false);
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,6 +23,41 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
     setIsSubmitting(true);
     await onScanStart(businessName.trim(), businessLocation.trim());
     setIsSubmitting(false);
+  };
+
+  const handleTestApi = async () => {
+    setIsTesting(true);
+    try {
+      const response = await fetch('https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/test-google-api', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        toast({
+          title: "✅ API Test Successful",
+          description: `Google Places API is working! Found: ${result.sampleResult?.name}`,
+        });
+      } else {
+        toast({
+          title: "❌ API Test Failed",
+          description: result.error || 'API test failed',
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "❌ Test Error",
+        description: 'Failed to test API connection',
+        variant: "destructive",
+      });
+    } finally {
+      setIsTesting(false);
+    }
   };
 
   return (
@@ -77,6 +115,18 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
           disabled={isSubmitting || !businessName.trim() || !businessLocation.trim()}
         >
           {isSubmitting ? 'Starting Scan...' : 'Get My Free Business Scan'}
+        </Button>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={handleTestApi}
+          disabled={isTesting}
+          className="w-full mt-2"
+        >
+          <TestTube className="h-4 w-4 mr-2" />
+          {isTesting ? 'Testing API...' : 'Test API Connection'}
         </Button>
       </form>
 
