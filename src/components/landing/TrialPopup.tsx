@@ -49,38 +49,30 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-w-lg md:max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="text-center mb-4">
-            <Badge variant="secondary" className="bg-success/10 text-success border-success/20 mb-3">
+          <div className="text-center mb-3">
+            <Badge variant="secondary" className="bg-success/10 text-success border-success/20 mb-2">
               <Clock className="h-4 w-4 mr-2" />
               Free Trial + Lock £97 Rate Before July 31st
             </Badge>
-            <DialogTitle className="text-2xl font-bold text-foreground">
+            <DialogTitle className="text-xl font-bold text-foreground">
               Start Your 14-Day Free Trial & Lock Your Rate
             </DialogTitle>
-            <p className="text-muted-foreground mt-2">
+            <p className="text-muted-foreground mt-2 text-sm">
               Try our system risk-free for 14 days, then pay just £97/month locked forever (normally £247/month)
             </p>
           </div>
         </DialogHeader>
 
-        <div className="space-y-4 mb-6">
-          <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-            <CheckCircle className="h-5 w-5 text-success" />
-            <span className="text-sm">14 days completely free - no payment required</span>
+        <div className="space-y-2 mb-4">
+          <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
+            <CheckCircle className="h-4 w-4 text-success flex-shrink-0" />
+            <span className="text-xs">14 days free + £97/month locked rate for life</span>
           </div>
-          <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-            <CheckCircle className="h-5 w-5 text-success" />
-            <span className="text-sm">£97/month locked rate for life after trial</span>
-          </div>
-          <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-            <CheckCircle className="h-5 w-5 text-success" />
-            <span className="text-sm">Cancel anytime during trial with no charge</span>
-          </div>
-          <div className="flex items-center gap-3 p-3 bg-brand-orange/10 rounded-lg border border-brand-orange/20">
-            <Clock className="h-5 w-5 text-brand-orange" />
-            <span className="text-sm font-medium">Rate lock expires July 31st - secure yours now!</span>
+          <div className="flex items-center gap-2 p-2 bg-brand-orange/10 rounded-lg border border-brand-orange/20">
+            <Clock className="h-4 w-4 text-brand-orange flex-shrink-0" />
+            <span className="text-xs font-medium">Rate lock expires July 31st - secure yours now!</span>
           </div>
         </div>
 
