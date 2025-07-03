@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, ArrowRight, ArrowLeft, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { AGENCY_CONFIG } from "@/lib/constants";
+import { ClientInfoForm } from "@/components/onboarding/ClientInfoForm";
+import { OnboardingSuccess } from "@/components/onboarding/OnboardingSuccess";
+import { OnboardingProgress } from "@/components/onboarding/OnboardingProgress";
 
 interface ClientData {
   business_name: string;
@@ -20,7 +16,6 @@ interface ClientData {
 }
 
 export const Onboarding = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -105,128 +100,17 @@ export const Onboarding = () => {
     }
   };
 
-  const renderStep1 = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Mail className="h-5 w-5" />
-          Client Information
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="business_name">Business Name</Label>
-            <Input
-              id="business_name"
-              value={clientData.business_name}
-              onChange={(e) => setClientData(prev => ({ ...prev, business_name: e.target.value }))}
-              placeholder="ABC Plumbing Ltd"
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="owner_name">Owner Name</Label>
-            <Input
-              id="owner_name"
-              value={clientData.owner_name}
-              onChange={(e) => setClientData(prev => ({ ...prev, owner_name: e.target.value }))}
-              placeholder="John Smith"
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="owner_email">Owner Email</Label>
-            <Input
-              id="owner_email"
-              type="email"
-              value={clientData.owner_email}
-              onChange={(e) => setClientData(prev => ({ ...prev, owner_email: e.target.value }))}
-              placeholder="john@abcplumbing.com"
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              type="tel"
-              value={clientData.phone}
-              onChange={(e) => setClientData(prev => ({ ...prev, phone: e.target.value }))}
-              placeholder="07xxx xxx xxx"
-            />
-          </div>
-          <div>
-            <Label htmlFor="address">Business Address</Label>
-            <Input
-              id="address"
-              value={clientData.address}
-              onChange={(e) => setClientData(prev => ({ ...prev, address: e.target.value }))}
-              placeholder="123 High Street, London"
-            />
-          </div>
-          <div>
-            <Label htmlFor="postcode">Postcode</Label>
-            <Input
-              id="postcode"
-              value={clientData.postcode}
-              onChange={(e) => setClientData(prev => ({ ...prev, postcode: e.target.value }))}
-              placeholder="SW1A 1AA"
-            />
-          </div>
-        </div>
-        <Button 
-          onClick={handleClientSubmit}
-          disabled={!clientData.business_name || !clientData.owner_name || !clientData.owner_email || loading}
-          className="w-full"
-        >
-          Generate Access Request
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </CardContent>
-    </Card>
-  );
-
-  const renderStep2 = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <CheckCircle className="h-5 w-5 text-success" />
-          Onboarding Complete!
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4 text-center">
-        <Badge className="bg-success text-success-foreground">
-          Google Business Profile Access Request Sent
-        </Badge>
-        <p className="text-muted-foreground">
-          We've sent an access request email to {clientData.owner_email} and will follow up automatically.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Button onClick={() => navigate('/dashboard')} className="flex-1">
-            Go to Dashboard
-          </Button>
-          <Button 
-            variant="outline" 
-            onClick={() => {
-              setCurrentStep(1);
-              setClientData({
-                business_name: "",
-                owner_name: "",
-                owner_email: "",
-                phone: "",
-                address: "",
-                postcode: ""
-              });
-            }}
-            className="flex-1"
-          >
-            Add Another Client
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
+  const handleAddAnother = () => {
+    setCurrentStep(1);
+    setClientData({
+      business_name: "",
+      owner_name: "",
+      owner_email: "",
+      phone: "",
+      address: "",
+      postcode: ""
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background p-4">
@@ -235,29 +119,23 @@ export const Onboarding = () => {
           <h1 className="text-3xl font-bold text-foreground mb-2">Client Onboarding</h1>
           <p className="text-muted-foreground">Set up Google Business Profile access for your clients</p>
           
-          {/* Progress indicator */}
-          <div className="flex items-center justify-center mt-6 space-x-4">
-            {[1, 2].map((step) => (
-              <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                  currentStep >= step 
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'bg-muted text-muted-foreground'
-                }`}>
-                  {currentStep > step ? <CheckCircle className="h-4 w-4" /> : step}
-                </div>
-                {step < 2 && (
-                  <div className={`w-12 h-px mx-2 ${
-                    currentStep > step ? 'bg-primary' : 'bg-muted'
-                  }`} />
-                )}
-              </div>
-            ))}
-          </div>
+          <OnboardingProgress currentStep={currentStep} totalSteps={2} />
         </div>
 
-        {currentStep === 1 && renderStep1()}
-        {currentStep === 2 && renderStep2()}
+        {currentStep === 1 && (
+          <ClientInfoForm 
+            clientData={clientData}
+            onClientDataChange={setClientData}
+            onSubmit={handleClientSubmit}
+            loading={loading}
+          />
+        )}
+        {currentStep === 2 && (
+          <OnboardingSuccess 
+            clientData={clientData}
+            onAddAnother={handleAddAnother}
+          />
+        )}
       </div>
     </div>
   );
