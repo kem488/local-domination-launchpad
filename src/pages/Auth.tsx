@@ -70,20 +70,46 @@ export const Auth = () => {
       return;
     }
 
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setLoading(true);
     const { error } = await signUp(email, password);
     
     if (error) {
+      let errorMessage = error.message;
+      
+      // Provide more user-friendly error messages
+      if (error.message.includes('User already registered')) {
+        errorMessage = "An account with this email already exists. Please sign in instead.";
+      } else if (error.message.includes('Invalid email')) {
+        errorMessage = "Please enter a valid email address.";
+      } else if (error.message.includes('Password')) {
+        errorMessage = "Password must be at least 6 characters long.";
+      }
+      
       toast({
         title: "Sign up failed",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive"
       });
     } else {
       toast({
         title: "Account created!",
-        description: "Please check your email to confirm your account"
+        description: "Please check your email to confirm your account before signing in",
+        duration: 6000
       });
+      // Clear form after successful signup
+      setEmail('');
+      setPassword('');
     }
     setLoading(false);
   };

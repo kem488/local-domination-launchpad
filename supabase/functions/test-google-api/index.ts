@@ -5,6 +5,10 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+interface TestApiRequest {
+  query?: string;
+}
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -25,10 +29,21 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    console.log('Testing Google Places API with a simple known business search...');
+    // Get custom query from request body or use default
+    let testQuery = "McDonald's London";
+    if (req.method === 'POST') {
+      try {
+        const body: TestApiRequest = await req.json();
+        if (body.query) {
+          testQuery = body.query;
+        }
+      } catch {
+        // Use default query if body parsing fails
+      }
+    }
+
+    console.log(`Testing Google Places API with query: "${testQuery}"`);
     
-    // Test with a very well-known business
-    const testQuery = "McDonald's London";
     const testUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(testQuery)}&key=${googleApiKey}`;
     
     console.log(`Making test request to: ${testUrl.replace(googleApiKey, '***HIDDEN***')}`);
@@ -52,7 +67,9 @@ const handler = async (req: Request): Promise<Response> => {
       resultsCount: data.results?.length || 0,
       hasError: !!data.error_message,
       errorMessage: data.error_message,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      quotaRemaining: response.headers.get('X-RateLimit-Remaining'),
+      dailyQuota: response.headers.get('X-RateLimit-Limit')
     };
     
     if (data.status === 'OK' && data.results && data.results.length > 0) {
@@ -66,16 +83,28 @@ const handler = async (req: Request): Promise<Response> => {
           name: data.results[0].name,
           address: data.results[0].formatted_address,
           rating: data.results[0].rating,
-          placeId: data.results[0].place_id
+          placeId: data.results[0].place_id,
+          types: data.results[0].types
         }
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     } else {
       console.error('❌ Google Places API test failed');
+      
+      // Provide more specific error messages
+      let errorMessage = 'Google Places API test failed';
+      if (data.status === 'OVER_QUERY_LIMIT') {
+        errorMessage = 'Google Places API quota exceeded';
+      } else if (data.status === 'REQUEST_DENIED') {
+        errorMessage = 'Google Places API request denied - check API key and permissions';
+      } else if (data.status === 'INVALID_REQUEST') {
+        errorMessage = 'Invalid request parameters';
+      }
+      
       return new Response(JSON.stringify({
         success: false,
-        error: 'Google Places API test failed',
+        error: errorMessage,
         analysis,
         testQuery,
         googleResponse: data
