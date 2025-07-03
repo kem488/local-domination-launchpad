@@ -14,7 +14,7 @@ interface ClientData {
 }
 
 interface OnboardingSuccessProps {
-  clientData: ClientData;
+  clientData: any;
   onAddAnother: () => void;
 }
 

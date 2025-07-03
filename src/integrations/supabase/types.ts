@@ -39,6 +39,42 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_response_templates: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          is_custom: boolean | null
+          is_default: boolean | null
+          name: string
+          personality_style: string
+          template_content: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          is_custom?: boolean | null
+          is_default?: boolean | null
+          name: string
+          personality_style: string
+          template_content: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          is_custom?: boolean | null
+          is_default?: boolean | null
+          name?: string
+          personality_style?: string
+          template_content?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       business_scans: {
         Row: {
           ai_recommendations: string | null
@@ -102,47 +138,239 @@ export type Database = {
         }
         Relationships: []
       }
+      client_branding_assets: {
+        Row: {
+          asset_data: Json | null
+          asset_type: string
+          asset_url: string | null
+          client_id: string
+          created_at: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          asset_data?: Json | null
+          asset_type: string
+          asset_url?: string | null
+          client_id: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          asset_data?: Json | null
+          asset_type?: string
+          asset_url?: string | null
+          client_id?: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_branding_assets_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "client_onboarding"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_onboarding: {
         Row: {
           address: string | null
+          annual_revenue_range: string | null
+          business_hours: Json | null
           business_name: string
           created_at: string
+          current_marketing_methods: string[] | null
+          existing_gbp_url: string | null
+          has_existing_gbp: boolean | null
           id: string
+          industry: string | null
+          marketing_budget_range: string | null
+          onboarding_step: number | null
           owner_email: string
           owner_name: string | null
+          pain_points: string[] | null
           phone: string | null
           postcode: string | null
+          preferred_contact_method: string | null
+          previous_agency_experience: string | null
+          primary_goals: string[] | null
+          services_offered: string[] | null
+          social_media_links: Json | null
           status: string | null
+          target_audience: string | null
+          team_size: number | null
           updated_at: string
           user_id: string
+          website_url: string | null
+          wizard_completed: boolean | null
+          wizard_data: Json | null
         }
         Insert: {
           address?: string | null
+          annual_revenue_range?: string | null
+          business_hours?: Json | null
           business_name: string
           created_at?: string
+          current_marketing_methods?: string[] | null
+          existing_gbp_url?: string | null
+          has_existing_gbp?: boolean | null
           id?: string
+          industry?: string | null
+          marketing_budget_range?: string | null
+          onboarding_step?: number | null
           owner_email: string
           owner_name?: string | null
+          pain_points?: string[] | null
           phone?: string | null
           postcode?: string | null
+          preferred_contact_method?: string | null
+          previous_agency_experience?: string | null
+          primary_goals?: string[] | null
+          services_offered?: string[] | null
+          social_media_links?: Json | null
           status?: string | null
+          target_audience?: string | null
+          team_size?: number | null
           updated_at?: string
           user_id: string
+          website_url?: string | null
+          wizard_completed?: boolean | null
+          wizard_data?: Json | null
         }
         Update: {
           address?: string | null
+          annual_revenue_range?: string | null
+          business_hours?: Json | null
           business_name?: string
           created_at?: string
+          current_marketing_methods?: string[] | null
+          existing_gbp_url?: string | null
+          has_existing_gbp?: boolean | null
           id?: string
+          industry?: string | null
+          marketing_budget_range?: string | null
+          onboarding_step?: number | null
           owner_email?: string
           owner_name?: string | null
+          pain_points?: string[] | null
           phone?: string | null
           postcode?: string | null
+          preferred_contact_method?: string | null
+          previous_agency_experience?: string | null
+          primary_goals?: string[] | null
+          services_offered?: string[] | null
+          social_media_links?: Json | null
           status?: string | null
+          target_audience?: string | null
+          team_size?: number | null
           updated_at?: string
           user_id?: string
+          website_url?: string | null
+          wizard_completed?: boolean | null
+          wizard_data?: Json | null
         }
         Relationships: []
+      }
+      client_review_settings: {
+        Row: {
+          ai_responses_enabled: boolean | null
+          auto_approve_negative: boolean | null
+          auto_approve_neutral: boolean | null
+          auto_approve_positive: boolean | null
+          client_id: string
+          created_at: string
+          custom_templates: Json | null
+          escalation_keywords: string[] | null
+          id: string
+          personality_style: string | null
+          response_delay_hours: number | null
+          updated_at: string
+        }
+        Insert: {
+          ai_responses_enabled?: boolean | null
+          auto_approve_negative?: boolean | null
+          auto_approve_neutral?: boolean | null
+          auto_approve_positive?: boolean | null
+          client_id: string
+          created_at?: string
+          custom_templates?: Json | null
+          escalation_keywords?: string[] | null
+          id?: string
+          personality_style?: string | null
+          response_delay_hours?: number | null
+          updated_at?: string
+        }
+        Update: {
+          ai_responses_enabled?: boolean | null
+          auto_approve_negative?: boolean | null
+          auto_approve_neutral?: boolean | null
+          auto_approve_positive?: boolean | null
+          client_id?: string
+          created_at?: string
+          custom_templates?: Json | null
+          escalation_keywords?: string[] | null
+          id?: string
+          personality_style?: string | null
+          response_delay_hours?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_review_settings_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "client_onboarding"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_team_members: {
+        Row: {
+          client_id: string
+          created_at: string
+          email: string | null
+          id: string
+          is_primary_contact: boolean | null
+          name: string
+          phone: string | null
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_primary_contact?: boolean | null
+          name: string
+          phone?: string | null
+          role: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_primary_contact?: boolean | null
+          name?: string
+          phone?: string | null
+          role?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_team_members_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "client_onboarding"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       email_sequences: {
         Row: {
