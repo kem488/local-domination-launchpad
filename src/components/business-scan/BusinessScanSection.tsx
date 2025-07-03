@@ -75,6 +75,8 @@ export const BusinessScanSection = () => {
       console.error('Scan error:', error);
       setProgress(0);
       setScanState('form');
+      // Show user-friendly error message
+      alert('Sorry, we couldn\'t scan your business at the moment. Please try again or contact support if the issue persists.');
     } finally {
       clearInterval(progressInterval);
     }
