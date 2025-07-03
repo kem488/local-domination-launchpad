@@ -9,6 +9,36 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      agency_settings: {
+        Row: {
+          agency_email: string
+          company_name: string | null
+          created_at: string
+          id: string
+          organization_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agency_email: string
+          company_name?: string | null
+          created_at?: string
+          id?: string
+          organization_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          agency_email?: string
+          company_name?: string | null
+          created_at?: string
+          id?: string
+          organization_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       business_scans: {
         Row: {
           ai_recommendations: string | null
@@ -71,6 +101,130 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      client_onboarding: {
+        Row: {
+          address: string | null
+          business_name: string
+          created_at: string
+          id: string
+          owner_email: string
+          owner_name: string | null
+          phone: string | null
+          postcode: string | null
+          status: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          business_name: string
+          created_at?: string
+          id?: string
+          owner_email: string
+          owner_name?: string | null
+          phone?: string | null
+          postcode?: string | null
+          status?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          business_name?: string
+          created_at?: string
+          id?: string
+          owner_email?: string
+          owner_name?: string | null
+          phone?: string | null
+          postcode?: string | null
+          status?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      email_sequences: {
+        Row: {
+          client_id: string
+          created_at: string
+          email_clicked_at: string | null
+          email_opened_at: string | null
+          email_sent_at: string | null
+          id: string
+          sequence_type: string
+          status: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          email_clicked_at?: string | null
+          email_opened_at?: string | null
+          email_sent_at?: string | null
+          id?: string
+          sequence_type: string
+          status?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          email_clicked_at?: string | null
+          email_opened_at?: string | null
+          email_sent_at?: string | null
+          id?: string
+          sequence_type?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_sequences_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "client_onboarding"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gbp_access_requests: {
+        Row: {
+          access_granted_at: string | null
+          client_id: string
+          created_at: string
+          id: string
+          last_follow_up: string | null
+          request_url: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          access_granted_at?: string | null
+          client_id: string
+          created_at?: string
+          id?: string
+          last_follow_up?: string | null
+          request_url?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          access_granted_at?: string | null
+          client_id?: string
+          created_at?: string
+          id?: string
+          last_follow_up?: string | null
+          request_url?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gbp_access_requests_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "client_onboarding"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       goals: {
         Row: {

@@ -99,11 +99,19 @@ export const Success = () => {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 space-y-4">
           <Button 
             size="lg"
+            onClick={() => window.location.href = '/onboarding'}
+            className="btn-hover-effect w-full"
+          >
+            Start Client Onboarding
+          </Button>
+          <Button 
+            variant="outline"
+            size="lg"
             onClick={() => window.location.href = '/'}
-            className="btn-hover-effect"
+            className="w-full"
           >
             Return to Homepage
           </Button>
