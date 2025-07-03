@@ -115,7 +115,7 @@ serve(async (req) => {
 
     // Send actual email using Resend
     const emailResponse = await resend.emails.send({
-      from: `${AGENCY_CONFIG.companyName} <onboarding@resend.dev>`,
+      from: `${AGENCY_CONFIG.companyName} <onboarding@system.syngularitylabs.com>`,
       to: [recipientEmail],
       subject: emailContent.subject,
       html: emailContent.html,
