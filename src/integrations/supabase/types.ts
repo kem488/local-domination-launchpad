@@ -9,6 +9,69 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      business_scans: {
+        Row: {
+          ai_recommendations: string | null
+          business_location: string
+          business_name: string
+          completeness_score: number | null
+          created_at: string
+          email: string | null
+          engagement_score: number | null
+          google_place_id: string | null
+          id: string
+          lead_qualified: boolean | null
+          overall_score: number | null
+          phone: string | null
+          photos_score: number | null
+          postcode: string | null
+          reviews_score: number | null
+          scan_results: Json | null
+          scan_status: string | null
+          updated_at: string
+        }
+        Insert: {
+          ai_recommendations?: string | null
+          business_location: string
+          business_name: string
+          completeness_score?: number | null
+          created_at?: string
+          email?: string | null
+          engagement_score?: number | null
+          google_place_id?: string | null
+          id?: string
+          lead_qualified?: boolean | null
+          overall_score?: number | null
+          phone?: string | null
+          photos_score?: number | null
+          postcode?: string | null
+          reviews_score?: number | null
+          scan_results?: Json | null
+          scan_status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ai_recommendations?: string | null
+          business_location?: string
+          business_name?: string
+          completeness_score?: number | null
+          created_at?: string
+          email?: string | null
+          engagement_score?: number | null
+          google_place_id?: string | null
+          id?: string
+          lead_qualified?: boolean | null
+          overall_score?: number | null
+          phone?: string | null
+          photos_score?: number | null
+          postcode?: string | null
+          reviews_score?: number | null
+          scan_results?: Json | null
+          scan_status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       goals: {
         Row: {
           category: string | null
@@ -68,6 +131,38 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      scan_reports: {
+        Row: {
+          created_at: string
+          id: string
+          report_data: Json
+          report_type: string
+          scan_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          report_data: Json
+          report_type: string
+          scan_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          report_data?: Json
+          report_type?: string
+          scan_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scan_reports_scan_id_fkey"
+            columns: ["scan_id"]
+            isOneToOne: false
+            referencedRelation: "business_scans"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       stripe_customers: {
         Row: {
