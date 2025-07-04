@@ -8,11 +8,11 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Mail, Phone } from "lucide-react";
 import { useConversionTracking } from "@/hooks/useConversionTracking";
 
-interface TrialPopupProps {
+interface ConsultationPopupProps {
   children: React.ReactNode;
 }
 
-export const TrialPopup = ({ children }: TrialPopupProps) => {
+export const ConsultationPopup = ({ children }: ConsultationPopupProps) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",

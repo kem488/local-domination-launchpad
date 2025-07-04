@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Phone, Mail } from "lucide-react";
-import { TrialPopup } from "../TrialPopup";
+import { ConsultationPopup } from "../ConsultationPopup";
 import { trackConversion } from "@/hooks/useABTesting";
 
 const services = [
@@ -49,7 +49,7 @@ export const PricingCard = () => {
         </div>
         
         <div className="space-y-3">
-          <TrialPopup>
+          <ConsultationPopup>
             <Button 
               size="lg" 
               className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground text-lg py-4 btn-hover-effect"
@@ -59,7 +59,7 @@ export const PricingCard = () => {
               <Phone className="h-5 w-5 mr-2" />
               Request Free Consultation
             </Button>
-          </TrialPopup>
+          </ConsultationPopup>
           
           <Button 
             variant="outline"

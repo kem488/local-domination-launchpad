@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X } from "lucide-react";
 import { smoothScrollTo } from "@/hooks/useScrollPosition";
-import { TrialPopup } from "@/components/landing/TrialPopup";
+import { ConsultationPopup } from "@/components/landing/ConsultationPopup";
 
 export const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,7 +67,7 @@ export const MobileMenu = () => {
 
           {/* CTA Button */}
           <div className="p-4 border-t border-border">
-            <TrialPopup>
+            <ConsultationPopup>
               <Button
                 size="lg"
                 className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground touch-target"
@@ -75,7 +75,7 @@ export const MobileMenu = () => {
               >
                 Get Free Business Scan
               </Button>
-            </TrialPopup>
+            </ConsultationPopup>
           </div>
         </div>
       </SheetContent>

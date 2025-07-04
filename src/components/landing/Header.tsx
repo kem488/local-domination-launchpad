@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { TrialPopup } from "./TrialPopup";
+import { ConsultationPopup } from "./ConsultationPopup";
 import { MobileMenu } from "@/components/ui/mobile-menu";
 import { useScrollPosition, smoothScrollTo } from "@/hooks/useScrollPosition";
 
@@ -52,26 +52,26 @@ export const Header = () => {
           
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-3">
-            <TrialPopup>
+            <ConsultationPopup>
               <Button 
                 size="sm"
                 className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground btn-hover-effect touch-target px-4"
               >
                 Get Free Scan
               </Button>
-            </TrialPopup>
+            </ConsultationPopup>
           </div>
 
           {/* Mobile Actions */}
           <div className="flex md:hidden items-center space-x-2">
-            <TrialPopup>
+            <ConsultationPopup>
               <Button
                 size="sm"
                 className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground touch-target px-3 text-sm"
               >
                 Scan
               </Button>
-            </TrialPopup>
+            </ConsultationPopup>
             <MobileMenu />
           </div>
         </div>

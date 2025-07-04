@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Users, MessageSquare, Phone } from "lucide-react";
-import { TrialPopup } from "./TrialPopup";
+import { ConsultationPopup } from "./ConsultationPopup";
 import { TrustSignals } from "../optimization/TrustSignals";
 import { trackConversion } from "@/hooks/useABTesting";
 
@@ -53,7 +53,7 @@ export const CTA = () => {
 
         {/* Primary CTA */}
         <div className="space-y-4">
-          <TrialPopup>
+            <ConsultationPopup>
             <Button 
               size="lg" 
               className="w-full md:w-auto bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 md:px-12 py-4 text-lg md:text-xl btn-hover-effect touch-target font-semibold shadow-lg"
@@ -64,7 +64,7 @@ export const CTA = () => {
               <span className="hidden sm:inline">Get Free Consultation</span>
               <span className="sm:hidden">Get Consultation</span>
             </Button>
-          </TrialPopup>
+            </ConsultationPopup>
           
           {/* Secondary CTA - Separated with space */}
           <div className="pt-4">

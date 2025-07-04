@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { X, Clock, Gift, Search, TrendingUp, Target, Percent } from "lucide-react";
-import { TrialPopup } from "../landing/TrialPopup";
+import { ConsultationPopup } from "../landing/ConsultationPopup";
 import { CountdownTimer } from "../optimization/CountdownTimer";
 import { trackConversion } from "@/hooks/useABTesting";
 
@@ -215,14 +215,14 @@ export const ExitIntentPopup = () => {
           <div className="space-y-3">
             <div className="flex flex-col gap-2">
               {showLastChance ? (
-                <TrialPopup>
+                <ConsultationPopup>
                   <Button 
                     onClick={() => handleExitConversion('discount_claim')}
                     className="bg-destructive hover:bg-destructive/90 text-destructive-foreground w-full animate-pulse"
                   >
                     {variant.cta}
                   </Button>
-                </TrialPopup>
+                </ConsultationPopup>
               ) : (
                 <Button 
                   onClick={() => {
@@ -237,15 +237,15 @@ export const ExitIntentPopup = () => {
               )}
               
               {!showLastChance && (
-                <TrialPopup>
+                <ConsultationPopup>
                   <Button 
                     variant="outline" 
                     className="w-full"
                     onClick={() => handleExitConversion('trial_start')}
                   >
-                    Or Start 14-Day Free Trial
+                    Or Request Free Consultation
                   </Button>
-                </TrialPopup>
+                </ConsultationPopup>
               )}
             </div>
 
