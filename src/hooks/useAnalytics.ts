@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react';
 
 // Google Analytics 4 configuration
 const GA_TRACKING_ID = 'G-XXXXXXXXXX'; // Replace with actual GA4 ID
-const FB_PIXEL_ID = '000000000000000'; // Replace with actual Facebook Pixel ID
+const FB_PIXEL_ID = '743853124791247'; // Your Facebook Pixel ID
 
 declare global {
   interface Window {
