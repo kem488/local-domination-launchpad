@@ -5,8 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { CheckCircle, Mail, Phone } from "lucide-react";
 import { useConversionTracking } from "@/hooks/useConversionTracking";
 
 interface TrialPopupProps {
@@ -23,6 +22,7 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
   const { trackFormStart, trackFormCompletion, trackFormAbandonment } = useConversionTracking();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,32 +39,24 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
         throw new Error('Please fill in all required fields');
       }
 
-      console.log('Submitting trial data:', formData);
+      console.log('Submitting lead data:', formData);
 
-      const { data, error } = await supabase.functions.invoke('create-trial-rate-lock-checkout', {
-        body: formData,
-      });
-
-      console.log('Function response:', { data, error });
-
-      if (error) {
-        console.error('Function error:', error);
-        throw new Error(error.message || 'Failed to create trial');
-      }
+      // Track successful form completion
+      trackFormCompletion('lead_capture', formData);
       
-      if (data?.url) {
-        console.log('Redirecting to Stripe:', data.url);
-        // Track successful form completion
-        trackFormCompletion('trial_popup', formData);
-        // Redirect to Stripe checkout
-        window.location.href = data.url;
-      } else {
-        console.error('No checkout URL received:', data);
-        throw new Error('No checkout URL received from server');
-      }
+      // Show success state
+      setIsSuccess(true);
+      
+      // Reset form after delay
+      setTimeout(() => {
+        setIsOpen(false);
+        setIsSuccess(false);
+        setFormData({ name: "", email: "", phone: "", businessType: "" });
+      }, 3000);
+      
     } catch (error) {
-      console.error('Error creating checkout session:', error);
-      setSubmitError(error instanceof Error ? error.message : 'Failed to start trial');
+      console.error('Error submitting lead:', error);
+      setSubmitError(error instanceof Error ? error.message : 'Failed to submit information');
     } finally {
       setIsSubmitting(false);
     }
@@ -74,12 +66,34 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
     if (open) {
-      trackFormStart('trial_popup');
-    } else if (!isSubmitting && formData.name) {
+      trackFormStart('lead_capture');
+      setIsSuccess(false);
+    } else if (!isSubmitting && formData.name && !isSuccess) {
       // Track abandonment if form was started but not completed
-      trackFormAbandonment('trial_popup', 'dialog_close');
+      trackFormAbandonment('lead_capture', 'dialog_close');
     }
   };
+
+  if (isSuccess) {
+    return (
+      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+        <DialogTrigger asChild>
+          {children}
+        </DialogTrigger>
+        <DialogContent className="w-full max-w-sm sm:max-w-lg max-h-[95vh] overflow-y-auto m-2 rounded-lg">
+          <div className="text-center space-y-6 py-8">
+            <CheckCircle className="h-16 w-16 text-success mx-auto" />
+            <div>
+              <h3 className="text-xl font-bold text-foreground mb-2">Thank You!</h3>
+              <p className="text-muted-foreground">
+                We've received your information and will be in touch soon to discuss how we can help your business grow.
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -89,18 +103,18 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
       <DialogContent className="w-full max-w-sm sm:max-w-lg md:max-w-xl max-h-[95vh] overflow-y-auto m-2 rounded-lg">
         <DialogHeader>
           <div className="text-center mb-3">
-            <Badge variant="secondary" className="bg-success/10 text-success border-success/20 mb-2 text-xs">
-              <Clock className="h-3 w-3 mr-1" />
-              <span className="hidden sm:inline">Free Trial + Lock £97 Rate Before July 31st</span>
-              <span className="sm:hidden">Free Trial + £97 Rate Lock</span>
+            <Badge variant="secondary" className="bg-brand-orange/10 text-brand-orange border-brand-orange/20 mb-2 text-xs">
+              <Mail className="h-3 w-3 mr-1" />
+              <span className="hidden sm:inline">Get Your Free Business Analysis</span>
+              <span className="sm:hidden">Free Business Analysis</span>
             </Badge>
             <DialogTitle className="text-lg sm:text-xl font-bold text-foreground">
-              <span className="hidden sm:inline">Start Your 14-Day Free Trial & Lock Your Rate</span>
-              <span className="sm:hidden">Start Free Trial & Lock Rate</span>
+              <span className="hidden sm:inline">Ready to Dominate Your Local Market?</span>
+              <span className="sm:hidden">Ready to Grow Your Business?</span>
             </DialogTitle>
             <p className="text-muted-foreground mt-2 text-xs sm:text-sm">
-              <span className="hidden sm:inline">Try our system risk-free for 14 days, then pay just £97/month locked forever (normally £247/month)</span>
-              <span className="sm:hidden">14 days free, then £97/month locked forever</span>
+              <span className="hidden sm:inline">Get a personalized consultation and see how we can help you attract more customers</span>
+              <span className="sm:hidden">Get personalized recommendations for your business</span>
             </p>
           </div>
         </DialogHeader>
@@ -108,11 +122,11 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
         <div className="space-y-2 mb-4">
           <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
             <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-success flex-shrink-0" />
-            <span className="text-xs">14 days free + £97/month locked rate for life</span>
+            <span className="text-xs">Free consultation with local marketing experts</span>
           </div>
-          <div className="flex items-center gap-2 p-2 bg-brand-orange/10 rounded-lg border border-brand-orange/20">
-            <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-brand-orange flex-shrink-0" />
-            <span className="text-xs font-medium">Rate lock expires July 31st - secure yours now!</span>
+          <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
+            <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-success flex-shrink-0" />
+            <span className="text-xs">Customized growth strategy for your trade</span>
           </div>
         </div>
 
@@ -171,7 +185,9 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
                 <SelectItem value="electrician">Electrician</SelectItem>
                 <SelectItem value="heating">Heating Engineer</SelectItem>
                 <SelectItem value="builder">Builder</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
+                <SelectItem value="landscaper">Landscaper</SelectItem>
+                <SelectItem value="cleaner">Cleaning Service</SelectItem>
+                <SelectItem value="other">Other Trade</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -188,17 +204,17 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
             disabled={isSubmitting}
             className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground disabled:opacity-50 touch-target font-semibold"
           >
-            {isSubmitting ? 'Setting up your trial...' : (
+            {isSubmitting ? 'Submitting...' : (
               <>
-                <span className="hidden sm:inline">Start Free Trial & Lock £97 Rate</span>
-                <span className="sm:hidden">Start Trial & Lock £97</span>
+                <Phone className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Request Free Consultation</span>
+                <span className="sm:hidden">Get Free Consultation</span>
               </>
             )}
           </Button>
 
           <p className="text-xs text-center text-muted-foreground leading-relaxed">
-            14 days free, then £97/month locked forever. Cancel anytime during trial.
-            <br />Rate lock expires July 31st (normally £247/month)
+            We'll contact you within 24 hours to discuss your business goals and how we can help you grow.
           </p>
         </form>
       </DialogContent>

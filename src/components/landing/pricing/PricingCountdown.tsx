@@ -1,64 +1,38 @@
-import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
-
-interface TimeLeft {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
+import { Clock, Users } from "lucide-react";
 
 export const PricingCountdown = () => {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  useEffect(() => {
-    const targetDate = new Date('2025-07-31T23:59:59').getTime();
-
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000)
-        });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <div className="flex justify-center mb-12">
-      <Card className="p-6 bg-gradient-to-r from-destructive/10 to-warning/10 border-destructive/20 animate-pulse-glow">
-        <div className="text-center">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Offer Expires In:</h3>
-          <div className="grid grid-cols-4 gap-4 text-center">
-            <div className="bg-destructive text-destructive-foreground rounded-lg p-3 animate-bounce-subtle">
-              <div className="text-2xl font-bold">{timeLeft.days}</div>
-              <div className="text-sm">Days</div>
+      <Card className="p-6 bg-gradient-to-r from-brand-orange/10 to-primary/10 border-brand-orange/20">
+        <div className="text-center space-y-4">
+          <div className="flex items-center justify-center gap-2 text-brand-orange">
+            <Clock className="h-6 w-6" />
+            <h3 className="text-lg font-semibold">Limited Consultation Spots Available</h3>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-6 text-center">
+            <div className="bg-background/50 rounded-lg p-4">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Users className="h-5 w-5 text-primary" />
+                <span className="text-sm font-medium text-muted-foreground">This Week</span>
+              </div>
+              <div className="text-2xl font-bold text-primary">3 Spots</div>
+              <div className="text-sm text-muted-foreground">Remaining</div>
             </div>
-            <div className="bg-destructive text-destructive-foreground rounded-lg p-3 animate-bounce-subtle" style={{ animationDelay: '0.1s' }}>
-              <div className="text-2xl font-bold">{timeLeft.hours}</div>
-              <div className="text-sm">Hours</div>
-            </div>
-            <div className="bg-destructive text-destructive-foreground rounded-lg p-3 animate-bounce-subtle" style={{ animationDelay: '0.2s' }}>
-              <div className="text-2xl font-bold">{timeLeft.minutes}</div>
-              <div className="text-sm">Minutes</div>
-            </div>
-            <div className="bg-destructive text-destructive-foreground rounded-lg p-3 animate-bounce-subtle" style={{ animationDelay: '0.3s' }}>
-              <div className="text-2xl font-bold">{timeLeft.seconds}</div>
-              <div className="text-sm">Seconds</div>
+            <div className="bg-background/50 rounded-lg p-4">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Clock className="h-5 w-5 text-success" />
+                <span className="text-sm font-medium text-muted-foreground">Response Time</span>
+              </div>
+              <div className="text-2xl font-bold text-success">24hrs</div>
+              <div className="text-sm text-muted-foreground">Or Less</div>
             </div>
           </div>
+          
+          <p className="text-sm text-muted-foreground">
+            Book your free consultation now to secure your spot this week
+          </p>
         </div>
       </Card>
     </div>
