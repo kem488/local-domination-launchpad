@@ -143,9 +143,15 @@ serve(async (req) => {
     }
 
     if (onboardingError) {
-      logStep("Warning: Could not create onboarding record", { error: onboardingError.message });
+      logStep("ERROR: Could not create onboarding record", { error: onboardingError.message });
+      throw new Error(`Failed to create trial record: ${onboardingError.message}`);
     } else {
-      logStep("Client onboarding record created/updated");
+      logStep("Client onboarding record created/updated with trial", { 
+        userId, 
+        trialActive: true, 
+        trialExpiresAt: trialExpiresAt.toISOString(),
+        paymentStatus: 'trial_active'
+      });
     }
 
     // Create checkout session with 14-day trial + locked rate

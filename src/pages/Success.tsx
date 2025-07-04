@@ -51,10 +51,7 @@ export const Success = () => {
               description: "Welcome to your trial. Let's get you set up.",
               duration: 5000
             });
-            // Small delay to let the toast show, then redirect
-            setTimeout(() => {
-              navigate('/onboarding');
-            }, 2000);
+            // Don't auto-redirect, let user click the button when ready
           }
         } catch (error) {
           console.error('Auto-login error:', error);

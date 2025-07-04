@@ -97,8 +97,11 @@ export const Auth = () => {
     if (error) {
       let errorMessage = error.message;
       
-      // Provide more user-friendly error messages
-      if (error.message.includes('User already registered')) {
+      // Provide more user-friendly error messages for various Supabase error formats
+      if (error.message.includes('User already registered') || 
+          error.message.includes('already been taken') ||
+          error.message.includes('already exists') ||
+          error.message.includes('email_exists')) {
         errorMessage = "An account with this email already exists. Please sign in instead.";
       } else if (error.message.includes('Invalid email')) {
         errorMessage = "Please enter a valid email address.";

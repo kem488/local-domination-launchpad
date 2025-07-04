@@ -96,6 +96,12 @@ export const PaymentProtectedRoute = ({ children }: PaymentProtectedRouteProps) 
               {trialStatus?.message || 'You need an active trial or subscription to access this area.'}
             </p>
             
+            {/* Debug info for development */}
+            <div className="text-xs text-muted-foreground bg-muted p-2 rounded mt-2">
+              <strong>Debug:</strong> Status: {trialStatus?.paymentStatus}, Trial: {trialStatus?.trialActive ? 'Yes' : 'No'}
+              {trialStatus?.trialExpiresAt && `, Expires: ${new Date(trialStatus.trialExpiresAt).toLocaleDateString()}`}
+            </div>
+            
             {trialStatus?.reason === 'trial_expired' && (
               <Badge variant="outline" className="text-warning border-warning">
                 <AlertTriangle className="h-4 w-4 mr-1" />
