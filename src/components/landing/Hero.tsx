@@ -26,10 +26,10 @@ export const Hero = () => {
             </div>
             <div className="flex gap-4 flex-col">
               <h1 className="text-5xl md:text-7xl max-w-lg tracking-tighter text-left font-regular">
-                Add 27+ new 5-star reviews, hit a 4.6-star rating and appear in Google's Top-3 Map Pack for your main service keyword <strong>within 90 days — or we work free until you do.</strong>
+                We help UK trades get to the top 3 spots of Google in their area in 90 days using AI
               </h1>
               <p className="text-xl leading-relaxed tracking-tight text-muted-foreground max-w-md text-left">
-                We help UK trades businesses get to the top 3 of Google in their area using AI to optimize local SEO and manage reviews. Our 6-phase methodology transforms you from "Google Who?" to the go-to business customers find first.
+                Add 27+ new 5-star reviews, hit a 4.6-star rating and appear in Google's Top-3 Map Pack for your main service keyword <strong>within 90 days — or we work free until you do.</strong> Our 6-phase methodology transforms you from "Google Who?" to the go-to business customers find first.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
