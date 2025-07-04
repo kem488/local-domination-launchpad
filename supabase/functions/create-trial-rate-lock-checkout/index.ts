@@ -44,7 +44,7 @@ serve(async (req) => {
     // Generate a temporary password for the user
     const tempPassword = crypto.randomUUID();
     
-    // Create user account in Supabase
+    // Create user account in Supabase or find existing user
     let userId;
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email,
@@ -59,20 +59,40 @@ serve(async (req) => {
     if (authError) {
       // Check if user already exists
       if (authError.message.includes('already registered') || authError.message.includes('already been taken')) {
-        logStep("User already exists, fetching existing user", { email });
-        const { data: existingUser, error: fetchError } = await supabase.auth.admin.listUsers();
-        if (!fetchError && existingUser?.users) {
-          const existingUserData = existingUser.users.find(u => u.email === email);
-          if (existingUserData) {
-            userId = existingUserData.id;
+        logStep("User already exists, finding existing user", { email });
+        
+        // More efficient user lookup by email using getUserByEmail
+        try {
+          const { data: existingUser, error: fetchError } = await supabase.auth.admin.getUserByEmail(email);
+          if (fetchError) {
+            logStep("Error fetching existing user", { error: fetchError.message });
+            throw new Error(`Could not fetch existing user: ${fetchError.message}`);
+          }
+          
+          if (existingUser?.user) {
+            userId = existingUser.user.id;
             logStep("Found existing user", { userId });
           } else {
-            throw new Error("Could not find existing user");
+            throw new Error("User exists but could not be found");
           }
-        } else {
-          throw new Error(`Authentication error: ${authError.message}`);
+        } catch (lookupError) {
+          logStep("Fallback: using email to search for user", { email });
+          // Fallback to listing users if getUserByEmail fails
+          const { data: userList, error: listError } = await supabase.auth.admin.listUsers();
+          if (!listError && userList?.users) {
+            const existingUserData = userList.users.find(u => u.email === email);
+            if (existingUserData) {
+              userId = existingUserData.id;
+              logStep("Found existing user via list", { userId });
+            } else {
+              throw new Error("User exists but could not be located");
+            }
+          } else {
+            throw new Error(`Authentication error: ${authError.message}`);
+          }
         }
       } else {
+        logStep("User creation failed with non-duplicate error", { error: authError.message });
         throw new Error(`Failed to create user: ${authError.message}`);
       }
     } else {

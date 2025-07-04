@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Star, TrendingUp, Calendar, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Success = () => {
   const [searchParams] = useSearchParams();
@@ -46,9 +47,24 @@ export const Success = () => {
               duration: 8000
             });
           } else {
+            // Send welcome email after successful login
+            try {
+              await supabase.functions.invoke('send-gbp-email', {
+                body: {
+                  type: 'welcome',
+                  recipientEmail: email,
+                  businessName: 'Your Business' // This could be improved by getting actual business name
+                }
+              });
+              console.log('Welcome email sent successfully');
+            } catch (emailError) {
+              console.error('Failed to send welcome email:', emailError);
+              // Don't block the user flow if email fails
+            }
+
             toast({
               title: "Successfully signed in!",
-              description: "Welcome to your trial. Let's get you set up.",
+              description: "Welcome to your trial. Check your email for setup instructions.",
               duration: 5000
             });
             // Don't auto-redirect, let user click the button when ready
