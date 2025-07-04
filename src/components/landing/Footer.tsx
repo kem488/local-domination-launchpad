@@ -29,10 +29,10 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-background/80">
-              <li><a href="/privacy" className="hover:text-background">Privacy Policy</a></li>
-              <li><a href="/terms" className="hover:text-background">Terms of Service</a></li>
-              <li><a href="/refund" className="hover:text-background">Refund Policy</a></li>
-              <li><a href="/contact" className="hover:text-background">Contact</a></li>
+              <li><a href="https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867f4a963f9ec35725caa45.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-background">Privacy Policy</a></li>
+              <li><a href="https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867f4a94f6d5ccd1e40c007.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-background">Terms of Service</a></li>
+              <li><a href="https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867f4a92c6d3de506ed0642.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-background">Refund Policy</a></li>
+              <li><a href="mailto:support@syngularitylabs.com" className="hover:text-background">Contact</a></li>
             </ul>
           </div>
         </div>
