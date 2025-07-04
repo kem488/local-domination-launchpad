@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { TrialPopup } from "./TrialPopup";
+import { MobileMenu } from "@/components/ui/mobile-menu";
 import { useScrollPosition, smoothScrollTo } from "@/hooks/useScrollPosition";
 import { useAuth } from "@/contexts/AuthContext";
 import { LogOut, User } from "lucide-react";
@@ -23,59 +24,60 @@ export const Header = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-sm py-2' 
-        : 'bg-background/95 backdrop-blur-sm border-b border-border py-4'
+        ? 'bg-background/98 backdrop-blur-md border-b border-border shadow-sm py-1' 
+        : 'bg-background/95 backdrop-blur-sm border-b border-border py-2'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <h1 className="text-2xl font-black bg-gradient-to-r from-brand-blue via-primary to-brand-orange bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-pointer tracking-tight">
-                SyngularityLabs.com
-              </h1>
-            </div>
+      <div className="max-w-7xl mx-auto mobile-padding">
+        <div className="flex items-center justify-between min-h-[60px]">
+          {/* Logo */}
+          <div className="flex items-center flex-1">
+            <h1 className={`font-black bg-gradient-to-r from-brand-blue via-primary to-brand-orange bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-pointer tracking-tight ${
+              isScrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'
+            }`}>
+              SyngularityLabs
+            </h1>
           </div>
           
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <button 
-                onClick={() => handleNavClick('how-it-works')}
-                className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                How It Works
-              </button>
-              <button 
-                onClick={() => handleNavClick('pricing')}
-                className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Pricing
-              </button>
-              <button 
-                onClick={() => handleNavClick('faq')}
-                className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                FAQ
-              </button>
-            </div>
-          </div>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            <button 
+              onClick={() => handleNavClick('how-it-works')}
+              className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors touch-target"
+            >
+              How It Works
+            </button>
+            <button 
+              onClick={() => handleNavClick('pricing')}
+              className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors touch-target"
+            >
+              Pricing
+            </button>
+            <button 
+              onClick={() => handleNavClick('faq')}
+              className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors touch-target"
+            >
+              FAQ
+            </button>
+          </nav>
           
-          <div className="flex items-center space-x-4">
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <>
                 <Button 
                   variant="outline"
-                  size={isScrolled ? "sm" : "sm"}
+                  size="sm"
                   onClick={() => navigate('/dashboard')}
-                  className={`hidden sm:inline-flex btn-hover-effect ${isScrolled ? 'text-xs' : ''}`}
+                  className="btn-hover-effect touch-target"
                 >
                   <User className="h-4 w-4 mr-1" />
                   Dashboard
                 </Button>
                 <Button 
                   variant="ghost"
-                  size={isScrolled ? "sm" : "sm"}
+                  size="sm"
                   onClick={handleSignOut}
-                  className={`btn-hover-effect ${isScrolled ? 'text-xs px-3' : ''}`}
+                  className="btn-hover-effect touch-target"
                 >
                   <LogOut className="h-4 w-4 mr-1" />
                   Sign Out
@@ -85,22 +87,35 @@ export const Header = () => {
               <>
                 <Button 
                   variant="outline"
-                  size={isScrolled ? "sm" : "sm"}
+                  size="sm"
                   onClick={() => navigate('/auth')}
-                  className={`hidden sm:inline-flex btn-hover-effect ${isScrolled ? 'text-xs' : ''}`}
+                  className="btn-hover-effect touch-target"
                 >
                   Sign In
                 </Button>
                 <TrialPopup>
                   <Button 
-                    size={isScrolled ? "sm" : "sm"}
-                    className={`bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground btn-hover-effect ${isScrolled ? 'text-xs px-3' : ''}`}
+                    size="sm"
+                    className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground btn-hover-effect touch-target px-4"
                   >
-                    {isScrolled ? 'Lock £97' : 'Lock £97/Month'}
+                    Lock £97
                   </Button>
                 </TrialPopup>
               </>
             )}
+          </div>
+
+          {/* Mobile Actions */}
+          <div className="flex md:hidden items-center space-x-2">
+            <TrialPopup>
+              <Button
+                size="sm"
+                className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground touch-target px-3 text-sm"
+              >
+                £97
+              </Button>
+            </TrialPopup>
+            <MobileMenu />
           </div>
         </div>
       </div>

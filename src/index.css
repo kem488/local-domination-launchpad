@@ -69,6 +69,42 @@ All colors MUST be HSL.
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+/* Mobile-first typography */
+@media (max-width: 768px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+/* Touch targets and mobile optimizations */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .mobile-padding {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-padding {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 /* Enhanced button hover effects */

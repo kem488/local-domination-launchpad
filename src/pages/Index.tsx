@@ -12,6 +12,7 @@ import { LiveNotifications } from "@/components/ui/live-notifications";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ExitIntentPopup } from "@/components/popups/ExitIntentPopup";
 import { SocialProofPopups } from "@/components/optimization/SocialProofPopups";
+import { StickyMobileCTA } from "@/components/ui/sticky-mobile-cta";
 
 const Index = () => {
   return (
@@ -38,6 +39,7 @@ const Index = () => {
       <ChatWidget />
       <ExitIntentPopup />
       <SocialProofPopups />
+      <StickyMobileCTA />
     </div>
   );
 };
