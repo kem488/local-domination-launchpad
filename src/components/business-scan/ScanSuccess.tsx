@@ -1,15 +1,90 @@
-import { CheckCircle } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { CheckCircle, ArrowRight, Gift, Sparkles } from "lucide-react";
 
 export const ScanSuccess = () => {
   return (
-    <div className="text-center py-12">
-      <CheckCircle className="h-16 w-16 text-success mx-auto mb-4" />
-      <h3 className="text-2xl font-bold text-foreground mb-4">
-        Report Sent Successfully!
-      </h3>
-      <p className="text-muted-foreground mb-6">
-        Check your email for your detailed business analysis and personalized recommendations.
-      </p>
+    <div className="text-center space-y-8 py-8">
+      <div className="flex items-center justify-center mb-6">
+        <div className="relative">
+          <CheckCircle className="h-16 w-16 text-success" />
+          <Sparkles className="h-6 w-6 text-brand-orange absolute -top-1 -right-1" />
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-3xl font-bold text-foreground">
+          🎉 Success! Your Report is Ready
+        </h3>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          Check your email for your detailed business analysis report with AI-powered recommendations 
+          and your free trial access to our automation system.
+        </p>
+      </div>
+
+      <Card className="p-8 bg-gradient-to-r from-success/10 to-primary/10 border-success/20 max-w-2xl mx-auto">
+        <h4 className="text-xl font-semibold text-foreground mb-4">
+          What's Next?
+        </h4>
+        <div className="space-y-3 text-left">
+          <div className="flex items-start gap-3">
+            <div className="w-6 h-6 bg-success rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <CheckCircle className="h-3 w-3 text-white" />
+            </div>
+            <div>
+              <p className="font-medium text-foreground">Check Your Email</p>
+              <p className="text-sm text-muted-foreground">Your detailed report is waiting in your inbox (including spam/junk)</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span className="text-xs text-white font-bold">2</span>
+            </div>
+            <div>
+              <p className="font-medium text-foreground">Review Your Action Plan</p>
+              <p className="text-sm text-muted-foreground">See exactly what needs to be improved and how it impacts your revenue</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <div className="w-6 h-6 bg-brand-orange rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span className="text-xs text-white font-bold">3</span>
+            </div>
+            <div>
+              <p className="font-medium text-foreground">Start Your Free Trial</p>
+              <p className="text-sm text-muted-foreground">Let our system implement the improvements automatically while you focus on your work</p>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      <div className="space-y-4">
+        <Button
+          onClick={() => {
+            // Check if we have scan context for trial
+            const scanContext = sessionStorage.getItem('scanContext');
+            if (scanContext) {
+              window.location.href = '/auth?mode=trial';
+            } else {
+              window.location.href = '#pricing';
+            }
+          }}
+          size="lg"
+          className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
+        >
+          Start My Free Trial Now
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+        <p className="text-sm text-muted-foreground">
+          14 days free • £97/month locked rate (expires July 31st) • Cancel anytime
+        </p>
+      </div>
+
+      <div className="pt-6 border-t border-border">
+        <p className="text-xs text-muted-foreground">
+          Questions? Our team is here to help - check your email for direct contact details
+        </p>
+      </div>
     </div>
   );
 };

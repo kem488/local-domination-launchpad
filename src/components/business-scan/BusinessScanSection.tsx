@@ -35,13 +35,10 @@ export const BusinessScanSection = () => {
     scanData,
     progress,
     handleScanStart,
-    handleLeadCaptured
+    handleLeadCaptured,
+    handleViewFullReport
   } = useBusinessScan();
 
-  // Unused function - kept for compatibility but no longer used
-  const handleViewFullReport = () => {
-    console.log('handleViewFullReport called - deprecated, ScanResults handles trial signup directly');
-  };
 
   return (
     <section id="business-scan" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/20">
@@ -63,13 +60,6 @@ export const BusinessScanSection = () => {
                   <ScanProgress progress={progress} />
                 )}
                 
-                {scanState === 'trial-signup' && scanData && (
-                  <LeadGate 
-                    scanData={scanData}
-                    onLeadCaptured={handleLeadCaptured}
-                  />
-                )}
-                
                 {scanState === 'results' && scanData && (
                   <ScanResults 
                     scanData={scanData} 
@@ -84,7 +74,7 @@ export const BusinessScanSection = () => {
                   />
                 )}
                 
-                {scanState === 'report' && (
+                {scanState === 'success' && (
                   <ScanSuccess />
                 )}
               </Card>

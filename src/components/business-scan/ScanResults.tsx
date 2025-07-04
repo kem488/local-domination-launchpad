@@ -150,35 +150,18 @@ export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) =>
           Want our team to implement these improvements?
         </h4>
         <p className="text-muted-foreground">
-          Get your complete business transformation with our done-for-you service
+          Get your detailed report with AI-powered recommendations and actionable insights
         </p>
         <Button
-          onClick={() => {
-            // Create trial with scan data context
-            const trialData = {
-              name: '', // Will be filled in checkout form
-              email: '', // Will be filled in checkout form
-              phone: '', // Will be filled in checkout form
-              businessType: 'other', // Default, can be updated in checkout
-              scanId: scanData.scanId,
-              businessName: placeDetails.name,
-              businessLocation: placeDetails.address
-            };
-            
-            // Store scan context for checkout
-            sessionStorage.setItem('scanContext', JSON.stringify(trialData));
-            
-            // Redirect directly to stripe checkout
-            window.location.href = '/auth?mode=trial';
-          }}
+          onClick={onViewFullReport}
           size="lg"
           className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
         >
-          Start My Free Trial
+          Get My Free Detailed Report
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
         <div className="text-xs text-muted-foreground">
-          Full implementation • Competitor analysis • Guaranteed results in 90 days
+          100% Free • No Credit Card Required • Instant Access
         </div>
       </div>
     </div>

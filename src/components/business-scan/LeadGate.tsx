@@ -40,6 +40,17 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
       const result = await response.json();
       
       if (result.success) {
+        // Store scan context and lead info for trial signup
+        const trialContext = {
+          scanId: scanData.scanId,
+          businessName: scanData.placeDetails.name,
+          businessLocation: scanData.placeDetails.address,
+          email: email.trim(),
+          phone: phone.trim() || null,
+          postcode: postcode.trim() || null
+        };
+        
+        sessionStorage.setItem('scanContext', JSON.stringify(trialContext));
         onLeadCaptured();
       } else {
         throw new Error(result.error || 'Failed to capture lead');
@@ -67,23 +78,23 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
 
       {/* What's Included */}
       <Card className="p-6 bg-gradient-to-r from-brand-blue-light to-background border-brand-blue/10 max-w-md mx-auto">
-        <h4 className="font-semibold text-foreground mb-4">Your report includes:</h4>
+        <h4 className="font-semibold text-foreground mb-4">Your detailed report includes:</h4>
         <div className="space-y-2 text-sm text-left">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-brand-orange rounded-full"></div>
-            <span>Detailed competitor analysis</span>
+            <span>Complete competitor analysis with ranking data</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-brand-orange rounded-full"></div>
-            <span>Step-by-step action plan</span>
+            <span>AI-powered step-by-step action plan</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-brand-orange rounded-full"></div>
-            <span>Revenue impact projections</span>
+            <span>Revenue impact projections & ROI calculations</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-brand-orange rounded-full"></div>
-            <span>AI-powered recommendations</span>
+            <span>Free trial access to our automation system</span>
           </div>
         </div>
       </Card>
@@ -156,7 +167,7 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
       <div className="text-xs text-muted-foreground space-y-1">
         <div>✅ 100% Free • No Credit Card Required</div>
         <div>🔒 Your information is secure and never shared</div>
-        <div>📧 Report delivered instantly to your inbox</div>
+        <div>📧 Report + Free Trial Access delivered instantly</div>
       </div>
     </div>
   );

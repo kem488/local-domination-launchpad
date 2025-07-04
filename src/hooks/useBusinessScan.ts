@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ScanData } from "../components/business-scan/BusinessScanSection";
 
-type ScanState = 'form' | 'scanning' | 'results' | 'trial-signup' | 'leadgate' | 'report';
+type ScanState = 'form' | 'scanning' | 'results' | 'leadgate' | 'success';
 
 // Enhanced error handling with retry logic
 const withRetry = async <T>(
@@ -134,7 +134,11 @@ export const useBusinessScan = () => {
   };
 
   const handleLeadCaptured = () => {
-    setScanState('report');
+    setScanState('success');
+  };
+
+  const handleViewFullReport = () => {
+    setScanState('leadgate');
   };
 
   return {
@@ -144,6 +148,7 @@ export const useBusinessScan = () => {
     error,
     handleScanStart,
     handleLeadCaptured,
+    handleViewFullReport,
     setScanState
   };
 };
