@@ -63,10 +63,9 @@ export const useFormValidation = () => {
   const updateField = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when user starts typing
-    if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
-    }
+    // Progressive validation: validate on blur for better UX
+    const error = validateField(name, value);
+    setErrors(prev => ({ ...prev, [name]: error }));
   };
 
   const submitForm = async (callback?: (data: FormData) => Promise<void>) => {

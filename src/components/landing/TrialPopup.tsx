@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useConversionTracking } from "@/hooks/useConversionTracking";
 
 interface TrialPopupProps {
   children: React.ReactNode;
@@ -19,9 +20,10 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
     phone: "",
     businessType: ""
   });
-
+  const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const { trackFormStart, trackFormCompletion, trackFormAbandonment } = useConversionTracking();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,6 +54,8 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
       
       if (data?.url) {
         console.log('Redirecting to Stripe:', data.url);
+        // Track successful form completion
+        trackFormCompletion('trial_popup', formData);
         // Redirect to Stripe checkout
         window.location.href = data.url;
       } else {
@@ -66,8 +70,19 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
     }
   };
 
+  // Track form start when dialog opens
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (open) {
+      trackFormStart('trial_popup');
+    } else if (!isSubmitting && formData.name) {
+      // Track abandonment if form was started but not completed
+      trackFormAbandonment('trial_popup', 'dialog_close');
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
@@ -155,13 +170,7 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
                 <SelectItem value="plumber">Plumber</SelectItem>
                 <SelectItem value="electrician">Electrician</SelectItem>
                 <SelectItem value="heating">Heating Engineer</SelectItem>
-                <SelectItem value="roofer">Roofer</SelectItem>
                 <SelectItem value="builder">Builder</SelectItem>
-                <SelectItem value="landscaper">Landscaper</SelectItem>
-                <SelectItem value="cleaner">Cleaning Service</SelectItem>
-                <SelectItem value="locksmith">Locksmith</SelectItem>
-                <SelectItem value="pest">Pest Control</SelectItem>
-                <SelectItem value="handyman">Handyman</SelectItem>
                 <SelectItem value="other">Other</SelectItem>
               </SelectContent>
             </Select>

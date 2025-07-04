@@ -9,8 +9,8 @@ export const StickyMobileCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Show after scrolling 300px and hide near footer
-    const showThreshold = 300;
+    // Show after scrolling 100px for faster engagement
+    const showThreshold = 100;
     const hideThreshold = document.body.scrollHeight - window.innerHeight - 500;
     
     setIsVisible(scrollPosition > showThreshold && scrollPosition < hideThreshold);

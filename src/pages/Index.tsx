@@ -13,8 +13,12 @@ import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ExitIntentPopup } from "@/components/popups/ExitIntentPopup";
 import { SocialProofPopups } from "@/components/optimization/SocialProofPopups";
 import { StickyMobileCTA } from "@/components/ui/sticky-mobile-cta";
+import { useConversionTracking } from "@/hooks/useConversionTracking";
 
 const Index = () => {
+  // Initialize conversion tracking
+  useConversionTracking();
+  
   return (
     <div className="min-h-screen bg-background">
       <Header />

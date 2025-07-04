@@ -239,13 +239,7 @@ export const LeadCaptureForm = ({ children, variant = "trial" }: LeadCaptureForm
                           <SelectItem value="plumber">Plumber</SelectItem>
                           <SelectItem value="electrician">Electrician</SelectItem>
                           <SelectItem value="heating">Heating Engineer</SelectItem>
-                          <SelectItem value="roofer">Roofer</SelectItem>
                           <SelectItem value="builder">Builder</SelectItem>
-                          <SelectItem value="landscaper">Landscaper</SelectItem>
-                          <SelectItem value="cleaner">Cleaning Service</SelectItem>
-                          <SelectItem value="locksmith">Locksmith</SelectItem>
-                          <SelectItem value="pest">Pest Control</SelectItem>
-                          <SelectItem value="handyman">Handyman</SelectItem>
                           <SelectItem value="other">Other</SelectItem>
                         </SelectContent>
                       </Select>
