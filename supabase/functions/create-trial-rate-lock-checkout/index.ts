@@ -102,60 +102,33 @@ serve(async (req) => {
       logStep("New customer created", { customerId });
     }
 
-    // Create or update client_onboarding record with trial status
+    // Create or update client_onboarding record with trial status using UPSERT
     const trialExpiresAt = new Date();
     trialExpiresAt.setDate(trialExpiresAt.getDate() + 14); // 14 days from now
 
-    // First check if record exists
-    const { data: existingRecord } = await supabase
+    // Use UPSERT to handle both new and existing records safely
+    const { error: onboardingError } = await supabase
       .from('client_onboarding')
-      .select('id')
-      .eq('user_id', userId)
-      .single();
-
-    let onboardingError = null;
+      .upsert({
+        user_id: userId,
+        business_name: businessName || name,
+        owner_email: email,
+        phone,
+        industry: businessType,
+        onboarding_step: 1,
+        status: 'trial_started',
+        address: businessLocation || null,
+        payment_status: 'trial_active',
+        stripe_customer_id: customerId,
+        trial_active: true,
+        trial_expires_at: trialExpiresAt.toISOString(),
+        updated_at: new Date().toISOString()
+      }, { 
+        onConflict: 'user_id',
+        ignoreDuplicates: false 
+      });
     
-    if (existingRecord) {
-      // Update existing record
-      const { error } = await supabase
-        .from('client_onboarding')
-        .update({
-          business_name: businessName || name,
-          owner_email: email,
-          phone,
-          industry: businessType,
-          status: 'trial_started',
-          address: businessLocation || null,
-          payment_status: 'trial_active',
-          stripe_customer_id: customerId,
-          trial_active: true,
-          trial_expires_at: trialExpiresAt.toISOString(),
-          updated_at: new Date().toISOString()
-        })
-        .eq('user_id', userId);
-      onboardingError = error;
-      logStep("Updated existing onboarding record", { userId });
-    } else {
-      // Insert new record
-      const { error } = await supabase
-        .from('client_onboarding')
-        .insert({
-          user_id: userId,
-          business_name: businessName || name,
-          owner_email: email,
-          phone,
-          industry: businessType,
-          onboarding_step: 1,
-          status: 'trial_started',
-          address: businessLocation || null,
-          payment_status: 'trial_active',
-          stripe_customer_id: customerId,
-          trial_active: true,
-          trial_expires_at: trialExpiresAt.toISOString()
-        });
-      onboardingError = error;
-      logStep("Created new onboarding record", { userId });
-    }
+    logStep("Upserted client onboarding record", { userId });
 
     // If scan context is available, link the scan to this user
     if (scanId) {
