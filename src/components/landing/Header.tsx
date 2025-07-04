@@ -2,23 +2,13 @@ import { Button } from "@/components/ui/button";
 import { TrialPopup } from "./TrialPopup";
 import { MobileMenu } from "@/components/ui/mobile-menu";
 import { useScrollPosition, smoothScrollTo } from "@/hooks/useScrollPosition";
-import { useAuth } from "@/contexts/AuthContext";
-import { LogOut, User } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const { scrollPosition } = useScrollPosition();
   const isScrolled = scrollPosition > 100;
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
 
   const handleNavClick = (sectionId: string) => {
     smoothScrollTo(sectionId);
-  };
-
-  const handleSignOut = async () => {
-    await signOut();
-    navigate('/');
   };
 
   return (
@@ -62,47 +52,14 @@ export const Header = () => {
           
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-3">
-            {user ? (
-              <>
-                <Button 
-                  variant="outline"
-                  size="sm"
-                  onClick={() => navigate('/dashboard')}
-                  className="btn-hover-effect touch-target"
-                >
-                  <User className="h-4 w-4 mr-1" />
-                  Dashboard
-                </Button>
-                <Button 
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleSignOut}
-                  className="btn-hover-effect touch-target"
-                >
-                  <LogOut className="h-4 w-4 mr-1" />
-                  Sign Out
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button 
-                  variant="outline"
-                  size="sm"
-                  onClick={() => navigate('/auth')}
-                  className="btn-hover-effect touch-target"
-                >
-                  Sign In
-                </Button>
-                <TrialPopup>
-                  <Button 
-                    size="sm"
-                    className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground btn-hover-effect touch-target px-4"
-                  >
-                    Lock £97
-                  </Button>
-                </TrialPopup>
-              </>
-            )}
+            <TrialPopup>
+              <Button 
+                size="sm"
+                className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground btn-hover-effect touch-target px-4"
+              >
+                Get Free Scan
+              </Button>
+            </TrialPopup>
           </div>
 
           {/* Mobile Actions */}
@@ -112,7 +69,7 @@ export const Header = () => {
                 size="sm"
                 className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground touch-target px-3 text-sm"
               >
-                £97
+                Scan
               </Button>
             </TrialPopup>
             <MobileMenu />

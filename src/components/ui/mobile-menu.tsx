@@ -1,25 +1,15 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, User, LogOut } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { smoothScrollTo } from "@/hooks/useScrollPosition";
 import { TrialPopup } from "@/components/landing/TrialPopup";
 
 export const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
 
   const handleNavClick = (sectionId: string) => {
     smoothScrollTo(sectionId);
-    setIsOpen(false);
-  };
-
-  const handleSignOut = async () => {
-    await signOut();
-    navigate('/');
     setIsOpen(false);
   };
 
@@ -73,44 +63,6 @@ export const MobileMenu = () => {
                 FAQ
               </button>
             </div>
-
-            {/* User Actions */}
-            <div className="border-t border-border p-4 space-y-3">
-              {user ? (
-                <>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      navigate('/dashboard');
-                      setIsOpen(false);
-                    }}
-                    className="w-full justify-start touch-target"
-                  >
-                    <User className="h-4 w-4 mr-2" />
-                    Dashboard
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    onClick={handleSignOut}
-                    className="w-full justify-start touch-target"
-                  >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
-                  </Button>
-                </>
-              ) : (
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    navigate('/auth');
-                    setIsOpen(false);
-                  }}
-                  className="w-full touch-target"
-                >
-                  Sign In
-                </Button>
-              )}
-            </div>
           </nav>
 
           {/* CTA Button */}
@@ -121,7 +73,7 @@ export const MobileMenu = () => {
                 className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground touch-target"
                 onClick={() => setIsOpen(false)}
               >
-                Lock £97/Month Rate
+                Get Free Business Scan
               </Button>
             </TrialPopup>
           </div>
