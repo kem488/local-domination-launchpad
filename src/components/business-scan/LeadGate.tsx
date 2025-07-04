@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { ScanData } from "./BusinessScanSection";
-import { Mail, Phone, MapPin, Gift, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, FileText, ArrowRight } from "lucide-react";
 
 interface LeadGateProps {
   scanData: ScanData;
@@ -40,17 +40,6 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
       const result = await response.json();
       
       if (result.success) {
-        // Store scan context and lead info for trial signup
-        const trialContext = {
-          scanId: scanData.scanId,
-          businessName: scanData.placeDetails.name,
-          businessLocation: scanData.placeDetails.address,
-          email: email.trim(),
-          phone: phone.trim() || null,
-          postcode: postcode.trim() || null
-        };
-        
-        sessionStorage.setItem('scanContext', JSON.stringify(trialContext));
         onLeadCaptured();
       } else {
         throw new Error(result.error || 'Failed to capture lead');
@@ -66,7 +55,7 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
     <div className="text-center space-y-8">
       <div>
         <div className="flex items-center justify-center mb-4">
-          <Gift className="h-12 w-12 text-brand-orange" />
+          <FileText className="h-12 w-12 text-brand-orange" />
         </div>
         <h3 className="text-2xl font-bold text-foreground mb-4">
           Get Your Detailed Report
@@ -94,7 +83,7 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-brand-orange rounded-full"></div>
-            <span>Free trial access to our automation system</span>
+            <span>Custom recommendations for your trade</span>
           </div>
         </div>
       </Card>
@@ -167,7 +156,7 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
       <div className="text-xs text-muted-foreground space-y-1">
         <div>✅ 100% Free • No Credit Card Required</div>
         <div>🔒 Your information is secure and never shared</div>
-        <div>📧 Report + Free Trial Access delivered instantly</div>
+        <div>📧 Detailed report delivered instantly to your inbox</div>
       </div>
     </div>
   );

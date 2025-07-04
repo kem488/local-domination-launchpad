@@ -1,16 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, TrendingUp } from "lucide-react";
+import { CheckCircle, Users, MessageSquare, Phone } from "lucide-react";
 import { TrialPopup } from "./TrialPopup";
-import { LeadCaptureForm } from "./LeadCaptureForm";
 import { TrustSignals } from "../optimization/TrustSignals";
-import { CountdownTimer } from "../optimization/CountdownTimer";
 import { trackConversion } from "@/hooks/useABTesting";
 
 export const CTA = () => {
-  const deadlineDate = new Date('2025-07-31T23:59:59');
-
   const handleFinalCTA = (action: string) => {
     trackConversion('final_cta_click', 'cta_section', { action });
   };
@@ -18,26 +14,24 @@ export const CTA = () => {
   return (
     <section className="mobile-padding">
       <div className="max-w-4xl mx-auto text-center space-y-12">
-        {/* Urgency Header */}
+        {/* Header */}
         <div className="space-y-4">
-          <Badge variant="destructive" className="animate-pulse text-xs">
-            <Clock className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-            <span className="hidden sm:inline">Final Hours - Only 3 Spots Left!</span>
-            <span className="sm:hidden">Only 3 Spots Left!</span>
+          <Badge variant="secondary" className="bg-brand-orange/10 text-brand-orange border-brand-orange/20 text-xs">
+            <MessageSquare className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
+            <span className="hidden sm:inline">Ready to Transform Your Business?</span>
+            <span className="sm:hidden">Transform Your Business</span>
           </Badge>
-          <CountdownTimer targetDate={deadlineDate} className="text-center" />
         </div>
         
         {/* Main Heading */}
         <div className="space-y-6">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-            <span className="hidden sm:inline">Stop the Feast-or-Famine Cycle Forever</span>
-            <span className="sm:hidden">Stop the Feast-or-Famine Cycle</span>
+            <span className="hidden sm:inline">Join 200+ UK Tradespeople Already Growing</span>
+            <span className="sm:hidden">Join 200+ UK Tradespeople</span>
           </h2>
           
           <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Join 200+ UK tradespeople who've transformed from "Google Who?" to market leaders. 
-            Try free for 14 days, then lock your £97/month rate forever before July 31st.
+            Stop struggling with inconsistent leads. Get the professional tools and strategies that work for your trade.
           </p>
         </div>
 
@@ -45,15 +39,15 @@ export const CTA = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           <div className="flex items-center justify-center gap-2 md:gap-3 p-4 md:p-6 bg-background/50 rounded-lg border touch-target">
             <CheckCircle className="h-5 w-5 md:h-6 md:w-6 text-success flex-shrink-0" />
-            <span className="font-medium text-sm md:text-base">90-Day Guarantee</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 md:gap-3 p-4 md:p-6 bg-background/50 rounded-lg border touch-target">
-            <TrendingUp className="h-5 w-5 md:h-6 md:w-6 text-primary flex-shrink-0" />
             <span className="font-medium text-sm md:text-base">Proven Results</span>
           </div>
           <div className="flex items-center justify-center gap-2 md:gap-3 p-4 md:p-6 bg-background/50 rounded-lg border touch-target">
-            <Clock className="h-5 w-5 md:h-6 md:w-6 text-warning flex-shrink-0" />
-            <span className="font-medium text-sm md:text-base">Limited Time Only</span>
+            <Users className="h-5 w-5 md:h-6 md:w-6 text-primary flex-shrink-0" />
+            <span className="font-medium text-sm md:text-base">Expert Team</span>
+          </div>
+          <div className="flex items-center justify-center gap-2 md:gap-3 p-4 md:p-6 bg-background/50 rounded-lg border touch-target">
+            <Phone className="h-5 w-5 md:h-6 md:w-6 text-brand-orange flex-shrink-0" />
+            <span className="font-medium text-sm md:text-base">Free Consultation</span>
           </div>
         </div>
 
@@ -63,11 +57,12 @@ export const CTA = () => {
             <Button 
               size="lg" 
               className="w-full md:w-auto bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 md:px-12 py-4 text-lg md:text-xl btn-hover-effect touch-target font-semibold shadow-lg"
-              onClick={() => handleFinalCTA('trial_start')}
+              onClick={() => handleFinalCTA('consultation_request')}
               id="final-cta-primary"
             >
-              <span className="hidden sm:inline">Start Free Trial & Lock £97 Rate</span>
-              <span className="sm:hidden">Start Trial & Lock £97</span>
+              <MessageSquare className="h-5 w-5 mr-2" />
+              <span className="hidden sm:inline">Get Free Consultation</span>
+              <span className="sm:hidden">Get Consultation</span>
             </Button>
           </TrialPopup>
           
@@ -78,12 +73,12 @@ export const CTA = () => {
               size="lg"
               className="w-full md:w-auto px-6 md:px-8 py-3 text-base border-2 btn-hover-effect touch-target"
               onClick={() => {
-                handleFinalCTA('see_details');
-                document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                handleFinalCTA('business_scan');
+                document.getElementById('business-scan')?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
-              <span className="hidden sm:inline">See Full Details</span>
-              <span className="sm:hidden">See Details</span>
+              <span className="hidden sm:inline">Start Business Analysis</span>
+              <span className="sm:hidden">Business Analysis</span>
             </Button>
           </div>
         </div>
@@ -96,16 +91,16 @@ export const CTA = () => {
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 text-sm">
                 <div className="p-3 bg-muted/50 rounded-lg touch-target">
-                  <div className="font-semibold text-primary mb-1">1. Start Trial</div>
-                  <div className="text-muted-foreground">14 days completely free</div>
+                  <div className="font-semibold text-primary mb-1">1. Analysis</div>
+                  <div className="text-muted-foreground">Free business scan</div>
                 </div>
                 <div className="p-3 bg-muted/50 rounded-lg touch-target">
-                  <div className="font-semibold text-primary mb-1">2. Subscribe</div>
-                  <div className="text-muted-foreground">£97/month locked rate</div>
+                  <div className="font-semibold text-primary mb-1">2. Consultation</div>
+                  <div className="text-muted-foreground">Strategy discussion</div>
                 </div>
                 <div className="p-3 bg-muted/50 rounded-lg touch-target">
-                  <div className="font-semibold text-primary mb-1">3. Results</div>
-                  <div className="text-muted-foreground">25+ reviews in 90 days</div>
+                  <div className="font-semibold text-primary mb-1">3. Growth</div>
+                  <div className="text-muted-foreground">Implement & see results</div>
                 </div>
               </div>
             </div>
