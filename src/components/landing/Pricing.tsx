@@ -186,6 +186,12 @@ export const Pricing = () => {
                 variant="outline" 
                 size="lg" 
                 className="w-full mt-6 btn-hover-effect"
+                onClick={() => {
+                  const scanSection = document.getElementById('business-scan');
+                  if (scanSection) {
+                    scanSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
               >
                 Get My Free Business Scan First
               </Button>
