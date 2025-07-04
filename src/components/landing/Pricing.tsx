@@ -6,6 +6,7 @@ import { CheckCircle, Clock } from "lucide-react";
 import { SavingsCalculator } from "@/components/ui/savings-calculator";
 import { TrialPopup } from "./TrialPopup";
 import { ProgressiveDisclosure } from "../optimization/ProgressiveDisclosure";
+import { InteractiveROICalculator } from "@/components/ui/interactive-roi-calculator";
 import { trackConversion } from "@/hooks/useABTesting";
 
 export const Pricing = () => {
@@ -158,52 +159,51 @@ export const Pricing = () => {
           </div>
         </div>
 
-        {/* Why Offer This Rate */}
-        <div className="mt-12 max-w-4xl mx-auto">
+        {/* Interactive ROI Calculator */}
+        <div className="mt-12 max-w-6xl mx-auto">
+          <InteractiveROICalculator />
+        </div>
+
+        {/* Why Offer This Rate - Simplified */}
+        <div className="mt-8 max-w-4xl mx-auto">
           <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">Your Investment Breakdown</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-muted rounded-lg">
-                  <span>Regular Monthly Price:</span>
-                  <span className="font-semibold">£247/month</span>
+            <CardContent className="p-6">
+              <div className="text-center space-y-4">
+                <div className="flex justify-center items-center gap-8">
+                  <div className="text-center">
+                    <div className="text-sm text-muted-foreground">Regular Price</div>
+                    <div className="text-2xl font-bold line-through text-muted-foreground">£247/month</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm text-muted-foreground">Your Locked Rate</div>
+                    <div className="text-3xl font-bold text-success">£97/month</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm text-muted-foreground">Annual Savings</div>
+                    <div className="text-2xl font-bold text-brand-orange">£{savings.yearlySavings.toLocaleString()}</div>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-muted rounded-lg">
-                  <span>Annual Cost (Regular):</span>
-                  <span className="font-semibold">£{(savings.regularRate * 12).toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-success/10 rounded-lg border border-success/20">
-                  <span className="font-semibold">Your Annual Cost:</span>
-                  <span className="font-bold text-success text-xl">£{(savings.lockedRate * 12).toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-brand-orange/10 rounded-lg border border-brand-orange/20">
-                  <span className="font-semibold text-lg">Annual Savings:</span>
-                  <span className="font-bold text-brand-orange text-2xl">£{savings.yearlySavings.toLocaleString()}</span>
-                </div>
-              </div>
 
-              <div className="mt-8 p-4 bg-brand-blue-light rounded-lg">
-                <h4 className="font-semibold text-brand-blue mb-2">Why Offer This Rate?</h4>
-                <p className="text-sm text-muted-foreground">
-                  We're building our case study database across different UK trades. After July 31st, this will only be available at £247/month. Even if we increase to £300-400+ in future, your monthly rate stays locked at £97.
-                </p>
-              </div>
+                <div className="p-4 bg-brand-blue-light rounded-lg">
+                  <p className="text-sm text-muted-foreground">
+                    <strong className="text-brand-blue">Why this rate?</strong> We're building case studies across UK trades. Rate locks forever - even if we increase to £300-400+.
+                  </p>
+                </div>
 
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="w-full mt-6 btn-hover-effect"
-                onClick={() => {
-                  const scanSection = document.getElementById('business-scan');
-                  if (scanSection) {
-                    scanSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-              >
-                Get My Free Business Scan First
-              </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="btn-hover-effect"
+                  onClick={() => {
+                    const scanSection = document.getElementById('business-scan');
+                    if (scanSection) {
+                      scanSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  Get My Free Business Scan First
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
