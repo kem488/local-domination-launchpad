@@ -6,14 +6,56 @@ import { TrialPopup } from "./TrialPopup";
 import { LeadCaptureForm } from "./LeadCaptureForm";
 import { CalendarBooking } from "../calendar/CalendarBooking";
 import { useScrollAnimation, useCountUp } from "@/hooks/useScrollAnimation";
+import { useABTest, trackConversion } from "@/hooks/useABTesting";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 
 export const Hero = () => {
   const { ref: statsRef, isVisible: statsVisible } = useScrollAnimation({ threshold: 0.3 });
+  const headlineTest = useABTest('hero_headline');
+  const ctaTest = useABTest('cta_button');
+  
+  useScrollTracking();
   
   const reviewCount = useCountUp(25, 2000, statsVisible);
   const starRating = useCountUp(45, 2000, statsVisible);
   const profileViews = useCountUp(2, 1500, statsVisible);
   const directoryListings = useCountUp(50, 2500, statsVisible);
+
+  const getHeadlineText = () => {
+    switch (headlineTest.variant) {
+      case 'Get Predictable Leads Every Month':
+        return (
+          <>
+            Get Predictable Leads Every Month:<br />
+            <span className="text-primary">25+ Reviews, 4.5+ Stars</span><br />
+            in 90 Days - Guaranteed
+          </>
+        );
+      case 'Beat Your Competitors at Their Own Game':
+        return (
+          <>
+            Beat Your Competitors at Their Own Game:<br />
+            <span className="text-primary">25+ Reviews, 4.5+ Stars</span><br />
+            in 90 Days - Guaranteed
+          </>
+        );
+      default:
+        return (
+          <>
+            End the Feast-or-Famine Cycle:<br />
+            <span className="text-primary">25+ Reviews, 4.5+ Stars</span><br />
+            in 90 Days - Guaranteed
+          </>
+        );
+    }
+  };
+
+  const handleCTAClick = () => {
+    trackConversion('cta_click', 'hero', { 
+      variant: ctaTest.variant,
+      headline_variant: headlineTest.variant 
+    });
+  };
 
   return (
     <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8" aria-labelledby="hero-heading">
@@ -24,9 +66,7 @@ export const Hero = () => {
           </div>
           
           <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            End the Feast-or-Famine Cycle:<br />
-            <span className="text-primary">25+ Reviews, 4.5+ Stars</span><br />
-            in 90 Days - Guaranteed
+            {getHeadlineText()}
           </h1>
           
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -38,8 +78,10 @@ export const Hero = () => {
               <Button 
                 size="lg" 
                 className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
+                onClick={handleCTAClick}
+                id="hero-primary-cta"
               >
-                Start Free Trial & Lock £97 Rate
+                {ctaTest.variant}
               </Button>
             </TrialPopup>
             <CalendarBooking>

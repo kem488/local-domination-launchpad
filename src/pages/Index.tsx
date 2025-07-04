@@ -11,6 +11,7 @@ import { Footer } from "@/components/landing/Footer";
 import { LiveNotifications } from "@/components/ui/live-notifications";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ExitIntentPopup } from "@/components/popups/ExitIntentPopup";
+import { SocialProofPopups } from "@/components/optimization/SocialProofPopups";
 
 const Index = () => {
   return (
@@ -36,6 +37,7 @@ const Index = () => {
       <LiveNotifications />
       <ChatWidget />
       <ExitIntentPopup />
+      <SocialProofPopups />
     </div>
   );
 };

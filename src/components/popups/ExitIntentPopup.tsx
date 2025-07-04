@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { X, Clock, Gift, Search, TrendingUp, Target } from "lucide-react";
+import { X, Clock, Gift, Search, TrendingUp, Target, Percent } from "lucide-react";
 import { TrialPopup } from "../landing/TrialPopup";
+import { CountdownTimer } from "../optimization/CountdownTimer";
+import { trackConversion } from "@/hooks/useABTesting";
 
 const POPUP_VARIANTS = [
   {
@@ -50,6 +52,21 @@ const POPUP_VARIANTS = [
     cta: 'Get My SEO Audit',
     icon: Target,
     urgency: 'Only available until end of month'
+  },
+  {
+    id: 'last-chance-discount',
+    title: 'FINAL CHANCE: Extra 20% Off',
+    subtitle: 'Limited time bonus discount before you leave',
+    description: 'Stack this exclusive 20% discount on top of your locked £97 rate - bringing it down to just £77.60/month for the first 6 months.',
+    benefits: [
+      'Extra 20% off your first 6 months (£77.60/month)',
+      'Still keeps your £97/month rate locked forever',
+      'Total savings: £117 in first 6 months',
+      'Valid only for next 10 minutes'
+    ],
+    cta: 'Claim 20% Bonus Discount',
+    icon: Percent,
+    urgency: 'This offer expires in 10 minutes'
   }
 ];
 
@@ -57,11 +74,24 @@ export const ExitIntentPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [variant, setVariant] = useState(POPUP_VARIANTS[0]);
+  const [showLastChance, setShowLastChance] = useState(false);
+
+  const handleExitConversion = (action: string) => {
+    trackConversion('exit_intent_conversion', 'popup', { 
+      variant: variant.id,
+      action 
+    });
+  };
 
   useEffect(() => {
-    // Random A/B test variant selection
-    const randomVariant = POPUP_VARIANTS[Math.floor(Math.random() * POPUP_VARIANTS.length)];
+    // 60% chance to show last-chance discount, 40% for other variants
+    const showDiscount = Math.random() < 0.6;
+    const randomVariant = showDiscount 
+      ? POPUP_VARIANTS.find(v => v.id === 'last-chance-discount')!
+      : POPUP_VARIANTS[Math.floor(Math.random() * (POPUP_VARIANTS.length - 1))];
+    
     setVariant(randomVariant);
+    setShowLastChance(randomVariant.id === 'last-chance-discount');
     
     // Track which variant was shown for analytics
     console.log('Exit popup variant:', randomVariant.id);
@@ -140,25 +170,53 @@ export const ExitIntentPopup = () => {
               <Clock className="h-4 w-4 text-brand-orange" />
               <span className="text-sm font-medium text-brand-orange">{variant.urgency}</span>
             </div>
+
+            {showLastChance && (
+              <div className="mt-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                <CountdownTimer 
+                  targetDate={new Date(Date.now() + 10 * 60 * 1000)} 
+                  className="justify-center text-destructive"
+                  showDays={false}
+                />
+              </div>
+            )}
           </div>
 
           <div className="space-y-3">
             <div className="flex flex-col gap-2">
-              <Button 
-                onClick={() => {
-                  setIsOpen(false);
-                  document.getElementById('business-scan')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground w-full"
-              >
-                {variant.cta}
-              </Button>
-              
-              <TrialPopup>
-                <Button variant="outline" className="w-full">
-                  Or Start 14-Day Free Trial
+              {showLastChance ? (
+                <TrialPopup>
+                  <Button 
+                    onClick={() => handleExitConversion('discount_claim')}
+                    className="bg-destructive hover:bg-destructive/90 text-destructive-foreground w-full animate-pulse"
+                  >
+                    {variant.cta}
+                  </Button>
+                </TrialPopup>
+              ) : (
+                <Button 
+                  onClick={() => {
+                    handleExitConversion('scan_request');
+                    setIsOpen(false);
+                    document.getElementById('business-scan')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground w-full"
+                >
+                  {variant.cta}
                 </Button>
-              </TrialPopup>
+              )}
+              
+              {!showLastChance && (
+                <TrialPopup>
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={() => handleExitConversion('trial_start')}
+                  >
+                    Or Start 14-Day Free Trial
+                  </Button>
+                </TrialPopup>
+              )}
             </div>
 
             <button

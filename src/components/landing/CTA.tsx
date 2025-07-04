@@ -4,15 +4,27 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, TrendingUp } from "lucide-react";
 import { TrialPopup } from "./TrialPopup";
 import { LeadCaptureForm } from "./LeadCaptureForm";
+import { TrustSignals } from "../optimization/TrustSignals";
+import { CountdownTimer } from "../optimization/CountdownTimer";
+import { trackConversion } from "@/hooks/useABTesting";
 
 export const CTA = () => {
+  const deadlineDate = new Date('2025-07-31T23:59:59');
+
+  const handleFinalCTA = (action: string) => {
+    trackConversion('final_cta_click', 'cta_section', { action });
+  };
+
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/5 to-brand-blue-light">
       <div className="max-w-4xl mx-auto text-center">
-        <Badge variant="destructive" className="mb-6">
-          <Clock className="h-4 w-4 mr-2" />
-          Offer Expires July 31st - Only Days Left!
-        </Badge>
+        <div className="flex flex-col items-center gap-4 mb-6">
+          <Badge variant="destructive" className="animate-pulse">
+            <Clock className="h-4 w-4 mr-2" />
+            Final Hours - Only 3 Spots Left!
+          </Badge>
+          <CountdownTimer targetDate={deadlineDate} className="text-center" />
+        </div>
         
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
           Stop the Feast-or-Famine Cycle Forever
@@ -43,6 +55,8 @@ export const CTA = () => {
               <Button 
                 size="lg" 
                 className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-xl btn-hover-effect"
+                onClick={() => handleFinalCTA('trial_start')}
+                id="final-cta-primary"
               >
                 Start Free Trial & Lock £97 Rate
               </Button>
@@ -51,7 +65,10 @@ export const CTA = () => {
               variant="outline" 
               size="lg"
               className="px-8 py-4 text-xl border-2 btn-hover-effect"
-              onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => {
+                handleFinalCTA('see_details');
+                document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               See Full Details
             </Button>
@@ -81,9 +98,8 @@ export const CTA = () => {
           </CardContent>
         </Card>
 
-        <div className="mt-8 text-center text-sm text-muted-foreground">
-          <p>✓ No setup fees ✓ 14-day free trial ✓ 90-day money-back guarantee</p>
-          <p className="mt-2">Secure SSL encrypted payment processing</p>
+        <div className="mt-8">
+          <TrustSignals />
         </div>
       </div>
     </section>

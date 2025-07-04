@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock } from "lucide-react";
 import { SavingsCalculator } from "@/components/ui/savings-calculator";
 import { TrialPopup } from "./TrialPopup";
+import { ProgressiveDisclosure } from "../optimization/ProgressiveDisclosure";
+import { trackConversion } from "@/hooks/useABTesting";
 
 export const Pricing = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -13,6 +15,10 @@ export const Pricing = () => {
     minutes: 0,
     seconds: 0
   });
+
+  const handlePricingCTA = (action: string) => {
+    trackConversion('pricing_cta_click', 'pricing', { action });
+  };
 
   useEffect(() => {
     const targetDate = new Date('2025-07-31T23:59:59').getTime();
@@ -60,9 +66,9 @@ export const Pricing = () => {
     <section id="pricing" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <Badge variant="destructive" className="mb-4">
+          <Badge variant="destructive" className="mb-4 animate-pulse">
             <Clock className="h-4 w-4 mr-2" />
-            Limited Time Offer Ends July 31st
+            Only 7 Spots Left - Ends July 31st
           </Badge>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Start Free Trial & Lock £97/Month Rate For Life
@@ -129,6 +135,8 @@ export const Pricing = () => {
                   <Button 
                     size="lg" 
                     className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground text-lg py-4 btn-hover-effect"
+                    onClick={() => handlePricingCTA('trial_signup')}
+                    id="pricing-primary-cta"
                   >
                     Start Free Trial & Lock Rate
                   </Button>
@@ -143,8 +151,9 @@ export const Pricing = () => {
             </Card>
           </div>
 
-          {/* Savings Calculator */}
-          <div className="lg:col-span-1">
+          {/* Progressive Disclosure & Calculator */}
+          <div className="lg:col-span-1 space-y-6">
+            <ProgressiveDisclosure />
             <SavingsCalculator />
           </div>
         </div>
