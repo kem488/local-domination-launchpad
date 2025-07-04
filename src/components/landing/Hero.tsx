@@ -43,6 +43,31 @@ export const Hero = () => {
               Join 200+ UK tradespeople who've gone from "Google Who?" to local market leaders. 
               Get 25+ reviews, dominate local search, and never worry about leads again.
             </p>
+            
+            {/* Trust Signals */}
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 py-6">
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
+                <ShieldCheck className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/90">Google Partner</span>
+              </div>
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
+                <Eye className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/90">500+ Businesses</span>
+              </div>
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
+                <ShieldCheck className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/90">GDPR Secure</span>
+              </div>
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
+                <Cpu className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/90">90-Day Guarantee</span>
+              </div>
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
+                <Zap className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/90">30sec Analysis</span>
+              </div>
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-4 items-center pt-4">
               <Button 
                 onClick={() => document.getElementById('business-scan')?.scrollIntoView({ behavior: 'smooth' })}
