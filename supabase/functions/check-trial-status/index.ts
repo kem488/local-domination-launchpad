@@ -44,11 +44,14 @@ serve(async (req) => {
     
     logStep("User authenticated", { userId: user.id, email: user.email });
 
-    // Check onboarding record for trial/payment status
+    // Check onboarding record for trial/payment status, prioritizing trial-active records
     const { data: onboardingData, error: onboardingError } = await supabase
       .from('client_onboarding')
       .select('payment_status, trial_active, trial_expires_at, stripe_customer_id')
       .eq('user_id', user.id)
+      .order('trial_active', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(1)
       .single();
 
     if (onboardingError) {

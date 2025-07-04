@@ -176,10 +176,10 @@ export const OnboardingWizard = () => {
         return;
       }
 
-      // Create comprehensive client onboarding record
+      // Update or create comprehensive client onboarding record
       const { data: clientRecord, error: clientError } = await supabase
         .from('client_onboarding')
-        .insert({
+        .upsert({
           user_id: user.id,
           business_name: wizardData.business_name,
           owner_name: wizardData.owner_name,
@@ -206,7 +206,10 @@ export const OnboardingWizard = () => {
           onboarding_step: 7,
           wizard_completed: true,
           wizard_data: wizardData,
-          status: 'pending'
+          status: 'complete'
+        }, {
+          onConflict: 'user_id',
+          ignoreDuplicates: false
         })
         .select()
         .single();
