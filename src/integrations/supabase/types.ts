@@ -193,7 +193,6 @@ export type Database = {
           owner_email: string
           owner_name: string | null
           pain_points: string[] | null
-          payment_status: string | null
           phone: string | null
           postcode: string | null
           preferred_contact_method: string | null
@@ -202,12 +201,8 @@ export type Database = {
           services_offered: string[] | null
           social_media_links: Json | null
           status: string | null
-          stripe_customer_id: string | null
-          stripe_session_id: string | null
           target_audience: string | null
           team_size: number | null
-          trial_active: boolean | null
-          trial_expires_at: string | null
           updated_at: string
           user_id: string
           website_url: string | null
@@ -230,7 +225,6 @@ export type Database = {
           owner_email: string
           owner_name?: string | null
           pain_points?: string[] | null
-          payment_status?: string | null
           phone?: string | null
           postcode?: string | null
           preferred_contact_method?: string | null
@@ -239,12 +233,8 @@ export type Database = {
           services_offered?: string[] | null
           social_media_links?: Json | null
           status?: string | null
-          stripe_customer_id?: string | null
-          stripe_session_id?: string | null
           target_audience?: string | null
           team_size?: number | null
-          trial_active?: boolean | null
-          trial_expires_at?: string | null
           updated_at?: string
           user_id: string
           website_url?: string | null
@@ -267,7 +257,6 @@ export type Database = {
           owner_email?: string
           owner_name?: string | null
           pain_points?: string[] | null
-          payment_status?: string | null
           phone?: string | null
           postcode?: string | null
           preferred_contact_method?: string | null
@@ -276,12 +265,8 @@ export type Database = {
           services_offered?: string[] | null
           social_media_links?: Json | null
           status?: string | null
-          stripe_customer_id?: string | null
-          stripe_session_id?: string | null
           target_audience?: string | null
           team_size?: number | null
-          trial_active?: boolean | null
-          trial_expires_at?: string | null
           updated_at?: string
           user_id?: string
           website_url?: string | null

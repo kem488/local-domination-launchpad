@@ -33,16 +33,8 @@ export const Step4GoogleBusiness = ({ data, onDataChange, onNext, onPrevious }: 
         <div>
           <Label className="text-base font-medium">Do you currently have a Google Business Profile?</Label>
           <RadioGroup
-            value={data.has_existing_gbp === true ? "yes" : data.has_existing_gbp === false ? "no" : "unsure"}
-            onValueChange={(value) => {
-              if (value === "yes") {
-                onDataChange({ ...data, has_existing_gbp: true });
-              } else if (value === "no") {
-                onDataChange({ ...data, has_existing_gbp: false });
-              } else {
-                onDataChange({ ...data, has_existing_gbp: null });
-              }
-            }}
+            value={data.has_existing_gbp ? "yes" : "no"}
+            onValueChange={(value) => onDataChange({ ...data, has_existing_gbp: value === "yes" })}
             className="mt-3"
           >
             <div className="flex items-center space-x-2">

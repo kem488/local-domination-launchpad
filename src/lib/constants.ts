@@ -1,8 +1,8 @@
-// Agency configuration - hardcoded for Syngularity Labs
+// Agency configuration - hardcoded for GUD Media
 export const AGENCY_CONFIG = {
   organizationId: "256083320097",
-  agencyEmail: "integrations@syngularitylabs.com",
-  companyName: "Syngularity Labs",
+  agencyEmail: "admin@gudmedia.co.uk",
+  companyName: "GUD Media",
 } as const;
 
 // Make.com webhook configuration

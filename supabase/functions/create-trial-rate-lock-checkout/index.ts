@@ -30,11 +30,11 @@ serve(async (req) => {
     }
     logStep("Environment variables verified");
 
-    const { name, email, phone, businessType, scanId, businessName, businessLocation } = await req.json();
+    const { name, email, phone, businessType } = await req.json();
     if (!name || !email || !phone || !businessType) {
       throw new Error("Missing required fields: name, email, phone, businessType");
     }
-    logStep("Request data validated", { name, email, businessType, scanId, businessName });
+    logStep("Request data validated", { name, email, businessType });
 
     // Initialize Supabase client with service role key
     const supabase = createClient(supabaseUrl, supabaseServiceKey, {
@@ -102,88 +102,25 @@ serve(async (req) => {
       logStep("New customer created", { customerId });
     }
 
-    // Create or update client_onboarding record with trial status
-    const trialExpiresAt = new Date();
-    trialExpiresAt.setDate(trialExpiresAt.getDate() + 14); // 14 days from now
-
-    // First check if record exists
-    const { data: existingRecord } = await supabase
+    // Create or update client_onboarding record
+    const { error: onboardingError } = await supabase
       .from('client_onboarding')
-      .select('id')
-      .eq('user_id', userId)
-      .single();
-
-    let onboardingError = null;
-    
-    if (existingRecord) {
-      // Update existing record
-      const { error } = await supabase
-        .from('client_onboarding')
-        .update({
-          business_name: businessName || name,
-          owner_email: email,
-          phone,
-          industry: businessType,
-          status: 'trial_started',
-          address: businessLocation || null,
-          payment_status: 'trial_active',
-          stripe_customer_id: customerId,
-          trial_active: true,
-          trial_expires_at: trialExpiresAt.toISOString(),
-          updated_at: new Date().toISOString()
-        })
-        .eq('user_id', userId);
-      onboardingError = error;
-      logStep("Updated existing onboarding record", { userId });
-    } else {
-      // Insert new record
-      const { error } = await supabase
-        .from('client_onboarding')
-        .insert({
-          user_id: userId,
-          business_name: businessName || name,
-          owner_email: email,
-          phone,
-          industry: businessType,
-          onboarding_step: 1,
-          status: 'trial_started',
-          address: businessLocation || null,
-          payment_status: 'trial_active',
-          stripe_customer_id: customerId,
-          trial_active: true,
-          trial_expires_at: trialExpiresAt.toISOString()
-        });
-      onboardingError = error;
-      logStep("Created new onboarding record", { userId });
-    }
-
-    // If scan context is available, link the scan to this user
-    if (scanId) {
-      const { error: scanLinkError } = await supabase
-        .from('business_scans')
-        .update({ 
-          lead_qualified: true,
-          email: email
-        })
-        .eq('id', scanId);
-      
-      if (scanLinkError) {
-        logStep("Warning: Could not link scan to user", { error: scanLinkError.message });
-      } else {
-        logStep("Successfully linked scan to user", { scanId, userId });
-      }
-    }
+      .upsert({
+        user_id: userId,
+        business_name: name,
+        owner_email: email,
+        phone,
+        industry: businessType,
+        onboarding_step: 1,
+        status: 'trial_started'
+      }, { 
+        onConflict: 'user_id'
+      });
 
     if (onboardingError) {
-      logStep("ERROR: Could not create onboarding record", { error: onboardingError.message });
-      throw new Error(`Failed to create trial record: ${onboardingError.message}`);
+      logStep("Warning: Could not create onboarding record", { error: onboardingError.message });
     } else {
-      logStep("Client onboarding record created/updated with trial", { 
-        userId, 
-        trialActive: true, 
-        trialExpiresAt: trialExpiresAt.toISOString(),
-        paymentStatus: 'trial_active'
-      });
+      logStep("Client onboarding record created/updated");
     }
 
     // Create checkout session with 14-day trial + locked rate

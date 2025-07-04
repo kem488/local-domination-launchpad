@@ -20,49 +20,26 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
     businessType: ""
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (isSubmitting) return;
-    
-    setIsSubmitting(true);
-    setSubmitError(null);
-    
     try {
-      // Validate required fields
-      if (!formData.name || !formData.email || !formData.phone || !formData.businessType) {
-        throw new Error('Please fill in all required fields');
-      }
-
-      console.log('Submitting trial data:', formData);
-
       const { data, error } = await supabase.functions.invoke('create-trial-rate-lock-checkout', {
         body: formData,
       });
 
-      console.log('Function response:', { data, error });
-
       if (error) {
-        console.error('Function error:', error);
-        throw new Error(error.message || 'Failed to create trial');
+        throw error;
       }
       
       if (data?.url) {
-        console.log('Redirecting to Stripe:', data.url);
         // Redirect to Stripe checkout
         window.location.href = data.url;
       } else {
-        console.error('No checkout URL received:', data);
-        throw new Error('No checkout URL received from server');
+        console.error('No checkout URL received');
       }
     } catch (error) {
       console.error('Error creating checkout session:', error);
-      setSubmitError(error instanceof Error ? error.message : 'Failed to start trial');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -156,19 +133,12 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
             </Select>
           </div>
 
-          {submitError && (
-            <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
-              {submitError}
-            </div>
-          )}
-
           <Button 
             type="submit" 
             size="lg" 
-            disabled={isSubmitting}
-            className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground disabled:opacity-50"
+            className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground"
           >
-            {isSubmitting ? 'Setting up your trial...' : 'Start Free Trial & Lock £97 Rate'}
+            Start Free Trial & Lock £97 Rate
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">

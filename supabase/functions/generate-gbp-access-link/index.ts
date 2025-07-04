@@ -16,8 +16,8 @@ interface RequestBody {
 // Hardcoded agency configuration
 const AGENCY_CONFIG = {
   organizationId: "256083320097",
-  agencyEmail: "integrations@syngularitylabs.com",
-  companyName: "Syngularity Labs",
+  agencyEmail: "admin@gudmedia.co.uk",
+  companyName: "GUD Media",
 };
 
 serve(async (req) => {
@@ -36,7 +36,9 @@ serve(async (req) => {
     console.log('Generating GBP access link for:', { clientId, businessName, ownerEmail, agencyEmail: AGENCY_CONFIG.agencyEmail });
 
     // Create the Google Business Profile access request URL
-    const accessUrl = "https://business.google.com";
+    // This is a simplified version - in practice, you'd generate a proper Google Business Profile access request
+    const baseUrl = "https://business.google.com/create";
+    const accessUrl = `${baseUrl}?hl=en&continue=https://business.google.com/`;
 
     // Store the GBP access request in the database
     const { data: gbpRequest, error: gbpError } = await supabase
