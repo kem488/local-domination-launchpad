@@ -7,14 +7,14 @@ import { LeadCaptureForm } from "./LeadCaptureForm";
 
 export const Hero = () => {
   return (
-    <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+    <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8" aria-labelledby="hero-heading">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center">
-          <Badge variant="secondary" className="mb-6 bg-brand-blue-light text-brand-blue border-brand-blue/20">
+        <header className="text-center">
+          <div className="mb-6 bg-brand-blue-light text-brand-blue border-brand-blue/10 rounded-full px-4 py-2 inline-block text-sm font-medium" role="banner">
             Limited Time: Lock £97/Month Rate For Life (Usually £247/month)
-          </Badge>
+          </div>
           
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+          <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
             End the Feast-or-Famine Cycle:<br />
             <span className="text-primary">25+ Reviews, 4.5+ Stars</span><br />
             in 90 Days - Guaranteed
@@ -57,25 +57,26 @@ export const Hero = () => {
               <span>90-day money-back guarantee</span>
             </div>
           </div>
-        </div>
+        </header>
         
         <div className="mt-16">
-          <Card className="p-8 bg-gradient-to-r from-brand-blue-light to-background border-brand-blue/10">
+          <Card className="p-8 bg-gradient-to-r from-brand-blue-light to-background border-brand-blue/10" role="region" aria-labelledby="results-heading">
+            <h2 id="results-heading" className="sr-only">Guaranteed Results</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2">25+</div>
+                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label="25 plus">25+</div>
                 <div className="text-muted-foreground">New Reviews</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2">4.5+</div>
+                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label="4.5 plus stars">4.5+</div>
                 <div className="text-muted-foreground">Star Average</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2">2x</div>
+                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label="2 times more">2x</div>
                 <div className="text-muted-foreground">Profile Views</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2">50+</div>
+                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label="50 plus">50+</div>
                 <div className="text-muted-foreground">Directory Listings</div>
               </div>
             </div>
