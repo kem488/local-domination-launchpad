@@ -111,7 +111,8 @@ export const BusinessScanSection = () => {
   };
 
   const handleViewFullReport = () => {
-    setScanState('leadgate');
+    // Redirect to auth page for sign up
+    window.location.href = '/auth';
   };
 
   const handleFixThisForMe = async (email: string) => {

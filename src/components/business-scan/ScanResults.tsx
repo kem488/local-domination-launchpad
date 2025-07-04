@@ -157,7 +157,7 @@ export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) =>
           size="lg"
           className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
         >
-          Get Done-For-You Service
+          Start My Free Trial
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
         <div className="text-xs text-muted-foreground">
