@@ -14,3 +14,24 @@ verify_jwt = false
 
 [functions.error-logger]
 verify_jwt = false
+
+[functions.check-trial-status]
+verify_jwt = false
+
+[functions.create-trial-rate-lock-checkout]
+verify_jwt = false
+
+[functions.capture-lead]
+verify_jwt = false
+
+[functions.send-gbp-email]
+verify_jwt = false
+
+[functions.generate-gbp-access-link]
+verify_jwt = false
+
+[functions.send-to-make-webhook]
+verify_jwt = false
+
+[functions.chat-assistant]
+verify_jwt = false

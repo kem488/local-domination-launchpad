@@ -1,84 +1,101 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-interface RequestBody {
-  clientId: string;
-  businessName: string;
-  ownerEmail: string;
-  agencyEmail: string;
-}
-
-// Hardcoded agency configuration
-const AGENCY_CONFIG = {
-  organizationId: "256083320097",
-  agencyEmail: "integrations@syngularitylabs.com",
-  companyName: "Syngularity Labs",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+      Deno.env.get("SUPABASE_URL") || '',
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ''
     );
 
-    const { clientId, businessName, ownerEmail }: RequestBody = await req.json();
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      throw new Error("No authorization header provided");
+    }
 
-    console.log('Generating GBP access link for:', { clientId, businessName, ownerEmail, agencyEmail: AGENCY_CONFIG.agencyEmail });
+    const token = authHeader.replace("Bearer ", "");
+    const { data: userData, error: userError } = await supabase.auth.getUser(token);
+    if (userError) throw new Error(`Authentication error: ${userError.message}`);
+    
+    const user = userData.user;
+    if (!user) throw new Error("User not authenticated");
 
-    // Create the Google Business Profile access request URL
-    const accessUrl = "https://business.google.com";
+    const { clientId } = await req.json();
 
-    // Store the GBP access request in the database
-    const { data: gbpRequest, error: gbpError } = await supabase
+    // Get client data
+    const { data: clientData, error: clientError } = await supabase
+      .from('client_onboarding')
+      .select('business_name, owner_email')
+      .eq('id', clientId)
+      .eq('user_id', user.id)
+      .single();
+
+    if (clientError || !clientData) {
+      throw new Error('Client not found or access denied');
+    }
+
+    // Generate Google Business Profile access URL
+    const accessUrl = `https://business.google.com/manage`;
+
+    // Create GBP access request
+    const { data: accessRequest, error: accessError } = await supabase
       .from('gbp_access_requests')
-      .insert({
+      .upsert({
         client_id: clientId,
-        status: 'sent',
         request_url: accessUrl,
+        status: 'sent',
+        updated_at: new Date().toISOString()
+      }, {
+        onConflict: 'client_id'
       })
       .select()
       .single();
 
-    if (gbpError) {
-      console.error('Error creating GBP access request:', gbpError);
-      throw gbpError;
+    if (accessError) {
+      throw accessError;
     }
 
-    console.log('GBP access request created:', gbpRequest);
+    // Send welcome email
+    try {
+      await supabase.functions.invoke('send-gbp-email', {
+        body: {
+          type: 'welcome',
+          clientId: clientId,
+          recipientEmail: clientData.owner_email,
+          businessName: clientData.business_name,
+          accessUrl: accessUrl
+        }
+      });
+    } catch (emailError) {
+      console.error('Failed to send welcome email:', emailError);
+    }
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        accessUrl: accessUrl,
-        requestId: gbpRequest.id
-      }),
-      {
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
-        status: 200,
-      }
-    );
+    return new Response(JSON.stringify({ 
+      success: true,
+      accessUrl: accessUrl,
+      requestId: accessRequest.id
+    }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 200,
+    });
 
   } catch (error) {
-    console.error('Error in generate-gbp-access-link function:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: error.message || 'An unexpected error occurred',
-        success: false 
-      }),
-      {
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
-        status: 500,
-      }
-    );
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return new Response(JSON.stringify({ 
+      success: false,
+      error: errorMessage 
+    }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+    });
   }
 });
