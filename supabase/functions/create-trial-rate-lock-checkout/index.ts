@@ -106,24 +106,56 @@ serve(async (req) => {
     const trialExpiresAt = new Date();
     trialExpiresAt.setDate(trialExpiresAt.getDate() + 14); // 14 days from now
 
-    const { error: onboardingError } = await supabase
+    // First check if record exists
+    const { data: existingRecord } = await supabase
       .from('client_onboarding')
-      .upsert({
-        user_id: userId,
-        business_name: businessName || name, // Use scanned business name if available
-        owner_email: email,
-        phone,
-        industry: businessType,
-        onboarding_step: 1,
-        status: 'trial_started',
-        address: businessLocation || null, // Store scanned location if available
-        payment_status: 'trial_active',
-        stripe_customer_id: customerId,
-        trial_active: true,
-        trial_expires_at: trialExpiresAt.toISOString()
-      }, { 
-        onConflict: 'user_id'
-      });
+      .select('id')
+      .eq('user_id', userId)
+      .single();
+
+    let onboardingError = null;
+    
+    if (existingRecord) {
+      // Update existing record
+      const { error } = await supabase
+        .from('client_onboarding')
+        .update({
+          business_name: businessName || name,
+          owner_email: email,
+          phone,
+          industry: businessType,
+          status: 'trial_started',
+          address: businessLocation || null,
+          payment_status: 'trial_active',
+          stripe_customer_id: customerId,
+          trial_active: true,
+          trial_expires_at: trialExpiresAt.toISOString(),
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', userId);
+      onboardingError = error;
+      logStep("Updated existing onboarding record", { userId });
+    } else {
+      // Insert new record
+      const { error } = await supabase
+        .from('client_onboarding')
+        .insert({
+          user_id: userId,
+          business_name: businessName || name,
+          owner_email: email,
+          phone,
+          industry: businessType,
+          onboarding_step: 1,
+          status: 'trial_started',
+          address: businessLocation || null,
+          payment_status: 'trial_active',
+          stripe_customer_id: customerId,
+          trial_active: true,
+          trial_expires_at: trialExpiresAt.toISOString()
+        });
+      onboardingError = error;
+      logStep("Created new onboarding record", { userId });
+    }
 
     // If scan context is available, link the scan to this user
     if (scanId) {

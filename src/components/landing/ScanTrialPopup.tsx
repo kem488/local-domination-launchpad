@@ -54,10 +54,23 @@ export const ScanTrialPopup = ({ isOpen, onClose }: ScanTrialPopupProps) => {
     }
   }, []);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    setSubmitError(null);
+    
     try {
+      // Validate required fields
+      if (!formData.name || !formData.email || !formData.phone || !formData.businessType) {
+        throw new Error('Please fill in all required fields');
+      }
+
       // Add scan context to form data
       const submissionData = {
         ...formData,
@@ -66,24 +79,34 @@ export const ScanTrialPopup = ({ isOpen, onClose }: ScanTrialPopupProps) => {
         businessLocation: scanContext?.businessLocation
       };
 
+      console.log('Submitting trial data:', submissionData);
+
       const { data, error } = await supabase.functions.invoke('create-trial-rate-lock-checkout', {
         body: submissionData,
       });
 
+      console.log('Function response:', { data, error });
+
       if (error) {
-        throw error;
+        console.error('Function error:', error);
+        throw new Error(error.message || 'Failed to create trial');
       }
       
       if (data?.url) {
+        console.log('Redirecting to Stripe:', data.url);
         // Clear scan context after successful checkout creation
         sessionStorage.removeItem('scanContext');
         // Redirect to Stripe checkout
         window.location.href = data.url;
       } else {
-        console.error('No checkout URL received');
+        console.error('No checkout URL received:', data);
+        throw new Error('No checkout URL received from server');
       }
     } catch (error) {
       console.error('Error creating checkout session:', error);
+      setSubmitError(error instanceof Error ? error.message : 'Failed to start trial');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -185,12 +208,19 @@ export const ScanTrialPopup = ({ isOpen, onClose }: ScanTrialPopupProps) => {
             </Select>
           </div>
 
+          {submitError && (
+            <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+              {submitError}
+            </div>
+          )}
+
           <Button 
             type="submit" 
             size="lg" 
-            className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground"
+            disabled={isSubmitting}
+            className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground disabled:opacity-50"
           >
-            Start Free Trial & Lock £97 Rate
+            {isSubmitting ? 'Setting up your trial...' : 'Start Free Trial & Lock £97 Rate'}
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">
