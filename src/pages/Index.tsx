@@ -30,7 +30,7 @@ const Index = () => {
         </section>
         
         {/* Business Scan Section */}
-        <section className="bg-section-light py-16">
+        <section id="business-scan" className="bg-section-light py-16">
           <BusinessScanSection />
         </section>
         

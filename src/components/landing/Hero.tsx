@@ -44,10 +44,16 @@ export const Hero = () => {
               Get 25+ reviews, dominate local search, and never worry about leads again.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 items-center pt-4">
-              <Button className="text-lg px-10 py-4 rounded-xl bg-brand-orange text-brand-orange-foreground border shadow-lg hover:bg-brand-orange/90 btn-hover-effect font-semibold">
+              <Button 
+                onClick={() => document.getElementById('business-scan')?.scrollIntoView({ behavior: 'smooth' })}
+                className="text-lg px-10 py-4 rounded-xl bg-brand-orange text-brand-orange-foreground border shadow-lg hover:bg-brand-orange/90 btn-hover-effect font-semibold"
+              >
                 Start Free Trial
               </Button>
-              <Button className="text-lg px-10 py-4 rounded-xl bg-transparent text-white border border-white/20 shadow-lg hover:bg-white/10 btn-hover-effect">
+              <Button 
+                onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                className="text-lg px-10 py-4 rounded-xl bg-transparent text-white border border-white/20 shadow-lg hover:bg-white/10 btn-hover-effect"
+              >
                 See How It Works
               </Button>
             </div>
