@@ -17,7 +17,7 @@ export const WhoWeHelp = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl text-primary">Who We Help</CardTitle>
+              <CardTitle className="text-2xl text-primary text-center">Who We Help</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-3">
