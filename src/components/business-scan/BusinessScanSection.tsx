@@ -7,7 +7,6 @@ import { ScanHeader } from "./ScanHeader";
 import { TrustIndicators } from "./TrustIndicators";
 import { ScanSuccess } from "./ScanSuccess";
 import { useBusinessScan } from "@/hooks/useBusinessScan";
-import businessScanDemo from "@/assets/business-scan-demo.png";
 
 export interface ScanData {
   scanId: string;
@@ -52,25 +51,10 @@ export const BusinessScanSection = () => {
         {/* Main Content */}
         <div className="max-w-7xl mx-auto">
           {scanState === 'form' ? (
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Left side - Image */}
-              <div className="hidden lg:block">
-                <div className="relative">
-                  <img 
-                    src={businessScanDemo} 
-                    alt="Business Scan Demo"
-                    className="w-full h-auto rounded-xl shadow-lg animate-fade-in"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent rounded-xl"></div>
-                </div>
-              </div>
-
-              {/* Right side - Form */}
-              <div>
-                <Card className="p-8 bg-card border-border shadow-lg">
-                  <ScanForm onScanStart={handleScanStart} />
-                </Card>
-              </div>
+            <div className="max-w-4xl mx-auto">
+              <Card className="p-8 bg-card border-border shadow-lg">
+                <ScanForm onScanStart={handleScanStart} />
+              </Card>
             </div>
           ) : (
             <div className="max-w-4xl mx-auto">
