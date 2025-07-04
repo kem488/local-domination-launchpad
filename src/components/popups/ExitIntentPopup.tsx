@@ -2,12 +2,70 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { X, Clock, Gift } from "lucide-react";
+import { X, Clock, Gift, Search, TrendingUp, Target } from "lucide-react";
 import { TrialPopup } from "../landing/TrialPopup";
+
+const POPUP_VARIANTS = [
+  {
+    id: 'competitor-analysis',
+    title: 'FREE Detailed Competitor Analysis',
+    subtitle: 'See exactly what your competitors are doing that you\'re not',
+    description: 'Discover the hidden strategies your competitors use to dominate local search and steal your customers.',
+    benefits: [
+      'Complete breakdown of top 3 competitor strategies',
+      'Exact keywords they rank for that you don\'t',
+      'Their review generation tactics exposed',
+      'Action plan to outrank them in 30 days'
+    ],
+    cta: 'Get My Competitor Analysis',
+    icon: Search,
+    urgency: 'Only 10 reports available this week'
+  },
+  {
+    id: 'gbp-optimization',
+    title: 'FREE In-Depth GBP Optimization Report',
+    subtitle: 'Professional audit of your Google Business Profile',
+    description: 'Get a comprehensive 15-point audit revealing exactly why you\'re not showing up in local searches.',
+    benefits: [
+      '15-point Google Business Profile scorecard',
+      'Missing optimization opportunities identified',
+      'Photo and content improvement recommendations',
+      'Step-by-step optimization checklist'
+    ],
+    cta: 'Get My GBP Report',
+    icon: TrendingUp,
+    urgency: 'Limited to 15 reports this month'
+  },
+  {
+    id: 'local-seo-audit',
+    title: 'FREE Local SEO Audit & Action Plan',
+    subtitle: 'Complete review of your local search presence',
+    description: 'Uncover the exact reasons you\'re losing leads to competitors and get a personalized action plan.',
+    benefits: [
+      'Complete local SEO health check',
+      'Citation and directory analysis',
+      'Review strategy assessment',
+      'Priority action plan with timelines'
+    ],
+    cta: 'Get My SEO Audit',
+    icon: Target,
+    urgency: 'Only available until end of month'
+  }
+];
 
 export const ExitIntentPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasShown, setHasShown] = useState(false);
+  const [variant, setVariant] = useState(POPUP_VARIANTS[0]);
+
+  useEffect(() => {
+    // Random A/B test variant selection
+    const randomVariant = POPUP_VARIANTS[Math.floor(Math.random() * POPUP_VARIANTS.length)];
+    setVariant(randomVariant);
+    
+    // Track which variant was shown for analytics
+    console.log('Exit popup variant:', randomVariant.id);
+  }, []);
 
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
@@ -54,30 +112,33 @@ export const ExitIntentPopup = () => {
         </DialogHeader>
         
         <div className="text-center space-y-4 pt-4">
+          <div className="flex items-center justify-center mb-4">
+            <variant.icon className="h-8 w-8 text-brand-orange mr-3" />
+            <div className="text-left">
+              <h3 className="text-2xl font-bold text-primary">{variant.title}</h3>
+              <p className="text-muted-foreground">{variant.subtitle}</p>
+            </div>
+          </div>
+
           <div className="p-4 bg-gradient-to-r from-brand-orange/10 to-brand-blue/10 rounded-lg border">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Clock className="h-5 w-5 text-brand-orange" />
-              <span className="font-semibold text-lg">Limited Time Only</span>
+            <p className="text-muted-foreground mb-4">{variant.description}</p>
+            
+            <div className="space-y-2 mb-4">
+              {variant.benefits.map((benefit, index) => (
+                <div key={index} className="flex items-start gap-2 text-sm text-left">
+                  <div className="w-2 h-2 bg-brand-orange rounded-full mt-2 flex-shrink-0" />
+                  <span>{benefit}</span>
+                </div>
+              ))}
             </div>
-            <p className="text-muted-foreground mb-3">
-              Get your business scanned for FREE and discover exactly why you're losing customers to competitors.
-            </p>
-            <div className="text-3xl font-bold text-primary mb-1">
-              FREE Business Scan
-            </div>
-            <div className="text-sm text-muted-foreground line-through">
-              Usually £47
+
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Clock className="h-4 w-4 text-brand-orange" />
+              <span className="text-sm font-medium text-brand-orange">{variant.urgency}</span>
             </div>
           </div>
 
           <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">
-              ✓ See your Google Business Profile score<br/>
-              ✓ Get personalized improvement recommendations<br/>
-              ✓ Discover hidden competitor advantages<br/>
-              ✓ No obligation - completely free
-            </p>
-
             <div className="flex flex-col gap-2">
               <Button 
                 onClick={() => {
@@ -86,7 +147,7 @@ export const ExitIntentPopup = () => {
                 }}
                 className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground w-full"
               >
-                Get My FREE Scan Now
+                {variant.cta}
               </Button>
               
               <TrialPopup>

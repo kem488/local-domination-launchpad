@@ -105,14 +105,24 @@ export const ChatWidget = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-24 right-6 z-50 w-80 h-96 flex flex-col shadow-xl animate-fade-in">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg font-semibold text-foreground">
-              Chat with us
-            </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Ask about our Local Market Domination System
-            </p>
+        <Card className="fixed bottom-24 right-6 z-50 w-80 h-96 flex flex-col shadow-xl animate-fade-in bg-background/95 backdrop-blur-md border border-border/50">
+          <CardHeader className="pb-3 flex-row items-center justify-between space-y-0">
+            <div>
+              <CardTitle className="text-lg font-semibold text-foreground">
+                Chat with us
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Ask about our Local Market Domination System
+              </p>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(false)}
+              className="h-8 w-8 text-muted-foreground hover:text-foreground"
+            >
+              <X className="h-4 w-4" />
+            </Button>
           </CardHeader>
           
           <CardContent className="flex-1 flex flex-col gap-3 p-4 pt-0">
