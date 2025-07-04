@@ -26,12 +26,15 @@ export const CTA = () => {
         {/* Main Heading */}
         <div className="space-y-6">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-            <span className="hidden sm:inline">Join 200+ UK Tradespeople Already Growing</span>
-            <span className="sm:hidden">Join 200+ UK Tradespeople</span>
+            <span className="hidden sm:inline">Built for UK Tradespeople Who Want to Dominate Local Search</span>
+            <span className="sm:hidden">Dominate Local Search</span>
           </h2>
           
           <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Stop struggling with inconsistent leads. Get the professional tools and strategies that work for your trade.
+            Stop wondering why your competitors always appear first on Google. 
+            Our comprehensive analysis reveals their exact strategy and shows you 
+            how to beat them at their own game. Used by plumbers, electricians, 
+            builders, and other skilled tradespeople across the UK.
           </p>
         </div>
 

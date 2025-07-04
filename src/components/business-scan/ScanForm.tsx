@@ -30,11 +30,34 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
     <div className="text-center">
       <div className="mb-8">
         <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-          Free Business Analysis
+          Get Your Free Competitor Intelligence Report
         </h3>
-        <p className="text-muted-foreground text-base md:text-lg">
-          Get your personalized growth report in 30 seconds
+        <p className="text-muted-foreground text-base md:text-lg mb-6">
+          Our AI-powered analysis will scan your Google Business Profile against 
+          your top competitors and reveal exactly why they're getting more calls. 
+          You'll discover the specific tactics they use and get a step-by-step 
+          plan to outrank them.
         </p>
+        
+        {/* Trust Elements */}
+        <div className="grid grid-cols-2 gap-2 text-xs text-success mb-6">
+          <div className="flex items-center gap-1">
+            <span className="text-success">✅</span>
+            <span>100% Free, No Credit Card Required</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="text-success">✅</span>
+            <span>500+ Businesses Analyzed This Week</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="text-success">✅</span>
+            <span>Live Google Data (Not Outdated Reports)</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="text-success">✅</span>
+            <span>Instant Results in Under 30 Seconds</span>
+          </div>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto">
@@ -80,13 +103,13 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
           className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect touch-target h-14 font-semibold"
           disabled={isSubmitting || !businessName.trim() || !businessLocation.trim()}
         >
-          {isSubmitting ? 'Analyzing Your Business...' : 'Get Free Analysis Now'}
+          {isSubmitting ? 'Analyzing Your Competitors...' : 'Reveal My Competitors\' Secrets Now'}
         </Button>
 
       </form>
 
       <div className="mt-6 text-sm text-muted-foreground">
-        ✓ Uses live Google data &nbsp; ✓ AI-powered insights &nbsp; ✓ Instant results
+        ✓ Live Google data analysis &nbsp; ✓ Competitor strategy revealed &nbsp; ✓ Instant insights
       </div>
     </div>
   );

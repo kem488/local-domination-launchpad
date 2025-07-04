@@ -5,20 +5,20 @@ import { LucideIcon, Cpu, ShieldCheck, Layers, Zap, Eye } from "lucide-react";
 import heroImage from "@/assets/hero-image.png";
 const features = [{
   icon: Eye,
-  title: "Review Generation",
-  description: "Automatically collect 25+ genuine reviews in 90 days."
+  title: "Competitor Vulnerability Report",
+  description: "We'll show you exactly where your competitors are weak and how to exploit those gaps to steal their customers."
 }, {
   icon: ShieldCheck,
-  title: "Local SEO Domination",
-  description: "Outrank competitors in Google search results."
+  title: "Local Search Domination Plan",
+  description: "Discover the hidden ranking factors your competitors use to appear first on Google Maps and local search."
 }, {
   icon: Layers,
-  title: "GBP Optimization",
-  description: "Complete Google Business Profile management."
+  title: "Review Generation System",
+  description: "The exact process top-ranking businesses use to generate 25+ genuine reviews monthly without chasing customers."
 }, {
   icon: Zap,
-  title: "Lead Automation",
-  description: "Never chase customers for reviews again."
+  title: "Customer Leak Detection",
+  description: "Find out where you're losing potential customers and how to plug those leaks before they call your competitors."
 }];
 export const Hero = () => {
   return <div className="min-h-svh w-screen bg-linear-to-br from-[#000] to-[#1A2428] text-white flex flex-col items-center justify-center p-8 relative overflow-hidden">
@@ -34,37 +34,38 @@ export const Hero = () => {
           
           <div className="space-y-6 flex items-center justify-center flex-col">
             <Badge variant="secondary" className="bg-brand-orange/10 text-brand-orange border-brand-orange/20 mb-4">
-              Transform Your Local Business in 90 Days
+              Competitor Intelligence Report
             </Badge>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl text-center leading-tight">
-              Stop the Feast-or-Famine Cycle Forever
+              Why Your Competitors Get 10x More Calls Than You
             </h1>
             <p className="text-xl md:text-2xl text-neutral-300 max-w-3xl text-center leading-relaxed">
-              Join 200+ UK tradespeople who've gone from "Google Who?" to local market leaders. 
-              Get 25+ reviews, dominate local search, and never worry about leads again.
+              We'll analyze your Google Business Profile against your top 3 competitors 
+              and reveal exactly what they're doing that you're not. Most local businesses 
+              are missing these crucial elements - is yours one of them?
             </p>
             
             {/* Trust Signals */}
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 py-6">
               <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
                 <ShieldCheck className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">Google Partner</span>
+                <span className="text-sm font-medium text-white/90">Google Partner Certified</span>
               </div>
               <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
                 <Eye className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">500+ Businesses</span>
+                <span className="text-sm font-medium text-white/90">500+ Business Audits</span>
               </div>
               <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
-                <ShieldCheck className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">GDPR Secure</span>
+                <Zap className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/90">7+ Years Experience</span>
               </div>
               <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
                 <Cpu className="h-4 w-4 text-white/80" />
                 <span className="text-sm font-medium text-white/90">90-Day Guarantee</span>
               </div>
               <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
-                <Zap className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">30sec Analysis</span>
+                <Layers className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/90">Live Google Data</span>
               </div>
             </div>
 
@@ -73,7 +74,7 @@ export const Hero = () => {
                 onClick={() => document.getElementById('business-scan')?.scrollIntoView({ behavior: 'smooth' })}
                 className="text-lg px-12 py-4 rounded-xl bg-brand-orange text-brand-orange-foreground border shadow-lg hover:bg-brand-orange/90 btn-hover-effect font-semibold w-full sm:w-auto min-w-[280px]"
               >
-                Get Free Business Analysis
+                Show Me My Competitors' Secrets
               </Button>
               <button 
                 onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}

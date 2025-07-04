@@ -9,6 +9,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export const FAQ = () => {
   const faqs = [
     {
+      question: "What exactly will I discover about my competitors?",
+      answer: "You'll see their exact review generation strategy, local SEO tactics, and the specific keywords they're targeting to outrank you. We'll reveal their Google Business Profile optimization secrets and show you the gaps you can exploit."
+    },
+    {
+      question: "How is this different from other analysis tools?",
+      answer: "We use live Google data and focus specifically on local search dominance strategies used by your direct competitors. Most tools give generic advice - we show you exactly what's working in your specific area and trade."
+    },
+    {
+      question: "What if I don't have any real competitors?",
+      answer: "Every local business has competitors - we'll identify businesses competing for your exact keywords and customer base. Even if you think you're unique, we'll find who's ranking for the terms your customers are searching."
+    },
+    {
       question: "How quickly will I see results?",
       answer: "Most clients see their first automated review requests within 7 days. Expect 25+ reviews, 4.5+ star average, and 2x profile views within 90 days. Many tradespeople see dramatic improvements in 30 days - our system works fast because it targets the exact moments when customers are most likely to leave positive reviews."
     },
@@ -33,20 +45,8 @@ export const FAQ = () => {
       answer: "Yes! Our system has been tested and proven effective across all local service industries including plumbing, electrical, roofing, cleaning, landscaping, HVAC, pest control, and more."
     },
     {
-      question: "What ongoing support do I get?",
-      answer: "You'll get priority email support, access to our knowledge base, monthly group strategy calls for the first 6 months, and lifetime access to all system updates and improvements."
-    },
-    {
-      question: "Can I cancel anytime?",
-      answer: "There's nothing to cancel! This is a one-time payment for lifetime access. No recurring fees, no hidden costs, no contracts."
-    },
-    {
-      question: "How is this different from other review tools?",
-      answer: "Basic tools cost £70-130 and just send review requests. Enterprise solutions cost £400+ monthly. We bridge that gap - giving you enterprise-level AI automation, complete Google optimization, 50+ directory listings, reputation monitoring, and customer journey automation, specifically designed for UK tradespeople."
-    },
-    {
       question: "What if I already have some reviews?",
-      answer: "Perfect! Our system works whether you have 0 reviews or 100. We'll analyze your current situation and optimize from there. Many clients with existing reviews see even faster results."
+      answer: "Perfect! Our system works whether you have 0 reviews or 100. We'll analyze your current situation and optimize from there. Many clients with existing reviews see even faster results because we can identify exactly what's working and amplify it."
     }
   ];
 
