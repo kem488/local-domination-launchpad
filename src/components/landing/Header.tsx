@@ -30,7 +30,9 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold text-primary">SyngularityLabs.com</h1>
+              <h1 className="text-2xl font-black bg-gradient-to-r from-brand-blue via-primary to-brand-orange bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-pointer tracking-tight">
+                SyngularityLabs.com
+              </h1>
             </div>
           </div>
           
