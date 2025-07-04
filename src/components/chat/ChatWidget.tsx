@@ -93,7 +93,7 @@ export const ChatWidget = () => {
   };
 
   return (
-    <>
+    <div data-chat-widget="true" data-chat-open={isOpen.toString()}>
       {/* Chat Toggle Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
@@ -177,6 +177,6 @@ export const ChatWidget = () => {
           </CardContent>
         </Card>
       )}
-    </>
+    </div>
   );
 };

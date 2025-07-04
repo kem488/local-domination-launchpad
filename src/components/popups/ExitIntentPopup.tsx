@@ -69,7 +69,11 @@ export const ExitIntentPopup = () => {
 
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !hasShown) {
+      // Don't show popup if chat widget is open
+      const chatWidget = document.querySelector('[data-chat-widget="true"]');
+      const isChatOpen = chatWidget?.getAttribute('data-chat-open') === 'true';
+      
+      if (e.clientY <= 0 && !hasShown && !isChatOpen) {
         setIsOpen(true);
         setHasShown(true);
       }
