@@ -8,10 +8,9 @@ import { SystemOverview } from "@/components/landing/SystemOverview";
 import { FAQ } from "@/components/landing/FAQ";
 import { CTA } from "@/components/landing/CTA";
 import { Footer } from "@/components/landing/Footer";
-import { LiveNotifications } from "@/components/ui/live-notifications";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ExitIntentPopup } from "@/components/popups/ExitIntentPopup";
-import { SocialProofPopups } from "@/components/optimization/SocialProofPopups";
+import { RealScanActivity } from "@/components/ui/real-scan-activity";
 import { StickyMobileCTA } from "@/components/ui/sticky-mobile-cta";
 import { ReviewPlatformsSlider } from "@/components/ui/review-platforms-slider";
 import { useConversionTracking } from "@/hooks/useConversionTracking";
@@ -68,10 +67,9 @@ const Index = () => {
         </section>
       </main>
       <Footer />
-      <LiveNotifications />
       <ChatWidget />
       <ExitIntentPopup />
-      <SocialProofPopups />
+      <RealScanActivity />
       <StickyMobileCTA />
     </div>
   );
