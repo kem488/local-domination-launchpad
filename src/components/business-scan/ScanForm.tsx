@@ -6,24 +6,22 @@ import { Search, MapPin, User, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ScanFormProps {
-  onScanStart: (businessName: string, businessLocation: string, name: string, email: string) => void;
+  onScanStart: (businessName: string, businessLocation: string) => void;
 }
 
 export const ScanForm = ({ onScanStart }: ScanFormProps) => {
   const [businessName, setBusinessName] = useState("");
   const [businessLocation, setBusinessLocation] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!businessName.trim() || !businessLocation.trim() || !name.trim() || !email.trim()) return;
+    if (!businessName.trim() || !businessLocation.trim()) return;
     
     setIsSubmitting(true);
-    await onScanStart(businessName.trim(), businessLocation.trim(), name.trim(), email.trim());
+    await onScanStart(businessName.trim(), businessLocation.trim());
     setIsSubmitting(false);
   };
 
@@ -31,15 +29,15 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
   return (
     <div className="text-center">
       <div className="mb-8">
-        <h3 className="text-2xl font-bold text-foreground mb-4">
-          Enter Your Business Details
+        <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+          Free Business Analysis
         </h3>
-        <p className="text-muted-foreground">
-          We'll analyze your Google Business Profile and show you exactly how to get more customers
+        <p className="text-muted-foreground text-base md:text-lg">
+          Get your personalized growth report in 30 seconds
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto">
         <div className="space-y-2 text-left">
           <Label htmlFor="businessName" className="text-sm font-medium">
             Business Name *
@@ -52,7 +50,7 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
               placeholder="e.g. Joe's Plumbing Services"
               value={businessName}
               onChange={(e) => setBusinessName(e.target.value)}
-              className="pl-10"
+              className="pl-10 h-12 text-base touch-target"
               required
             />
           </div>
@@ -70,43 +68,7 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
               placeholder="e.g. Manchester or M1 2AB"
               value={businessLocation}
               onChange={(e) => setBusinessLocation(e.target.value)}
-              className="pl-10"
-              required
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2 text-left">
-          <Label htmlFor="name" className="text-sm font-medium">
-            Your Name *
-          </Label>
-          <div className="relative">
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              id="name"
-              type="text"
-              placeholder="e.g. John Smith"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="pl-10"
-              required
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2 text-left">
-          <Label htmlFor="email" className="text-sm font-medium">
-            Email Address *
-          </Label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              id="email"
-              type="email"
-              placeholder="e.g. john@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="pl-10"
+              className="pl-10 h-12 text-base touch-target"
               required
             />
           </div>
@@ -115,16 +77,16 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
         <Button
           type="submit"
           size="lg"
-          className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
-          disabled={isSubmitting || !businessName.trim() || !businessLocation.trim() || !name.trim() || !email.trim()}
+          className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect touch-target h-14 font-semibold"
+          disabled={isSubmitting || !businessName.trim() || !businessLocation.trim()}
         >
-          {isSubmitting ? 'Starting Scan...' : 'Get My Free Business Scan'}
+          {isSubmitting ? 'Analyzing Your Business...' : 'Get Free Analysis Now'}
         </Button>
 
       </form>
 
-      <div className="mt-6 text-xs text-muted-foreground">
-        This scan uses live Google data and AI analysis • 100% Free • No spam ever
+      <div className="mt-6 text-sm text-muted-foreground">
+        ✓ Uses live Google data &nbsp; ✓ AI-powered insights &nbsp; ✓ Instant results
       </div>
     </div>
   );

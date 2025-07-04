@@ -40,7 +40,7 @@ export const useBusinessScan = () => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
-  const handleScanStart = async (businessName: string, businessLocation: string, name: string, email: string) => {
+  const handleScanStart = async (businessName: string, businessLocation: string) => {
     setScanState('scanning');
     setProgress(0);
     setError(null);
@@ -71,9 +71,7 @@ export const useBusinessScan = () => {
           body: JSON.stringify({
             businessName,
             businessLocation,
-            name,
-            email,
-            source: 'initial-scan'
+            source: 'business-scan'
           })
         });
 

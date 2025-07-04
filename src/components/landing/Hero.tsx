@@ -68,19 +68,19 @@ export const Hero = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 items-center pt-4">
+            <div className="flex flex-col items-center pt-4 space-y-4">
               <Button 
                 onClick={() => document.getElementById('business-scan')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-lg px-10 py-4 rounded-xl bg-brand-orange text-brand-orange-foreground border shadow-lg hover:bg-brand-orange/90 btn-hover-effect font-semibold"
+                className="text-lg px-12 py-4 rounded-xl bg-brand-orange text-brand-orange-foreground border shadow-lg hover:bg-brand-orange/90 btn-hover-effect font-semibold w-full sm:w-auto min-w-[280px]"
               >
-                Start Free Trial
+                Get Free Business Analysis
               </Button>
-              <Button 
+              <button 
                 onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-lg px-10 py-4 rounded-xl bg-transparent text-white border border-white/20 shadow-lg hover:bg-white/10 btn-hover-effect"
+                className="text-white/80 hover:text-white text-sm underline underline-offset-4 transition-colors"
               >
-                See How It Works
-              </Button>
+                See how it works
+              </button>
             </div>
           </div>
         </div>
