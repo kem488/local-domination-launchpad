@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Star, Quote } from "lucide-react";
 import { MobileTestimonials } from "@/components/ui/mobile-testimonials";
+import testimonialsImage from "@/assets/testimonials.png";
 
 export const Testimonials = () => {
   const testimonials = [
@@ -80,6 +81,15 @@ export const Testimonials = () => {
           <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto px-2">
             See how local service businesses across the UK have transformed their online presence and grown their customer base.
           </p>
+        </div>
+
+        {/* Testimonials Image */}
+        <div className="mb-8 md:mb-16">
+          <img 
+            src={testimonialsImage} 
+            alt="Customer Testimonials and Reviews"
+            className="w-full max-w-4xl mx-auto rounded-lg shadow-2xl"
+          />
         </div>
 
         {/* Mobile-optimized Stats */}
