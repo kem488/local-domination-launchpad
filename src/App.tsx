@@ -11,6 +11,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { Auth } from "./pages/Auth";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { PaymentProtectedRoute } from "@/components/auth/PaymentProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -26,9 +27,9 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/success" element={<Success />} />
             <Route path="/onboarding" element={
-              <ProtectedRoute>
+              <PaymentProtectedRoute>
                 <Onboarding />
-              </ProtectedRoute>
+              </PaymentProtectedRoute>
             } />
             <Route path="/dashboard" element={
               <ProtectedRoute>

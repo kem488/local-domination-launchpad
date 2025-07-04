@@ -22,7 +22,8 @@ export const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/onboarding');
+      // Don't automatically redirect to onboarding - user needs trial/payment
+      navigate('/');
     }
     
     // Check if coming from scan results with trial mode

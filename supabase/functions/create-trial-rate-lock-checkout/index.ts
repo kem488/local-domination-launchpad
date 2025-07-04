@@ -102,7 +102,10 @@ serve(async (req) => {
       logStep("New customer created", { customerId });
     }
 
-    // Create or update client_onboarding record
+    // Create or update client_onboarding record with trial status
+    const trialExpiresAt = new Date();
+    trialExpiresAt.setDate(trialExpiresAt.getDate() + 14); // 14 days from now
+
     const { error: onboardingError } = await supabase
       .from('client_onboarding')
       .upsert({
@@ -113,7 +116,11 @@ serve(async (req) => {
         industry: businessType,
         onboarding_step: 1,
         status: 'trial_started',
-        address: businessLocation || null // Store scanned location if available
+        address: businessLocation || null, // Store scanned location if available
+        payment_status: 'trial_active',
+        stripe_customer_id: customerId,
+        trial_active: true,
+        trial_expires_at: trialExpiresAt.toISOString()
       }, { 
         onConflict: 'user_id'
       });
