@@ -1,83 +1,73 @@
+import { Scene } from "@/components/ui/hero-section";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MoveRight, PhoneCall } from "lucide-react";
-import { TrialPopup } from "./TrialPopup";
-import { CalendarBooking } from "../calendar/CalendarBooking";
-import { useConversionTracking } from "@/hooks/useConversionTracking";
+import { LucideIcon, Cpu, ShieldCheck, Layers, Zap, Eye } from "lucide-react";
+
+const features = [
+  {
+    icon: Cpu,
+    title: "Performance",
+    description: "Ultra-fast data processing in every situation.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Security",
+    description: "Advanced protection for complete peace of mind.",
+  },
+  {
+    icon: Layers,
+    title: "Modularity",
+    description: "Easy integration with existing architecture.",
+  },
+  {
+    icon: Zap,
+    title: "Responsiveness",
+    description: "Instant response to every command.",
+  },
+];
 
 export const Hero = () => {
-  const { trackCTAClick } = useConversionTracking();
-
-  const handleTrialClick = () => {
-    trackCTAClick('Get Started Now', 'hero_primary');
-  };
-
-  const handleHealthCheckClick = () => {
-    trackCTAClick('Free Google Business Health Check', 'hero_secondary');
-  };
-
   return (
-    <div className="w-full py-20 lg:py-40">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 gap-8 items-center md:grid-cols-2">
-          <div className="flex gap-4 flex-col">
-            <div>
-              <Badge variant="outline">End the Feast-or-Famine Cycle</Badge>
-            </div>
-            <div className="flex gap-4 flex-col">
-              <h1 className="text-5xl md:text-7xl max-w-lg tracking-tighter text-left font-regular">
-                We help UK trades get to the top 3 spots of Google in their area in 90 days using AI
-              </h1>
-              <p className="text-xl leading-relaxed tracking-tight text-muted-foreground max-w-md text-left">
-                Add 27+ new 5-star reviews, hit a 4.6-star rating and appear in Google's Top-3 Map Pack for your main service keyword <strong>within 90 days — or we work free until you do.</strong> Our 6-phase methodology transforms you from "Google Who?" to the go-to business customers find first.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <CalendarBooking>
-                <Button 
-                  size="lg" 
-                  className="gap-4" 
-                  variant="outline"
-                  onClick={handleHealthCheckClick}
-                >
-                  Free Google Business Health Check <PhoneCall className="w-4 h-4" />
-                </Button>
-              </CalendarBooking>
-              <TrialPopup>
-                <Button 
-                  size="lg" 
-                  className="gap-4 bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground"
-                  onClick={handleTrialClick}
-                >
-                  Get Started Now <MoveRight className="w-4 h-4" />
-                </Button>
-              </TrialPopup>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-8">
-            <div className="bg-muted rounded-md aspect-square flex items-center justify-center">
-              <img 
-                src="/api/placeholder/300/300" 
-                alt="Google Business Profile optimization dashboard showing 5-star reviews"
-                className="w-full h-full object-cover rounded-md"
-              />
-            </div>
-            <div className="bg-muted rounded-md row-span-2 flex items-center justify-center">
-              <img 
-                src="/api/placeholder/300/600" 
-                alt="UK trades business ranking #1 on Google Maps search results"
-                className="w-full h-full object-cover rounded-md"
-              />
-            </div>
-            <div className="bg-muted rounded-md aspect-square flex items-center justify-center">
-              <img 
-                src="/api/placeholder/300/300" 
-                alt="AI-powered review management system generating customer testimonials"
-                className="w-full h-full object-cover rounded-md"
-              />
+    <div className="min-h-svh w-screen bg-linear-to-br from-[#000] to-[#1A2428] text-white flex flex-col items-center justify-center p-8">
+      <div className="w-full max-w-6xl space-y-12 relative z-10">
+        <div className="flex flex-col items-center text-center space-y-8">
+          <Badge variant="secondary" className="backdrop-blur-sm bg-white/10 border border-white/20 text-white hover:bg-white/20 px-4 py-2 rounded-full">
+            ✨ Next Generation Tools
+          </Badge>
+          
+          <div className="space-y-6 flex items-center justify-center flex-col ">
+            <h1 className=" text-3xl md:text-6xl font-semibold tracking-tight max-w-3xl">
+              Discover minimalism and power in one place
+            </h1>
+            <p className="text-lg text-neutral-300 max-w-2xl">
+              Designed with aesthetics and performance in mind. Experience ultra-fast processing, advanced security, and intuitive design.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 items-center">
+              <Button className="text-sm px-8 py-3 rounded-xl bg-white text-black border border-white/10 shadow-none hover:bg-white/90 transition-none">
+                Get Started
+              </Button>
+              <Button className="text-sm px-8 py-3 rounded-xl bg-transparent text-white border border-white/20 shadow-none hover:bg-white/10 transition-none">
+                Learn More
+              </Button>
             </div>
           </div>
         </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+          {features.map((feature, idx) => (
+            <div
+              key={idx}
+              className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl p-4 md:p-6 h-40 md:h-48 flex flex-col justify-start items-start space-y-2 md:space-y-3"
+            >
+              <feature.icon size={18} className="text-white/80 md:w-5 md:h-5" />
+              <h3 className="text-sm md:text-base font-medium">{feature.title}</h3>
+              <p className="text-xs md:text-sm text-neutral-400">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className='absolute inset-0'>
+        <Scene />
       </div>
     </div>
   );
