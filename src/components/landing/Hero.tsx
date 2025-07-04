@@ -54,25 +54,11 @@ export const Hero = () => {
               </TrialPopup>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-8">
-            <div className="bg-muted rounded-md aspect-square flex items-center justify-center overflow-hidden">
+          <div className="flex justify-center">
+            <div className="bg-muted rounded-md w-80 h-96 flex items-center justify-center overflow-hidden">
               <img 
                 src="/lovable-uploads/fbb2edc0-ae82-4dac-b283-74fe41f81b7e.png" 
                 alt="Tradesperson's phone showing 127 five-star reviews, 4.8 rating, and #1 local search ranking"
-                className="w-full h-full object-cover rounded-md"
-              />
-            </div>
-            <div className="bg-muted rounded-md row-span-2 flex items-center justify-center">
-              <img 
-                src="/api/placeholder/300/600" 
-                alt="UK trades business ranking #1 on Google Maps search results"
-                className="w-full h-full object-cover rounded-md"
-              />
-            </div>
-            <div className="bg-muted rounded-md aspect-square flex items-center justify-center">
-              <img 
-                src="/api/placeholder/300/300" 
-                alt="AI-powered review management system generating customer testimonials"
                 className="w-full h-full object-cover rounded-md"
               />
             </div>
