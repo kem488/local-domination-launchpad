@@ -6,60 +6,60 @@ import { MobileTestimonials } from "@/components/ui/mobile-testimonials";
 import testimonialsImage from "@/assets/testimonials.png";
 
 export const Testimonials = () => {
-  const testimonials = [
+  const caseStudies = [
     {
       id: "1",
-      name: "Mark Richardson",
-      business: "Richardson Plumbing, Manchester",
-      avatar: "MR",
-      rating: 5,
-      text: "Went from feast-or-famine to consistent £8k months. The automated system brings me customers while I sleep. Never worrying about the next job again.",
-      results: "Doubled leads in 30 days, 47 new reviews"
+      name: "Plumbing Service",
+      business: "Greater Manchester Area",
+      avatar: "PS",
+      rating: 0, // Remove rating display for case studies
+      text: "A local plumbing service struggling with inconsistent lead flow implemented our 6-phase system to automate review collection and optimize their Google Business Profile.",
+      results: "Achieved consistent monthly bookings through automated review generation and improved local search visibility"
     },
     {
       id: "2",
-      name: "Sarah Thompson", 
-      business: "Thompson's Cleaning Services, Birmingham",
-      avatar: "ST",
-      rating: 5,
-      text: "I was spending 3 hours a week chasing reviews. Now the system does it automatically and my rating went from 3.2 to 4.8 stars. Complete game changer.",
-      results: "From 8 to 47 reviews, saved 3 hours weekly"
+      name: "Cleaning Company", 
+      business: "West Midlands Region",
+      avatar: "CC",
+      rating: 0,
+      text: "A cleaning service spending hours weekly chasing customer reviews automated their reputation management using our proven methodology.",
+      results: "Reduced manual review management time while systematically improving online ratings"
     },
     {
       id: "3",
-      name: "David Clarke",
-      business: "Clarke's Electrical, Leeds", 
-      avatar: "DC",
-      rating: 5,
-      text: "I used to be invisible on Google. Now I'm the first electrician customers see when they search 'electrician Leeds'. Bookings up 200%.",
-      results: "Page 1 rankings, 200% booking increase"
+      name: "Electrical Contractor",
+      business: "Yorkshire Region", 
+      avatar: "EC",
+      rating: 0,
+      text: "An electrical contractor with poor Google visibility implemented our local SEO optimization and review automation system to improve search rankings.",
+      results: "Achieved first-page local search rankings through systematic Google Business Profile optimization"
     },
     {
       id: "4",
-      name: "Emma Williams",
-      business: "Williams Garden Design, Bristol",
-      avatar: "EW", 
-      rating: 5,
-      text: "£97 for lifetime access? No-brainer. One landscaping job from the extra leads paid for it 50x over. Now I'm booked solid through winter.",
-      results: "Booked solid, £97 ROI in first job"
+      name: "Garden Design Service",
+      business: "South West Region",
+      avatar: "GD",
+      rating: 0,
+      text: "A landscaping business used our system to build consistent online presence and automate customer feedback collection during seasonal fluctuations.",
+      results: "Maintained steady bookings during traditionally quiet periods through improved online visibility"
     },
     {
       id: "5",
-      name: "James Mitchell",
-      business: "Mitchell Roofing, Liverpool",
-      avatar: "JM",
-      rating: 5,
-      text: "My competitors can't figure out how I suddenly got 52 five-star reviews. They're all scrambling to copy me but they're already too far behind.",
-      results: "52 new reviews, market dominance"
+      name: "Roofing Contractor",
+      business: "North West Region",
+      avatar: "RC",
+      rating: 0,
+      text: "A roofing company implemented our review automation system to systematically collect customer feedback and build market credibility.",
+      results: "Built strong online reputation through consistent review collection and Google Business Profile management"
     },
     {
       id: "6",
-      name: "Lisa Roberts",
-      business: "Roberts Pest Control, Newcastle", 
-      avatar: "LR",
-      rating: 5,
-      text: "I went from Page 3 of Google to the top result for 'pest control Newcastle'. The system actually works exactly as promised.",
-      results: "From invisible to #1 local ranking"
+      name: "Pest Control Service",
+      business: "North East Region",
+      avatar: "PC",
+      rating: 0,
+      text: "A pest control business transformed their local search presence using our methodology to optimize their Google Business Profile and automate customer outreach.",
+      results: "Improved from poor search visibility to prominent local search positioning"
     }
   ];
 
@@ -75,19 +75,19 @@ export const Testimonials = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 md:mb-4 px-2">
-            <span className="hidden sm:inline">Real Results from Real UK Businesses</span>
-            <span className="sm:hidden">Real UK Business Results</span>
+            <span className="hidden sm:inline">Case Study Scenarios: Our Methodology in Action</span>
+            <span className="sm:hidden">Methodology Case Studies</span>
           </h2>
           <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto px-2">
-            See how local service businesses across the UK have transformed their online presence and grown their customer base.
+            Example scenarios showing how our 6-phase system helps UK service businesses build stronger online presence and automated review collection.
           </p>
         </div>
 
-        {/* Testimonials Image */}
+        {/* Case Studies Image */}
         <div className="mb-8 md:mb-16">
           <img 
             src={testimonialsImage} 
-            alt="Customer Testimonials and Reviews"
+            alt="Case Study Examples and Business Scenarios"
             className="w-full max-w-4xl mx-auto rounded-lg shadow-2xl"
           />
         </div>
@@ -102,8 +102,8 @@ export const Testimonials = () => {
           ))}
         </div>
 
-        {/* Mobile-optimized Testimonials */}
-        <MobileTestimonials testimonials={testimonials} />
+        {/* Mobile-optimized Case Studies */}
+        <MobileTestimonials testimonials={caseStudies} />
 
         <div className="text-center mt-8 md:mt-12">
           <Card className="inline-block p-4 md:p-6 bg-gradient-to-r from-success/10 to-primary/10 border-success/20 mx-2">
