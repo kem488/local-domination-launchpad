@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.50.3";
+import { checkRateLimit, validateEmail, validateUKPhone, validateUKPostcode, sanitizeString, logSecurityEvent } from "../_shared/security.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -17,28 +18,33 @@ interface LeadCaptureRequest {
   source?: string;
 }
 
-// Email validation function
-function isValidEmail(email: string): boolean {
-  return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
-}
-
-// UK phone validation function  
-function isValidUKPhone(phone: string): boolean {
-  const cleaned = phone.replace(/\s/g, '');
-  return /^(\+44|0)[0-9]{10,11}$/.test(cleaned);
-}
-
-// UK postcode validation function
-function isValidUKPostcode(postcode: string): boolean {
-  return /^[A-Z]{1,2}[0-9][A-Z0-9]?\s?[0-9][A-Z]{2}$/i.test(postcode.replace(/\s/g, ''));
-}
-
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Rate limiting check
+    const rateLimitResult = await checkRateLimit(req, supabase, {
+      maxRequests: 5,
+      windowMinutes: 60,
+      endpoint: 'capture-lead'
+    });
+
+    if (!rateLimitResult.allowed) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Too many requests. Please try again later.' 
+      }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const requestData = await req.json();
     
     // Input validation for email (required)
@@ -53,7 +59,8 @@ const handler = async (req: Request): Promise<Response> => {
     }
     
     const email = requestData.email.trim().toLowerCase();
-    if (!isValidEmail(email)) {
+    if (!validateEmail(email)) {
+      await logSecurityEvent(supabase, 'invalid_email', req, { email });
       return new Response(JSON.stringify({ 
         success: false, 
         error: 'Please enter a valid email address' 
@@ -64,17 +71,18 @@ const handler = async (req: Request): Promise<Response> => {
     }
     
     // Sanitize and validate optional fields
-    const scanId = requestData.scanId ? requestData.scanId.trim() : null;
-    const name = requestData.name ? requestData.name.trim().slice(0, 50) : null;
-    const businessName = requestData.businessName ? requestData.businessName.trim().slice(0, 100) : null;
-    const businessLocation = requestData.businessLocation ? requestData.businessLocation.trim().slice(0, 200) : null;
-    const source = requestData.source ? requestData.source.trim().slice(0, 50) : 'unknown';
+    const scanId = requestData.scanId ? sanitizeString(requestData.scanId, 50) : null;
+    const name = requestData.name ? sanitizeString(requestData.name, 50) : null;
+    const businessName = requestData.businessName ? sanitizeString(requestData.businessName, 100) : null;
+    const businessLocation = requestData.businessLocation ? sanitizeString(requestData.businessLocation, 200) : null;
+    const source = requestData.source ? sanitizeString(requestData.source, 50) : 'unknown';
     
     // Validate phone if provided
     let phone = null;
     if (requestData.phone && typeof requestData.phone === 'string') {
       phone = requestData.phone.trim();
-      if (phone && !isValidUKPhone(phone)) {
+      if (phone && !validateUKPhone(phone)) {
+        await logSecurityEvent(supabase, 'invalid_phone', req, { phone });
         return new Response(JSON.stringify({ 
           success: false, 
           error: 'Please enter a valid UK phone number' 
@@ -89,7 +97,8 @@ const handler = async (req: Request): Promise<Response> => {
     let postcode = null;
     if (requestData.postcode && typeof requestData.postcode === 'string') {
       postcode = requestData.postcode.trim().toUpperCase();
-      if (postcode && !isValidUKPostcode(postcode)) {
+      if (postcode && !validateUKPostcode(postcode)) {
+        await logSecurityEvent(supabase, 'invalid_postcode', req, { postcode });
         return new Response(JSON.stringify({ 
           success: false, 
           error: 'Please enter a valid UK postcode' 
@@ -99,11 +108,6 @@ const handler = async (req: Request): Promise<Response> => {
         });
       }
     }
-    
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
-    const supabase = createClient(supabaseUrl, supabaseKey);
 
     if (scanId) {
       // Update existing scan with lead information

@@ -529,6 +529,30 @@ export type Database = {
         }
         Relationships: []
       }
+      rate_limits: {
+        Row: {
+          endpoint: string
+          id: string
+          ip_address: string
+          request_count: number
+          window_start: string
+        }
+        Insert: {
+          endpoint: string
+          id?: string
+          ip_address: string
+          request_count?: number
+          window_start?: string
+        }
+        Update: {
+          endpoint?: string
+          id?: string
+          ip_address?: string
+          request_count?: number
+          window_start?: string
+        }
+        Relationships: []
+      }
       scan_reports: {
         Row: {
           created_at: string
@@ -560,6 +584,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      security_logs: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          ip_address: string | null
+          metadata: Json | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
       }
       stripe_customers: {
         Row: {
@@ -727,6 +781,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       voice_entries: {
         Row: {

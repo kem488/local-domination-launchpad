@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.50.3";
+import { checkRateLimit, sanitizeString, logSecurityEvent } from "../_shared/security.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -30,6 +31,27 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Rate limiting check
+    const rateLimitResult = await checkRateLimit(req, supabase, {
+      maxRequests: 10,
+      windowMinutes: 60,
+      endpoint: 'scan-business'
+    });
+
+    if (!rateLimitResult.allowed) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Too many requests. Please try again later.' 
+      }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const requestData = await req.json();
     
     // Input validation
@@ -54,10 +76,14 @@ const handler = async (req: Request): Promise<Response> => {
     }
     
     // Sanitize inputs
-    const businessName = requestData.businessName.trim().slice(0, 100);
-    const businessLocation = requestData.businessLocation.trim().slice(0, 200);
+    const businessName = sanitizeString(requestData.businessName, 100);
+    const businessLocation = sanitizeString(requestData.businessLocation, 200);
     
     if (businessName.length < 2) {
+      await logSecurityEvent(supabase, 'invalid_input', req, { 
+        field: 'businessName', 
+        value: businessName 
+      });
       return new Response(JSON.stringify({ 
         success: false, 
         error: 'Business name must be at least 2 characters' 
@@ -67,16 +93,12 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
     
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const googleApiKey = Deno.env.get('GOOGLE_PLACES_API_KEY')!;
     
     if (!googleApiKey) {
       console.error('Google Places API key not configured');
       throw new Error('API configuration error');
     }
-    
-    const supabase = createClient(supabaseUrl, supabaseKey);
 
     console.log(`Starting scan for: "${businessName}" in "${businessLocation}"`);
 
