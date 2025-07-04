@@ -58,8 +58,8 @@ serve(async (req) => {
         'OpenAI-Beta': 'assistants=v2'
       },
       body: JSON.stringify({
-        assistant_id: 'asst_your_assistant_id', // Replace with your assistant ID
-        instructions: 'You are a helpful assistant for SyngularityLabs, helping UK tradespeople with questions about our Local Market Domination System. Be friendly, helpful, and focus on how our system can help them get more reviews and grow their business.'
+        assistant_id: Deno.env.get('OPENAI_ASSISTANT_ID') || 'asst_your_assistant_id', // Will use environment variable if set
+        instructions: 'You are a helpful assistant for SyngularityLabs, helping UK tradespeople with questions about our Local Market Domination System. Be friendly, helpful, and focus on how our system can help them get more reviews and grow their business. Keep responses concise and actionable.'
       })
     });
 
