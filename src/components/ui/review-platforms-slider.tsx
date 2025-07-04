@@ -1,16 +1,13 @@
 import React from 'react';
 import { Card } from './card';
 
-// Review platform logos - using placeholder image URLs that will show platform logos
+// Review platform logos - real logo URLs
 const REVIEW_PLATFORMS = [
-  { name: 'Google', logo: '/api/placeholder/120/60?text=Google' },
-  { name: 'Facebook', logo: '/api/placeholder/120/60?text=Facebook' },
-  { name: 'Trustpilot', logo: '/api/placeholder/120/60?text=Trustpilot' },
-  { name: 'Yelp', logo: '/api/placeholder/120/60?text=Yelp' },
-  { name: 'Checkatrade', logo: '/api/placeholder/120/60?text=Checkatrade' },
-  { name: 'MyBuilder', logo: '/api/placeholder/120/60?text=MyBuilder' },
-  { name: 'Rated People', logo: '/api/placeholder/120/60?text=RatedPeople' },
-  { name: 'Which?', logo: '/api/placeholder/120/60?text=Which' },
+  { name: 'Google', logo: 'https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867ef594f6d5cc9e640bade.png' },
+  { name: 'Facebook', logo: 'https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867ef596a45324273d78f36.png' },
+  { name: 'Trustpilot', logo: 'https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867ef590bbcf4cdca6bf2c2.png' },
+  { name: 'Checkatrade', logo: 'https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867ef5963f9ec6fcf5ca497.png' },
+  { name: 'Which?', logo: 'https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867ef590ea4e1c511b689e3.png' },
 ];
 
 export const ReviewPlatformsSlider = () => {
