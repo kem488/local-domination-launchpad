@@ -125,16 +125,16 @@ export const ChatWidget = () => {
             </Button>
           </CardHeader>
           
-          <CardContent className="flex-1 flex flex-col gap-3 p-4 pt-0">
+          <CardContent className="flex-1 flex flex-col p-4 pt-0 min-h-0">
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto space-y-3 pr-2">
+            <div className="flex-1 overflow-y-auto space-y-3 pr-2 max-h-full">
               {messages.map((message) => (
                 <div
                   key={message.id}
                   className={`flex ${message.isAssistant ? 'justify-start' : 'justify-end'}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${
+                    className={`max-w-[80%] rounded-lg px-3 py-2 text-sm break-words ${
                       message.isAssistant
                         ? 'bg-muted text-foreground'
                         : 'bg-primary text-primary-foreground'
