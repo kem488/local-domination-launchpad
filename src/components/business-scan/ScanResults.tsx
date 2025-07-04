@@ -153,11 +153,28 @@ export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) =>
           Get your complete business transformation with our done-for-you service
         </p>
         <Button
-          onClick={onViewFullReport}
+          onClick={() => {
+            // Create trial with scan data context
+            const trialData = {
+              name: '', // Will be filled in checkout form
+              email: '', // Will be filled in checkout form
+              phone: '', // Will be filled in checkout form
+              businessType: 'other', // Default, can be updated in checkout
+              scanId: scanData.scanId,
+              businessName: placeDetails.name,
+              businessLocation: placeDetails.address
+            };
+            
+            // Store scan context for checkout
+            sessionStorage.setItem('scanContext', JSON.stringify(trialData));
+            
+            // Redirect directly to stripe checkout
+            window.location.href = '/auth?mode=trial';
+          }}
           size="lg"
           className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
         >
-          Get Done-For-You Service
+          Start My Free Trial
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
         <div className="text-xs text-muted-foreground">

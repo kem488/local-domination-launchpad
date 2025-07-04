@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useState, useEffect } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,17 +8,51 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-interface TrialPopupProps {
-  children: React.ReactNode;
+interface ScanTrialPopupProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export const TrialPopup = ({ children }: TrialPopupProps) => {
+interface ScanContext {
+  scanId: string;
+  businessName: string;
+  businessLocation: string;
+}
+
+export const ScanTrialPopup = ({ isOpen, onClose }: ScanTrialPopupProps) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     businessType: ""
   });
+  
+  const [scanContext, setScanContext] = useState<ScanContext | null>(null);
+
+  useEffect(() => {
+    // Load scan context from sessionStorage
+    const stored = sessionStorage.getItem('scanContext');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        setScanContext({
+          scanId: parsed.scanId,
+          businessName: parsed.businessName,
+          businessLocation: parsed.businessLocation
+        });
+        
+        // Pre-populate business name if available
+        if (parsed.businessName && !formData.name) {
+          setFormData(prev => ({
+            ...prev,
+            name: parsed.businessName.split(' ')[0] || '' // Extract first word as potential owner name
+          }));
+        }
+      } catch (error) {
+        console.error('Error parsing scan context:', error);
+      }
+    }
+  }, []);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -37,10 +71,18 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
         throw new Error('Please fill in all required fields');
       }
 
-      console.log('Submitting trial data:', formData);
+      // Add scan context to form data
+      const submissionData = {
+        ...formData,
+        scanId: scanContext?.scanId,
+        businessName: scanContext?.businessName,
+        businessLocation: scanContext?.businessLocation
+      };
+
+      console.log('Submitting trial data:', submissionData);
 
       const { data, error } = await supabase.functions.invoke('create-trial-rate-lock-checkout', {
-        body: formData,
+        body: submissionData,
       });
 
       console.log('Function response:', { data, error });
@@ -52,6 +94,8 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
       
       if (data?.url) {
         console.log('Redirecting to Stripe:', data.url);
+        // Clear scan context after successful checkout creation
+        sessionStorage.removeItem('scanContext');
         // Redirect to Stripe checkout
         window.location.href = data.url;
       } else {
@@ -67,10 +111,7 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-lg md:max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="text-center mb-3">
@@ -84,6 +125,17 @@ export const TrialPopup = ({ children }: TrialPopupProps) => {
             <p className="text-muted-foreground mt-2 text-sm">
               Try our system risk-free for 14 days, then pay just £97/month locked forever (normally £247/month)
             </p>
+            
+            {scanContext && (
+              <div className="mt-4 p-3 bg-brand-blue-light rounded-lg border border-brand-blue/20">
+                <p className="text-sm font-medium text-brand-blue">
+                  🎯 Based on your scan results for {scanContext.businessName}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  We'll prioritize improvements identified in your business health check
+                </p>
+              </div>
+            )}
           </div>
         </DialogHeader>
 

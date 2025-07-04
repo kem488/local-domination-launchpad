@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,20 +8,30 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { LogIn, UserPlus } from 'lucide-react';
+import { ScanTrialPopup } from '@/components/landing/ScanTrialPopup';
 
 export const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showTrialPopup, setShowTrialPopup] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const { signIn, signUp, user } = useAuth();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (user) {
-      navigate('/onboarding');
+      // Don't automatically redirect to onboarding - user needs trial/payment
+      navigate('/');
     }
-  }, [user, navigate]);
+    
+    // Check if coming from scan results with trial mode
+    const mode = searchParams.get('mode');
+    if (mode === 'trial') {
+      setShowTrialPopup(true);
+    }
+  }, [user, navigate, searchParams]);
 
   const handleSignIn = async () => {
     if (!email || !password) {
@@ -87,8 +97,11 @@ export const Auth = () => {
     if (error) {
       let errorMessage = error.message;
       
-      // Provide more user-friendly error messages
-      if (error.message.includes('User already registered')) {
+      // Provide more user-friendly error messages for various Supabase error formats
+      if (error.message.includes('User already registered') || 
+          error.message.includes('already been taken') ||
+          error.message.includes('already exists') ||
+          error.message.includes('email_exists')) {
         errorMessage = "An account with this email already exists. Please sign in instead.";
       } else if (error.message.includes('Invalid email')) {
         errorMessage = "Please enter a valid email address.";
@@ -118,7 +131,7 @@ export const Auth = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-foreground">GUD Media</h1>
+          <h1 className="text-3xl font-bold text-foreground">Syngularity Labs</h1>
           <p className="text-muted-foreground mt-2">Access your client onboarding dashboard</p>
         </div>
 
@@ -216,6 +229,12 @@ export const Auth = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Trial popup for scan-based signups */}
+      <ScanTrialPopup 
+        isOpen={showTrialPopup} 
+        onClose={() => setShowTrialPopup(false)} 
+      />
     </div>
   );
 };

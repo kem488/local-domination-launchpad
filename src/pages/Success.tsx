@@ -51,10 +51,7 @@ export const Success = () => {
               description: "Welcome to your trial. Let's get you set up.",
               duration: 5000
             });
-            // Small delay to let the toast show, then redirect
-            setTimeout(() => {
-              navigate('/onboarding');
-            }, 2000);
+            // Don't auto-redirect, let user click the button when ready
           }
         } catch (error) {
           console.error('Auto-login error:', error);
@@ -188,7 +185,7 @@ export const Success = () => {
         </div>
 
         <div className="mt-6 text-xs text-muted-foreground">
-          <p>Questions? Email us at support@localmarketdomination.com</p>
+          <p>Questions? Email us at support@mail.syngularitylabs.com</p>
           <p>Your billing will start automatically after your 14-day trial ends</p>
         </div>
       </div>

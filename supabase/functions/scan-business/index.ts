@@ -45,12 +45,26 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Starting scan for: "${businessName}" in "${businessLocation}"`);
 
-    // Try multiple search strategies
+    // Get location coordinates for better search accuracy
+    let locationCoordinates = null;
+    try {
+      const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(businessLocation)}&key=${googleApiKey}`;
+      const geocodeResponse = await fetch(geocodeUrl);
+      const geocodeData = await geocodeResponse.json();
+      
+      if (geocodeData.status === 'OK' && geocodeData.results.length > 0) {
+        locationCoordinates = geocodeData.results[0].geometry.location;
+        console.log(`Location coordinates found:`, locationCoordinates);
+      }
+    } catch (error) {
+      console.warn(`Could not geocode location: ${businessLocation}`, error);
+    }
+
+    // Try multiple search strategies with location biasing
     const searchQueries = [
       `${businessName} ${businessLocation}`,
       `${businessName} near ${businessLocation}`,
-      `${businessName}, ${businessLocation}`,
-      businessLocation // fallback to location only
+      `${businessName}, ${businessLocation}`
     ];
 
     let searchData = null;
@@ -60,7 +74,13 @@ const handler = async (req: Request): Promise<Response> => {
       searchQuery = query;
       console.log(`Trying search query: "${searchQuery}"`);
       
-      const searchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(searchQuery)}&key=${googleApiKey}`;
+      // Add location bias if coordinates available
+      let searchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(searchQuery)}&key=${googleApiKey}`;
+      
+      if (locationCoordinates) {
+        const radius = 50000; // 50km radius
+        searchUrl += `&location=${locationCoordinates.lat},${locationCoordinates.lng}&radius=${radius}`;
+      }
       
       try {
         const searchResponse = await fetch(searchUrl);
@@ -78,8 +98,29 @@ const handler = async (req: Request): Promise<Response> => {
         }
         
         if (searchData.results && searchData.results.length > 0) {
-          console.log(`Found ${searchData.results.length} results for query: "${searchQuery}"`);
-          break; // Success, exit loop
+          // Filter results by location proximity if coordinates available
+          if (locationCoordinates) {
+            const filteredResults = searchData.results.filter(result => {
+              if (result.geometry?.location) {
+                const distance = calculateDistance(
+                  locationCoordinates.lat, locationCoordinates.lng,
+                  result.geometry.location.lat, result.geometry.location.lng
+                );
+                console.log(`Business "${result.name}" distance: ${distance}km`);
+                return distance <= 50; // 50km radius
+              }
+              return true; // Keep if no coordinates to compare
+            });
+            
+            if (filteredResults.length > 0) {
+              searchData.results = filteredResults;
+              console.log(`Found ${filteredResults.length} results within location radius for query: "${searchQuery}"`);
+              break;
+            }
+          } else {
+            console.log(`Found ${searchData.results.length} results for query: "${searchQuery}"`);
+            break; // Success, exit loop
+          }
         }
         
         console.log(`No results for query: "${searchQuery}"`);
@@ -91,10 +132,20 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!searchData || !searchData.results || searchData.results.length === 0) {
       console.error('No business found after trying all search strategies');
-      throw new Error(`Sorry, we couldn't find "${businessName}" in "${businessLocation}". Try checking the spelling or using a more specific location.`);
+      throw new Error(`Sorry, we couldn't find "${businessName}" in "${businessLocation}". Try using a more specific business name and location (e.g., "Joe's Plumbing, Manchester" or include a postcode).`);
     }
 
+    // Select the best matching result (first one after filtering)
     const place = searchData.results[0];
+    console.log(`Selected business: "${place.name}" at "${place.formatted_address}"`);
+    
+    // Verify business name similarity to prevent wrong matches
+    const nameSimilarity = calculateNameSimilarity(businessName.toLowerCase(), place.name.toLowerCase());
+    console.log(`Name similarity score: ${nameSimilarity}`);
+    
+    if (nameSimilarity < 0.3) {
+      console.warn(`Low name similarity detected. Expected: "${businessName}", Found: "${place.name}"`);
+    }
     
     // Get detailed place information
     const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place.place_id}&fields=place_id,name,rating,user_ratings_total,photos,formatted_address,formatted_phone_number,website,opening_hours,types&key=${googleApiKey}`;
@@ -282,6 +333,50 @@ function generateAnalysis(scores: any, place: GooglePlaceDetails) {
   }
 
   return { issues, strengths };
+}
+
+// Helper function to calculate distance between two coordinates
+function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371; // Earth's radius in kilometers
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLng/2) * Math.sin(dLng/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
+// Helper function to calculate name similarity using Levenshtein distance
+function calculateNameSimilarity(str1: string, str2: string): number {
+  const matrix = [];
+  const len1 = str1.length;
+  const len2 = str2.length;
+
+  for (let i = 0; i <= len2; i++) {
+    matrix[i] = [i];
+  }
+
+  for (let j = 0; j <= len1; j++) {
+    matrix[0][j] = j;
+  }
+
+  for (let i = 1; i <= len2; i++) {
+    for (let j = 1; j <= len1; j++) {
+      if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+
+  const maxLen = Math.max(len1, len2);
+  return maxLen === 0 ? 1 : 1 - (matrix[len2][len1] / maxLen);
 }
 
 serve(handler);
