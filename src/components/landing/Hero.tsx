@@ -55,10 +55,10 @@ export const Hero = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-8">
-            <div className="bg-muted rounded-md aspect-square flex items-center justify-center">
+            <div className="bg-muted rounded-md aspect-square flex items-center justify-center overflow-hidden">
               <img 
-                src="/api/placeholder/300/300" 
-                alt="Google Business Profile optimization dashboard showing 5-star reviews"
+                src="/lovable-uploads/fbb2edc0-ae82-4dac-b283-74fe41f81b7e.png" 
+                alt="Tradesperson's phone showing 127 five-star reviews, 4.8 rating, and #1 local search ranking"
                 className="w-full h-full object-cover rounded-md"
               />
             </div>
