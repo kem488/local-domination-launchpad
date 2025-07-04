@@ -188,7 +188,7 @@ export const Success = () => {
         </div>
 
         <div className="mt-6 text-xs text-muted-foreground">
-          <p>Questions? Email us at support@localmarketdomination.com</p>
+          <p>Questions? Email us at support@mail.syngularitylabs.com</p>
           <p>Your billing will start automatically after your 14-day trial ends</p>
         </div>
       </div>
