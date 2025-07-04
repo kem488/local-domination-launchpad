@@ -30,11 +30,11 @@ serve(async (req) => {
     }
     logStep("Environment variables verified");
 
-    const { name, email, phone, businessType } = await req.json();
+    const { name, email, phone, businessType, scanId, businessName, businessLocation } = await req.json();
     if (!name || !email || !phone || !businessType) {
       throw new Error("Missing required fields: name, email, phone, businessType");
     }
-    logStep("Request data validated", { name, email, businessType });
+    logStep("Request data validated", { name, email, businessType, scanId, businessName });
 
     // Initialize Supabase client with service role key
     const supabase = createClient(supabaseUrl, supabaseServiceKey, {
@@ -107,15 +107,33 @@ serve(async (req) => {
       .from('client_onboarding')
       .upsert({
         user_id: userId,
-        business_name: name,
+        business_name: businessName || name, // Use scanned business name if available
         owner_email: email,
         phone,
         industry: businessType,
         onboarding_step: 1,
-        status: 'trial_started'
+        status: 'trial_started',
+        address: businessLocation || null // Store scanned location if available
       }, { 
         onConflict: 'user_id'
       });
+
+    // If scan context is available, link the scan to this user
+    if (scanId) {
+      const { error: scanLinkError } = await supabase
+        .from('business_scans')
+        .update({ 
+          lead_qualified: true,
+          email: email
+        })
+        .eq('id', scanId);
+      
+      if (scanLinkError) {
+        logStep("Warning: Could not link scan to user", { error: scanLinkError.message });
+      } else {
+        logStep("Successfully linked scan to user", { scanId, userId });
+      }
+    }
 
     if (onboardingError) {
       logStep("Warning: Could not create onboarding record", { error: onboardingError.message });

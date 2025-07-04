@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,20 +8,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { LogIn, UserPlus } from 'lucide-react';
+import { ScanTrialPopup } from '@/components/landing/ScanTrialPopup';
 
 export const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showTrialPopup, setShowTrialPopup] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const { signIn, signUp, user } = useAuth();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (user) {
       navigate('/onboarding');
     }
-  }, [user, navigate]);
+    
+    // Check if coming from scan results with trial mode
+    const mode = searchParams.get('mode');
+    if (mode === 'trial') {
+      setShowTrialPopup(true);
+    }
+  }, [user, navigate, searchParams]);
 
   const handleSignIn = async () => {
     if (!email || !password) {
@@ -216,6 +225,12 @@ export const Auth = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Trial popup for scan-based signups */}
+      <ScanTrialPopup 
+        isOpen={showTrialPopup} 
+        onClose={() => setShowTrialPopup(false)} 
+      />
     </div>
   );
 };

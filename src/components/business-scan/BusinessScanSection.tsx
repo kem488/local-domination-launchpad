@@ -111,8 +111,8 @@ export const BusinessScanSection = () => {
   };
 
   const handleViewFullReport = () => {
-    // Redirect to auth page for sign up
-    window.location.href = '/auth';
+    // This function is no longer used since ScanResults handles trial signup directly
+    console.log('handleViewFullReport called - should not be used');
   };
 
   const handleFixThisForMe = async (email: string) => {
