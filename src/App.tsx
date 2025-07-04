@@ -15,13 +15,18 @@ import { PaymentProtectedRoute } from "@/components/auth/PaymentProtectedRoute";
 import { CriticalCSS } from "@/components/ui/critical-css";
 import { ResourceHints } from "@/components/optimization/ResourceHints";
 import { ServiceWorker } from "@/components/optimization/ServiceWorker";
+import { HeatmapTracking } from "@/components/optimization/HeatmapTracking";
 import { usePerformanceMonitoring } from "@/hooks/usePerformanceMonitoring";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useUTMTracking } from "@/hooks/useUTMTracking";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  // Initialize performance monitoring
+  // Initialize performance monitoring and analytics
   usePerformanceMonitoring();
+  useAnalytics();
+  useUTMTracking();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -30,6 +35,7 @@ const App = () => {
           <CriticalCSS />
           <ResourceHints />
           <ServiceWorker />
+          <HeatmapTracking />
           <Toaster />
           <Sonner />
           <BrowserRouter>
