@@ -792,7 +792,10 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      is_valid_email: {
+        Args: { email_address: string }
+        Returns: boolean
+      }
     }
     Enums: {
       stripe_order_status: "pending" | "completed" | "canceled"

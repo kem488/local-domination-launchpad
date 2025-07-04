@@ -30,7 +30,42 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { businessName, businessLocation }: ScanRequest = await req.json();
+    const requestData = await req.json();
+    
+    // Input validation
+    if (!requestData.businessName || typeof requestData.businessName !== 'string') {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Business name is required and must be a string' 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
+    if (!requestData.businessLocation || typeof requestData.businessLocation !== 'string') {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Business location is required and must be a string' 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
+    // Sanitize inputs
+    const businessName = requestData.businessName.trim().slice(0, 100);
+    const businessLocation = requestData.businessLocation.trim().slice(0, 200);
+    
+    if (businessName.length < 2) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Business name must be at least 2 characters' 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
