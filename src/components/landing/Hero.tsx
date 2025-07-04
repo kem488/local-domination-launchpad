@@ -26,7 +26,7 @@ export const Hero = () => {
             </div>
             <div className="flex gap-4 flex-col">
               <h1 className="text-5xl md:text-7xl max-w-lg tracking-tighter text-left font-regular">
-                25+ Reviews, 4.5+ Stars in 90 Days - Guaranteed
+                Add 27+ new 5-star reviews, hit a 4.6-star rating and appear in Google's Top-3 Map Pack for your main service keyword <strong>within 90 days — or we work free until you do.</strong>
               </h1>
               <p className="text-xl leading-relaxed tracking-tight text-muted-foreground max-w-md text-left">
                 We help UK trades businesses get to the top 3 of Google in their area using AI to optimize local SEO and manage reviews. Our 6-phase methodology transforms you from "Google Who?" to the go-to business customers find first.
