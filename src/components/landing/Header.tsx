@@ -5,7 +5,6 @@ import { useScrollPosition, smoothScrollTo } from "@/hooks/useScrollPosition";
 import { useAuth } from "@/contexts/AuthContext";
 import { LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import logo from "@/assets/logo.png";
 
 export const Header = () => {
   const { scrollPosition } = useScrollPosition();
@@ -32,13 +31,11 @@ export const Header = () => {
         <div className="flex items-center justify-between min-h-[60px]">
           {/* Logo */}
           <div className="flex items-center flex-1">
-            <img 
-              src={logo} 
-              alt="SyngularityLabs Logo"
-              className={`hover:scale-105 transition-transform duration-300 cursor-pointer ${
-                isScrolled ? 'h-8 md:h-10' : 'h-10 md:h-12'
-              }`}
-            />
+            <h1 className={`font-black bg-gradient-to-r from-brand-blue via-primary to-brand-orange bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-pointer tracking-tight ${
+              isScrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'
+            }`}>
+              SyngularityLabs
+            </h1>
           </div>
           
           {/* Desktop Navigation */}
