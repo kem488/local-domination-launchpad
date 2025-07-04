@@ -1,31 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
 export const WhoWeHelp = () => {
-  const targetBusinesses = [
-    "Plumbers & Electricians",
-    "Roofers & Builders", 
-    "Landscapers & Gardeners",
-    "Cleaning Services",
-    "HVAC Engineers",
-    "Locksmiths & Security",
-    "Pest Control",
-    "Handyman Services"
-  ];
-
-  const painPoints = [
-    "Inconsistent lead flow - feast one month, famine the next",
-    "Spending 2-3 hours weekly chasing customers for reviews with no system",
-    "Watching competitors with worse work steal your customers online",
-    "Your Google Business Profile barely shows up in local searches",
-    "Losing £1,000s in potential work to businesses with better online presence",
-    "One negative review can destroy weeks of reputation building",
-    "Customers can't find you when they search for your services",
-    "Wasting ad spend while competitors dominate free organic listings"
-  ];
-
-  return (
-    <section id="who-we-help" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
+  const targetBusinesses = ["Plumbers & Electricians", "Roofers & Builders", "Landscapers & Gardeners", "Cleaning Services", "HVAC Engineers", "Locksmiths & Security", "Pest Control", "Handyman Services"];
+  const painPoints = ["Inconsistent lead flow - feast one month, famine the next", "Spending 2-3 hours weekly chasing customers for reviews with no system", "Watching competitors with worse work steal your customers online", "Your Google Business Profile barely shows up in local searches", "Losing £1,000s in potential work to businesses with better online presence", "One negative review can destroy weeks of reputation building", "Customers can't find you when they search for your services", "Wasting ad spend while competitors dominate free organic listings"];
+  return <section id="who-we-help" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
@@ -43,27 +21,23 @@ export const WhoWeHelp = () => {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-3">
-                {targetBusinesses.map((business, index) => (
-                  <Badge key={index} variant="secondary" className="justify-center py-2">
+                {targetBusinesses.map((business, index) => <Badge key={index} variant="secondary" className="justify-center py-2">
                     {business}
-                  </Badge>
-                ))}
+                  </Badge>)}
               </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl text-destructive">Common Pain Points We Solve</CardTitle>
+              <CardTitle className="text-2xl text-destructive text-center">What We Help With</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">
-                {painPoints.map((point, index) => (
-                  <li key={index} className="flex items-start gap-3">
+                {painPoints.map((point, index) => <li key={index} className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
                     <span className="text-muted-foreground">{point}</span>
-                  </li>
-                ))}
+                  </li>)}
               </ul>
             </CardContent>
           </Card>
@@ -80,6 +54,5 @@ export const WhoWeHelp = () => {
           </Card>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
