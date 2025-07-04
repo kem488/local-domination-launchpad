@@ -4,8 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Star, CheckCircle, TrendingUp } from "lucide-react";
 import { TrialPopup } from "./TrialPopup";
 import { LeadCaptureForm } from "./LeadCaptureForm";
+import { CalendarBooking } from "../calendar/CalendarBooking";
+import { useScrollAnimation, useCountUp } from "@/hooks/useScrollAnimation";
 
 export const Hero = () => {
+  const { ref: statsRef, isVisible: statsVisible } = useScrollAnimation({ threshold: 0.3 });
+  
+  const reviewCount = useCountUp(25, 2000, statsVisible);
+  const starRating = useCountUp(45, 2000, statsVisible);
+  const profileViews = useCountUp(2, 1500, statsVisible);
+  const directoryListings = useCountUp(50, 2500, statsVisible);
+
   return (
     <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8" aria-labelledby="hero-heading">
       <div className="max-w-7xl mx-auto">
@@ -33,14 +42,15 @@ export const Hero = () => {
                 Start Free Trial & Lock £97 Rate
               </Button>
             </TrialPopup>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="px-8 py-4 text-lg btn-hover-effect"
-              onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              See Full Details
-            </Button>
+            <CalendarBooking>
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="px-8 py-4 text-lg btn-hover-effect"
+              >
+                Book Discovery Call
+              </Button>
+            </CalendarBooking>
           </div>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-muted-foreground">
@@ -60,23 +70,38 @@ export const Hero = () => {
         </header>
         
         <div className="mt-16">
-          <Card className="p-8 bg-gradient-to-r from-brand-blue-light to-background border-brand-blue/10" role="region" aria-labelledby="results-heading">
+          <Card 
+            ref={statsRef}
+            className={`p-8 bg-gradient-to-r from-brand-blue-light to-background border-brand-blue/10 transition-all duration-1000 ${
+              statsVisible ? 'animate-fade-in' : 'opacity-0 translate-y-10'
+            }`} 
+            role="region" 
+            aria-labelledby="results-heading"
+          >
             <h2 id="results-heading" className="sr-only">Guaranteed Results</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label="25 plus">25+</div>
+                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label={`${reviewCount} plus`}>
+                  {reviewCount}+
+                </div>
                 <div className="text-muted-foreground">New Reviews</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label="4.5 plus stars">4.5+</div>
+                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label={`${starRating/10} plus stars`}>
+                  {(starRating/10).toFixed(1)}+
+                </div>
                 <div className="text-muted-foreground">Star Average</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label="2 times more">2x</div>
+                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label={`${profileViews} times more`}>
+                  {profileViews}x
+                </div>
                 <div className="text-muted-foreground">Profile Views</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label="50 plus">50+</div>
+                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label={`${directoryListings} plus`}>
+                  {directoryListings}+
+                </div>
                 <div className="text-muted-foreground">Directory Listings</div>
               </div>
             </div>

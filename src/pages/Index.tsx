@@ -9,6 +9,8 @@ import { FAQ } from "@/components/landing/FAQ";
 import { CTA } from "@/components/landing/CTA";
 import { Footer } from "@/components/landing/Footer";
 import { LiveNotifications } from "@/components/ui/live-notifications";
+import { ChatWidget } from "@/components/chat/ChatWidget";
+import { ExitIntentPopup } from "@/components/popups/ExitIntentPopup";
 
 const Index = () => {
   return (
@@ -32,6 +34,8 @@ const Index = () => {
       </main>
       <Footer />
       <LiveNotifications />
+      <ChatWidget />
+      <ExitIntentPopup />
     </div>
   );
 };
