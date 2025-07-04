@@ -12,37 +12,49 @@ import { Auth } from "./pages/Auth";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { PaymentProtectedRoute } from "@/components/auth/PaymentProtectedRoute";
+import { CriticalCSS } from "@/components/ui/critical-css";
+import { ResourceHints } from "@/components/optimization/ResourceHints";
+import { ServiceWorker } from "@/components/optimization/ServiceWorker";
+import { usePerformanceMonitoring } from "@/hooks/usePerformanceMonitoring";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/success" element={<Success />} />
-            <Route path="/onboarding" element={
-              <PaymentProtectedRoute>
-                <Onboarding />
-              </PaymentProtectedRoute>
-            } />
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  // Initialize performance monitoring
+  usePerformanceMonitoring();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <TooltipProvider>
+          <CriticalCSS />
+          <ResourceHints />
+          <ServiceWorker />
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/success" element={<Success />} />
+              <Route path="/onboarding" element={
+                <PaymentProtectedRoute>
+                  <Onboarding />
+                </PaymentProtectedRoute>
+              } />
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
