@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Zap, Shield, TrendingUp } from "lucide-react";
+import systemImage from "@/assets/system-overview.png";
 
 export const SystemOverview = () => {
   const systemFeatures = [
@@ -41,6 +42,15 @@ export const SystemOverview = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Our system combines cutting-edge AI technology with deep understanding of UK local service markets, backed by extensive research and industry best practices.
           </p>
+        </div>
+
+        {/* System Overview Image */}
+        <div className="mb-16">
+          <img 
+            src={systemImage} 
+            alt="System Overview Dashboard"
+            className="w-full max-w-4xl mx-auto rounded-lg shadow-2xl"
+          />
         </div>
 
         {/* System Features */}
