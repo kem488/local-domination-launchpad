@@ -18,8 +18,8 @@ interface EmailRequest {
 // Hardcoded agency configuration
 const AGENCY_CONFIG = {
   organizationId: "256083320097",
-  agencyEmail: "admin@gudmedia.co.uk",
-  companyName: "GUD Media",
+  agencyEmail: "integrations@syngularitylabs.com",
+  companyName: "Syngularity Labs",
 };
 
 serve(async (req) => {
@@ -44,17 +44,30 @@ serve(async (req) => {
       switch (type) {
         case 'welcome':
           return {
-            subject: `Welcome! Google Business Profile Setup for ${businessName}`,
+            subject: `Welcome to ${AGENCY_CONFIG.companyName}! Google Business Profile Setup for ${businessName}`,
             html: `
-              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                <h2 style="color: #2563eb;">Welcome to Google Business Profile Setup</h2>
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h2 style="color: #2563eb; margin-bottom: 20px;">Welcome to ${AGENCY_CONFIG.companyName}!</h2>
                 <p>Hi there,</p>
                 <p>We're excited to help you set up your Google Business Profile for <strong>${businessName}</strong>!</p>
-                <p>To get started, please click the link below to create or claim your business listing:</p>
-                <a href="${accessUrl}" style="display: inline-block; background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">
-                  Set Up Google Business Profile
-                </a>
-                <p>If you have any questions, please don't hesitate to contact us at ${AGENCY_CONFIG.agencyEmail}</p>
+                
+                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h3 style="color: #1f2937; margin-top: 0;">Next Steps: Grant Us Access to Your Google Business Profile</h3>
+                  <p style="margin-bottom: 15px;"><strong>Step 1:</strong> Click the button below to go to Google Business</p>
+                  <a href="${accessUrl}" style="display: inline-block; background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">
+                    Go to Google Business
+                  </a>
+                  <p style="margin-bottom: 10px;"><strong>Step 2:</strong> Sign in to your Google Business Profile account</p>
+                  <p style="margin-bottom: 10px;"><strong>Step 3:</strong> Navigate to "Users and access" in your business settings</p>
+                  <p style="margin-bottom: 10px;"><strong>Step 4:</strong> Click "Invite new users" and add:</p>
+                  <p style="background-color: #e5e7eb; padding: 8px; border-radius: 4px; font-family: monospace; margin: 10px 0;"><strong>${AGENCY_CONFIG.agencyEmail}</strong></p>
+                  <p style="margin-bottom: 10px;"><strong>Step 5:</strong> Select "Manager" access level and send the invitation</p>
+                </div>
+                
+                <p>Once you've sent the invitation, we'll be able to start optimizing your business profile, managing reviews, and improving your local search visibility.</p>
+                
+                <p>If you have any questions or need assistance, please don't hesitate to contact us at <a href="mailto:support@mail.syngularitylabs.com">support@mail.syngularitylabs.com</a></p>
+                
                 <p>Best regards,<br>The ${AGENCY_CONFIG.companyName} Team</p>
               </div>
             `
@@ -115,7 +128,7 @@ serve(async (req) => {
 
     // Send actual email using Resend
     const emailResponse = await resend.emails.send({
-      from: `${AGENCY_CONFIG.companyName} <onboarding@system.syngularitylabs.com>`,
+      from: `Syngularity <onboarding@system.syngularitylabs.com>`,
       to: [recipientEmail],
       subject: emailContent.subject,
       html: emailContent.html,
