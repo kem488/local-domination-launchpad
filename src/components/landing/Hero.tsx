@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, CheckCircle, TrendingUp } from "lucide-react";
+import { Star, CheckCircle, TrendingUp, Calendar, Mail } from "lucide-react";
 import { TrialPopup } from "./TrialPopup";
 import { LeadCaptureForm } from "./LeadCaptureForm";
 import { CalendarBooking } from "../calendar/CalendarBooking";
 import { useScrollAnimation, useCountUp } from "@/hooks/useScrollAnimation";
 import { useABTest, trackConversion } from "@/hooks/useABTesting";
 import { useScrollTracking } from "@/hooks/useScrollTracking";
+import { motion, useScroll, useTransform } from 'framer-motion';
+import ReputationDashboard from "@/components/ui/reputation-hero";
 
 export const Hero = () => {
   const { ref: statsRef, isVisible: statsVisible } = useScrollAnimation({ threshold: 0.3 });
@@ -15,6 +17,10 @@ export const Hero = () => {
   const ctaTest = useABTest('cta_button');
   
   useScrollTracking();
+  
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   
   const reviewCount = useCountUp(25, 2000, statsVisible);
   const starRating = useCountUp(45, 2000, statsVisible);
@@ -58,22 +64,75 @@ export const Hero = () => {
   };
 
   return (
-    <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8" aria-labelledby="hero-heading">
-      <div className="max-w-7xl mx-auto">
-        <header className="text-center">
-          <div className="mb-6 bg-brand-blue-light text-brand-blue border-brand-blue/10 rounded-full px-4 py-2 inline-block text-sm font-medium" role="banner">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-30" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/70 to-background/90" />
+      
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-32 h-32 bg-primary/5 rounded-full blur-xl"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              x: [0, 30, 0],
+              y: [0, -30, 0],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 8 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+
+      <motion.div
+        className="relative z-10 container mx-auto px-4 pt-24 pb-20"
+        style={{ y: heroY, opacity: heroOpacity }}
+      >
+        {/* Hero Content */}
+        <div className="text-center mb-16">
+          <motion.div
+            className="mb-6 bg-brand-blue-light text-brand-blue border-brand-blue/10 rounded-full px-4 py-2 inline-block text-sm font-medium"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             Limited Time: Lock £97/Month Rate For Life (Usually £247/month)
-          </div>
+          </motion.div>
           
-          <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+          <motion.h1
+            id="hero-heading"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             {getHeadlineText()}
-          </h1>
+          </motion.h1>
           
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+          <motion.p
+            className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             Stop chasing customers for reviews and worrying about your next job. Our AI-powered automation system generates consistent 5-star reviews and doubles your Google visibility - so you never run out of leads again.
-          </p>
+          </motion.p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             <TrialPopup>
               <Button 
                 size="lg" 
@@ -90,12 +149,18 @@ export const Hero = () => {
                 size="lg"
                 className="px-8 py-4 text-lg btn-hover-effect"
               >
+                <Calendar className="h-5 w-5 mr-2" />
                 Book Discovery Call
               </Button>
             </CalendarBooking>
-          </div>
+          </motion.div>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-muted-foreground">
+          <motion.div
+            className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-muted-foreground mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
             <div className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-success" />
               <span>No contracts or setup fees</span>
@@ -108,48 +173,79 @@ export const Hero = () => {
               <TrendingUp className="h-5 w-5 text-primary" />
               <span>90-day money-back guarantee</span>
             </div>
-          </div>
-        </header>
-        
-        <div className="mt-16">
-          <Card 
-            ref={statsRef}
-            className={`p-8 bg-gradient-to-r from-brand-blue-light to-background border-brand-blue/10 transition-all duration-1000 ${
-              statsVisible ? 'animate-fade-in' : 'opacity-0 translate-y-10'
-            }`} 
-            role="region" 
-            aria-labelledby="results-heading"
+          </motion.div>
+
+          {/* Contact Information */}
+          <motion.div
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <h2 id="results-heading" className="sr-only">Guaranteed Results</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label={`${reviewCount} plus`}>
-                  {reviewCount}+
-                </div>
-                <div className="text-muted-foreground">New Reviews</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label={`${starRating/10} plus stars`}>
-                  {(starRating/10).toFixed(1)}+
-                </div>
-                <div className="text-muted-foreground">Star Average</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label={`${profileViews} times more`}>
-                  {profileViews}x
-                </div>
-                <div className="text-muted-foreground">Profile Views</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-brand-blue mb-2" aria-label={`${directoryListings} plus`}>
-                  {directoryListings}+
-                </div>
-                <div className="text-muted-foreground">Directory Listings</div>
-              </div>
+            <div className="flex items-center gap-2">
+              <Mail className="h-4 w-4" />
+              <a href="mailto:support@syngularity.com" className="hover:text-primary transition-colors">
+                support@syngularity.com
+              </a>
             </div>
-          </Card>
+            <div className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              <a 
+                href="https://share.syngularitylabs.com/widget/booking/7ZLny2CRwKGZVoekzEhe" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+              >
+                Schedule a Call
+              </a>
+            </div>
+          </motion.div>
         </div>
-      </div>
-    </section>
+
+        {/* Dashboard Component */}
+        <ReputationDashboard />
+
+        {/* Features Section */}
+        <motion.div
+          className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          {[
+            {
+              icon: <Star className="w-8 h-8" />,
+              title: "Review Automation",
+              description: "Generate 25+ genuine reviews automatically with our proven system"
+            },
+            {
+              icon: <TrendingUp className="w-8 h-8" />,
+              title: "Local SEO Domination",
+              description: "Rank #1 in your area and double your Google Business Profile views"
+            },
+            {
+              icon: <CheckCircle className="w-8 h-8" />,
+              title: "Guaranteed Results",
+              description: "4.5+ star rating and 50+ directory listings within 90 days"
+            }
+          ].map((feature, index) => (
+            <motion.div
+              key={index}
+              className="text-center p-6 bg-card border border-border rounded-lg hover:shadow-lg transition-all duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="text-primary mb-4 flex justify-center">{feature.icon}</div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{feature.title}</h3>
+              <p className="text-muted-foreground">{feature.description}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
+    </div>
   );
 };

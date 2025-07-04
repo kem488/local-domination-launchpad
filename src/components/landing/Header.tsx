@@ -4,6 +4,7 @@ import { useScrollPosition, smoothScrollTo } from "@/hooks/useScrollPosition";
 import { useAuth } from "@/contexts/AuthContext";
 import { LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SyngularityLogo from "@/components/ui/syngularity-logo";
 
 export const Header = () => {
   const { scrollPosition } = useScrollPosition();
@@ -30,9 +31,12 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-black bg-gradient-to-r from-brand-blue via-primary to-brand-orange bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-pointer tracking-tight">
-                SyngularityLabs.com
-              </h1>
+              <SyngularityLogo 
+                size={isScrolled ? "sm" : "md"} 
+                variant="light"
+                animated={true}
+                className="hover:scale-105 transition-transform duration-300 cursor-pointer"
+              />
             </div>
           </div>
           
