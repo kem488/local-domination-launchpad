@@ -13,6 +13,7 @@ import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ExitIntentPopup } from "@/components/popups/ExitIntentPopup";
 import { SocialProofPopups } from "@/components/optimization/SocialProofPopups";
 import { StickyMobileCTA } from "@/components/ui/sticky-mobile-cta";
+import { ReviewPlatformsSlider } from "@/components/ui/review-platforms-slider";
 import { useConversionTracking } from "@/hooks/useConversionTracking";
 
 const Index = () => {
@@ -23,20 +24,48 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main id="main-content">
-        <Hero />
-        <BusinessScanSection />
-        <WhoWeHelp />
-        <section id="how-it-works">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-primary to-brand-blue">
+          <Hero />
+        </section>
+        
+        {/* Business Scan Section */}
+        <section className="bg-section-light py-16">
+          <BusinessScanSection />
+        </section>
+        
+        {/* Review Platforms Slider */}
+        <ReviewPlatformsSlider />
+        
+        {/* Who We Help Section */}
+        <section className="bg-section-muted py-16">
+          <WhoWeHelp />
+        </section>
+        
+        {/* Strategy Section */}
+        <section id="how-it-works" className="bg-background py-16">
           <Strategy />
         </section>
-        <section id="pricing">
+        
+        {/* Pricing Section */}
+        <section id="pricing" className="bg-section-accent py-16">
           <Pricing />
         </section>
-        <SystemOverview />
-        <section id="faq">
+        
+        {/* System Overview */}
+        <section className="bg-background py-16">
+          <SystemOverview />
+        </section>
+        
+        {/* FAQ Section */}
+        <section id="faq" className="bg-section-muted py-16">
           <FAQ />
         </section>
-        <CTA />
+        
+        {/* CTA Section */}
+        <section className="bg-gradient-to-r from-primary/10 to-brand-blue-light py-16">
+          <CTA />
+        </section>
       </main>
       <Footer />
       <LiveNotifications />

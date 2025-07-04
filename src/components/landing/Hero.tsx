@@ -4,21 +4,21 @@ import { Badge } from "@/components/ui/badge";
 import { LucideIcon, Cpu, ShieldCheck, Layers, Zap, Eye } from "lucide-react";
 import heroImage from "@/assets/hero-image.png";
 const features = [{
-  icon: Cpu,
-  title: "Performance",
-  description: "Ultra-fast data processing in every situation."
+  icon: Eye,
+  title: "Review Generation",
+  description: "Automatically collect 25+ genuine reviews in 90 days."
 }, {
   icon: ShieldCheck,
-  title: "Security",
-  description: "Advanced protection for complete peace of mind."
+  title: "Local SEO Domination",
+  description: "Outrank competitors in Google search results."
 }, {
   icon: Layers,
-  title: "Modularity",
-  description: "Easy integration with existing architecture."
+  title: "GBP Optimization",
+  description: "Complete Google Business Profile management."
 }, {
   icon: Zap,
-  title: "Responsiveness",
-  description: "Instant response to every command."
+  title: "Lead Automation",
+  description: "Never chase customers for reviews again."
 }];
 export const Hero = () => {
   return <div className="min-h-svh w-screen bg-linear-to-br from-[#000] to-[#1A2428] text-white flex flex-col items-center justify-center p-8 relative overflow-hidden">
@@ -32,19 +32,23 @@ export const Hero = () => {
         <div className="flex flex-col items-center text-center space-y-8">
           
           
-          <div className="space-y-6 flex items-center justify-center flex-col ">
-            <h1 className=" text-3xl md:text-6xl font-semibold tracking-tight max-w-3xl">
-              Discover minimalism and power in one place
+          <div className="space-y-6 flex items-center justify-center flex-col">
+            <Badge variant="secondary" className="bg-brand-orange/10 text-brand-orange border-brand-orange/20 mb-4">
+              Transform Your Local Business in 90 Days
+            </Badge>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl text-center leading-tight">
+              Stop the Feast-or-Famine Cycle Forever
             </h1>
-            <p className="text-lg text-neutral-300 max-w-2xl">
-              Designed with aesthetics and performance in mind. Experience ultra-fast processing, advanced security, and intuitive design.
+            <p className="text-xl md:text-2xl text-neutral-300 max-w-3xl text-center leading-relaxed">
+              Join 200+ UK tradespeople who've gone from "Google Who?" to local market leaders. 
+              Get 25+ reviews, dominate local search, and never worry about leads again.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 items-center">
-              <Button className="text-sm px-8 py-3 rounded-xl bg-white text-black border border-white/10 shadow-none hover:bg-white/90 transition-none">
-                Get Started
+            <div className="flex flex-col sm:flex-row gap-4 items-center pt-4">
+              <Button className="text-lg px-10 py-4 rounded-xl bg-brand-orange text-brand-orange-foreground border shadow-lg hover:bg-brand-orange/90 btn-hover-effect font-semibold">
+                Start Free Trial
               </Button>
-              <Button className="text-sm px-8 py-3 rounded-xl bg-transparent text-white border border-white/20 shadow-none hover:bg-white/10 transition-none">
-                Learn More
+              <Button className="text-lg px-10 py-4 rounded-xl bg-transparent text-white border border-white/20 shadow-lg hover:bg-white/10 btn-hover-effect">
+                See How It Works
               </Button>
             </div>
           </div>

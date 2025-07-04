@@ -12,31 +12,31 @@ export const Pricing = () => {
   };
 
   return (
-    <section id="pricing" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
-      <div className="max-w-7xl mx-auto">
+    <section id="pricing" className="px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-12">
         <PricingHeader />
         <PricingCountdown />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Pricing Card */}
           <div className="lg:col-span-2">
             <PricingCard savings={savings} />
           </div>
 
           {/* Progressive Disclosure & Calculator */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-8">
             <ProgressiveDisclosure />
             <SavingsCalculator />
           </div>
         </div>
 
         {/* Interactive ROI Calculator */}
-        <div className="mt-12 max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <InteractiveROICalculator />
         </div>
 
         {/* Why Offer This Rate - Simplified */}
-        <div className="mt-8 max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <PricingSummary savings={savings} />
         </div>
       </div>

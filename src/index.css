@@ -47,6 +47,16 @@ All colors MUST be HSL.
     --success-foreground: 0 0% 100%;
     --warning: 43 96% 56%;
     --warning-foreground: 0 0% 0%;
+    
+    /* Section background variants */
+    --section-light: 0 0% 99%;
+    --section-muted: 210 40% 98%;
+    --section-accent: 216 87% 97%;
+    
+    /* Section background variants */
+    --section-light: 0 0% 99%;
+    --section-muted: 210 40% 98%;
+    --section-accent: 216 87% 97%;
 
     --radius: 0.5rem;
 

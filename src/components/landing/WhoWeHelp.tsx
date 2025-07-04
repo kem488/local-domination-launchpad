@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 export const WhoWeHelp = () => {
   const targetBusinesses = ["Plumbers & Electricians", "Roofers & Builders", "Landscapers & Gardeners", "Cleaning Services", "HVAC Engineers", "Locksmiths & Security", "Pest Control", "Handyman Services"];
   const painPoints = ["Inconsistent lead flow - feast one month, famine the next", "Spending 2-3 hours weekly chasing customers for reviews with no system", "Watching competitors with worse work steal your customers online", "Your Google Business Profile barely shows up in local searches", "Losing £1,000s in potential work to businesses with better online presence", "One negative review can destroy weeks of reputation building", "Customers can't find you when they search for your services", "Wasting ad spend while competitors dominate free organic listings"];
-  return <section id="who-we-help" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
+  return <section id="who-we-help" className="px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">

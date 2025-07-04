@@ -75,6 +75,8 @@ export const ExitIntentPopup = () => {
   const [hasShown, setHasShown] = useState(false);
   const [variant, setVariant] = useState(POPUP_VARIANTS[0]);
   const [showLastChance, setShowLastChance] = useState(false);
+  const [timeOnSite, setTimeOnSite] = useState(0);
+  const [scrollPercentage, setScrollPercentage] = useState(0);
 
   const handleExitConversion = (action: string) => {
     trackConversion('exit_intent_conversion', 'popup', { 
@@ -83,52 +85,80 @@ export const ExitIntentPopup = () => {
     });
   };
 
+  // Check if user has seen popup recently (24-48 hour cooldown)
+  const hasRecentlySeenPopup = () => {
+    const lastShown = localStorage.getItem('exitPopupLastShown');
+    if (!lastShown) return false;
+    
+    const hoursSinceLastShown = (Date.now() - parseInt(lastShown)) / (1000 * 60 * 60);
+    return hoursSinceLastShown < 24; // 24 hour cooldown
+  };
+
   useEffect(() => {
-    // 60% chance to show last-chance discount, 40% for other variants
-    const showDiscount = Math.random() < 0.6;
+    // Track time on site
+    const startTime = Date.now();
+    const timeInterval = setInterval(() => {
+      setTimeOnSite((Date.now() - startTime) / 1000);
+    }, 1000);
+
+    // Track scroll percentage
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollPercentage((scrolled / maxScroll) * 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      clearInterval(timeInterval);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Select variant once on mount
+    const showDiscount = Math.random() < 0.4; // Reduced from 60% to 40%
     const randomVariant = showDiscount 
       ? POPUP_VARIANTS.find(v => v.id === 'last-chance-discount')!
       : POPUP_VARIANTS[Math.floor(Math.random() * (POPUP_VARIANTS.length - 1))];
     
     setVariant(randomVariant);
     setShowLastChance(randomVariant.id === 'last-chance-discount');
-    
-    // Track which variant was shown for analytics
-    console.log('Exit popup variant:', randomVariant.id);
   }, []);
 
   useEffect(() => {
+    // More restrictive conditions for showing popup
+    const canShowPopup = () => {
+      return (
+        !hasShown &&
+        !hasRecentlySeenPopup() &&
+        timeOnSite >= 45 && // Minimum 45 seconds on site
+        scrollPercentage >= 30 // Must scroll past 30% of page
+      );
+    };
+
     const handleMouseLeave = (e: MouseEvent) => {
+      // Detect fast movement to top (escape velocity)
+      const isEscapeVelocity = e.clientY <= 0 && e.movementY < -50;
+      
       // Don't show popup if chat widget is open
       const chatWidget = document.querySelector('[data-chat-widget="true"]');
       const isChatOpen = chatWidget?.getAttribute('data-chat-open') === 'true';
       
-      if (e.clientY <= 0 && !hasShown && !isChatOpen) {
+      if (isEscapeVelocity && canShowPopup() && !isChatOpen) {
         setIsOpen(true);
         setHasShown(true);
-      }
-    };
-
-    // Also trigger on scroll up attempt at top of page
-    const handleScroll = () => {
-      if (window.scrollY <= 100 && !hasShown) {
-        const timer = setTimeout(() => {
-          setIsOpen(true);
-          setHasShown(true);
-        }, 30000); // Show after 30 seconds if at top
-
-        return () => clearTimeout(timer);
+        localStorage.setItem('exitPopupLastShown', Date.now().toString());
       }
     };
 
     document.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('scroll', handleScroll);
 
     return () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('scroll', handleScroll);
     };
-  }, [hasShown]);
+  }, [hasShown, timeOnSite, scrollPercentage]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
