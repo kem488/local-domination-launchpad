@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle } from "lucide-react";
+import beforeAfterResults from "@/assets/before-after-google-results.png";
 
 export const Strategy = () => {
   const phases = [
@@ -96,6 +97,43 @@ export const Strategy = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Our 6-phase methodology transforms you from "Google Who?" to the go-to business customers find first - using the same tools big agencies charge £400+ monthly for.
           </p>
+        </div>
+
+        {/* Before/After Results Showcase */}
+        <div className="mb-16">
+          <Card className="overflow-hidden bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20">
+            <CardHeader className="text-center pb-6">
+              <Badge className="mx-auto mb-4 bg-success/10 text-success border-success/20">
+                Real Results in 90 Days
+              </Badge>
+              <CardTitle className="text-2xl font-bold">
+                This Is What Dominating Google Looks Like
+              </CardTitle>
+              <p className="text-muted-foreground">
+                From invisible to unstoppable - see the transformation our clients experience
+              </p>
+            </CardHeader>
+            <CardContent className="pb-8">
+              <div className="relative group">
+                <img 
+                  src={beforeAfterResults} 
+                  alt="Before and after Google search results showing transformation from poor visibility to top rankings"
+                  className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6 mt-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-destructive mb-2">BEFORE</div>
+                  <p className="text-sm text-muted-foreground">Buried on page 2, losing customers to competitors every day</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-success mb-2">AFTER</div>
+                  <p className="text-sm text-muted-foreground">Dominating page 1, customers choosing you first</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <Tabs defaultValue="audit" className="w-full">
