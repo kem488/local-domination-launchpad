@@ -28,9 +28,9 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Rate limiting check
+    // Enhanced rate limiting for sensitive lead capture
     const rateLimitResult = await checkRateLimit(req, supabase, {
-      maxRequests: 5,
+      maxRequests: 3, // Stricter limit for lead capture
       windowMinutes: 60,
       endpoint: 'capture-lead'
     });

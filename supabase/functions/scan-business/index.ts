@@ -35,9 +35,9 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Rate limiting check
+    // Enhanced rate limiting for business scanning
     const rateLimitResult = await checkRateLimit(req, supabase, {
-      maxRequests: 10,
+      maxRequests: 5, // Reasonable limit for business scans
       windowMinutes: 60,
       endpoint: 'scan-business'
     });
