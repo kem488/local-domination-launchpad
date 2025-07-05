@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ScanData } from "../components/business-scan/BusinessScanSection";
 import { BusinessScanService } from "@/services/businessScanService";
@@ -74,7 +75,9 @@ export const useBusinessScan = () => {
           setScanData(prev => prev ? { ...prev, aiRecommendations: fallbackRecommendations } : null);
           setAiGenerationStatus('completed');
         }
-        channel && supabase.removeChannel(channel);
+        if (channel) {
+          supabase.removeChannel(channel);
+        }
       }, 15000);
 
       setTimeout(() => {
