@@ -7,7 +7,6 @@ import { ScanHeader } from "./ScanHeader";
 import { TrustIndicators } from "./TrustIndicators";
 import { ScanSuccess } from "./ScanSuccess";
 import { useBusinessScan } from "@/hooks/useBusinessScan";
-
 export interface ScanData {
   scanId: string;
   scores: {
@@ -28,7 +27,6 @@ export interface ScanData {
     hasHours: boolean;
   };
 }
-
 export const BusinessScanSection = () => {
   const {
     scanState,
@@ -38,52 +36,30 @@ export const BusinessScanSection = () => {
     handleLeadCaptured,
     handleViewFullReport
   } = useBusinessScan();
-
-
-  return (
-    <section id="business-scan" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/20">
+  return <section id="business-scan" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/20">
       <div className="max-w-7xl mx-auto">
         <ScanHeader />
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto">
-          {scanState === 'form' ? (
-            <div className="max-w-4xl mx-auto">
-              <Card className="p-8 bg-card border-border shadow-lg">
+          {scanState === 'form' ? <div className="max-w-4xl mx-auto">
+              <Card className="p-8 border-border shadow-lg bg-slate-100">
                 <ScanForm onScanStart={handleScanStart} />
               </Card>
-            </div>
-          ) : (
-            <div className="max-w-4xl mx-auto">
+            </div> : <div className="max-w-4xl mx-auto">
               <Card className="p-8 bg-card border-border shadow-lg">
-                {scanState === 'scanning' && (
-                  <ScanProgress progress={progress} />
-                )}
+                {scanState === 'scanning' && <ScanProgress progress={progress} />}
                 
-                {scanState === 'results' && scanData && (
-                  <ScanResults 
-                    scanData={scanData} 
-                    onViewFullReport={handleViewFullReport}
-                  />
-                )}
+                {scanState === 'results' && scanData && <ScanResults scanData={scanData} onViewFullReport={handleViewFullReport} />}
                 
-                {scanState === 'leadgate' && scanData && (
-                  <LeadGate 
-                    scanData={scanData}
-                    onLeadCaptured={handleLeadCaptured}
-                  />
-                )}
+                {scanState === 'leadgate' && scanData && <LeadGate scanData={scanData} onLeadCaptured={handleLeadCaptured} />}
                 
-                {scanState === 'success' && (
-                  <ScanSuccess />
-                )}
+                {scanState === 'success' && <ScanSuccess />}
               </Card>
-            </div>
-          )}
+            </div>}
         </div>
 
         <TrustIndicators />
       </div>
-    </section>
-  );
+    </section>;
 };
