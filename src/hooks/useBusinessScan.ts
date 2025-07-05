@@ -41,7 +41,9 @@ export const useBusinessScan = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleScanStart = async (businessName: string, businessLocation: string) => {
+    console.log('🚀 CACHE TEST: handleScanStart called at', new Date().toISOString());
     console.log('🚀 Starting business scan for:', { businessName, businessLocation });
+    console.log('🚀 IMPORTANT: This should call scan-business NOT capture-lead');
     setScanState('scanning');
     setProgress(0);
     setError(null);
