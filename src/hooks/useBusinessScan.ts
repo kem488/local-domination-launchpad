@@ -1,8 +1,8 @@
-
 import { useState } from "react";
 import { ScanData } from "../components/business-scan/BusinessScanSection";
 import { BusinessScanService } from "@/services/businessScanService";
 import { getErrorMessage, logError, showToastError } from "@/utils/scanErrorHandler";
+import { supabase } from "@/integrations/supabase/client";
 
 type ScanState = 'form' | 'scanning' | 'results' | 'leadgate' | 'success';
 type AIGenerationStatus = 'pending' | 'generating' | 'completed' | 'failed';
