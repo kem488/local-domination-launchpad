@@ -5,20 +5,20 @@ import { LucideIcon, Cpu, ShieldCheck, Layers, Zap, Eye } from "lucide-react";
 import heroImage from "@/assets/hero-image.png";
 const features = [{
   icon: Eye,
-  title: "Competitor Vulnerability Report",
-  description: "We'll show you exactly where your competitors are weak and how to exploit those gaps to steal their customers."
+  title: "Profile Optimization Report",
+  description: "We'll show you exactly what's missing from your Google Business Profile and how to fix it to get more calls."
 }, {
   icon: ShieldCheck,
-  title: "Local Search Domination Plan",
-  description: "Discover the hidden ranking factors your competitors use to appear first on Google Maps and local search."
+  title: "Local Search Visibility Plan",
+  description: "Discover the key ranking factors and optimization opportunities to improve your Google Maps visibility."
 }, {
   icon: Layers,
   title: "Review Generation System",
-  description: "The exact process top-ranking businesses use to generate 25+ genuine reviews monthly without chasing customers."
+  description: "Learn proven strategies to generate more genuine reviews and improve your online reputation."
 }, {
   icon: Zap,
-  title: "Customer Leak Detection",
-  description: "Find out where you're losing potential customers and how to plug those leaks before they call your competitors."
+  title: "Customer Conversion Analysis",
+  description: "Find out where you're losing potential customers and how to optimize your profile to convert more visitors into calls."
 }];
 export const Hero = () => {
   return <div className="min-h-svh w-screen bg-linear-to-br from-[#000] to-[#1A2428] text-white flex flex-col items-center justify-center p-8 relative overflow-hidden">
@@ -34,15 +34,15 @@ export const Hero = () => {
           
           <div className="space-y-6 flex items-center justify-center flex-col">
             <Badge variant="secondary" className="bg-brand-orange/10 text-brand-orange border-brand-orange/20 mb-4">
-              Competitor Intelligence Report
+              Business Profile Audit
             </Badge>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl text-center leading-tight">
-              Why Your Competitors Get 10x More Calls Than You
+              Is Your Google Business Profile Costing You Customers?
             </h1>
             <p className="text-xl md:text-2xl text-neutral-300 max-w-3xl text-center leading-relaxed">
-              We'll analyze your Google Business Profile against your top 3 competitors 
-              and reveal exactly what they're doing that you're not. Most local businesses 
-              are missing these crucial elements - is yours one of them?
+              We'll analyze your Google Business Profile and reveal exactly what's holding you back 
+              from getting more calls. Most local businesses are missing these crucial optimization 
+              opportunities - is yours one of them?
             </p>
             
             {/* Trust Signals */}
@@ -86,7 +86,7 @@ export const Hero = () => {
                 }}
                 className="text-lg px-12 py-4 rounded-xl bg-brand-orange text-brand-orange-foreground border shadow-lg hover:bg-brand-orange/90 btn-hover-effect font-semibold w-full sm:w-auto min-w-[280px]"
               >
-                Show Me My Competitors' Secrets
+                Audit My Business Profile Now
               </Button>
               <button 
                 onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}

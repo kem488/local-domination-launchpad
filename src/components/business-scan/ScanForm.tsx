@@ -30,13 +30,13 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
     <div className="text-center">
       <div className="mb-8">
         <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-          Get Your Free Competitor Intelligence Report
+          Get Your Free Google Business Profile Audit
         </h3>
         <p className="text-muted-foreground text-base md:text-lg mb-6">
-          Our AI-powered analysis will scan your Google Business Profile against 
-          your top competitors and reveal exactly why they're getting more calls. 
-          You'll discover the specific tactics they use and get a step-by-step 
-          plan to outrank them.
+          Our AI-powered analysis will scan your Google Business Profile and reveal 
+          exactly what's holding your business back from getting more calls. You'll 
+          discover the specific improvements needed and get a step-by-step optimization 
+          plan to maximize your local visibility.
         </p>
         
         {/* Trust Elements */}
@@ -103,13 +103,13 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
           className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect touch-target h-14 font-semibold"
           disabled={isSubmitting || !businessName.trim() || !businessLocation.trim()}
         >
-          {isSubmitting ? 'Analyzing Your Competitors...' : 'Reveal My Competitors\' Secrets Now'}
+          {isSubmitting ? 'Analyzing Your Business Profile...' : 'Audit My Business Profile Now'}
         </Button>
 
       </form>
 
       <div className="mt-6 text-sm text-muted-foreground">
-        ✓ Live Google data analysis &nbsp; ✓ Competitor strategy revealed &nbsp; ✓ Instant insights
+        ✓ Live Google data analysis &nbsp; ✓ Profile optimization tips &nbsp; ✓ Instant insights
       </div>
     </div>
   );
