@@ -252,7 +252,26 @@ const handler = async (req: Request): Promise<Response> => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          scanId: scanData.id
+          scanId: scanData.id,
+          businessData: {
+            businessName,
+            businessLocation
+          },
+          scanResults: {
+            overallScore: scores.overall,
+            reviewsScore: scores.reviews,
+            completenessScore: scores.completeness,
+            photosScore: scores.photos,
+            engagementScore: scores.engagement
+          },
+          placeDetails: {
+            name: placeDetails.name,
+            rating: placeDetails.rating,
+            reviewCount: placeDetails.user_ratings_total,
+            hasPhotos: placeDetails.photos && placeDetails.photos.length > 0,
+            hasWebsite: !!placeDetails.website,
+            hasPhone: !!placeDetails.formatted_phone_number
+          }
         })
       });
 
