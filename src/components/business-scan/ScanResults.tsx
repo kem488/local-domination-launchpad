@@ -14,7 +14,7 @@ interface ScanResultsProps {
 }
 
 export const ScanResults = ({ scanData, onViewFullReport, onAiStatusChange }: ScanResultsProps) => {
-  const { scores, placeDetails } = scanData;
+  const { scores, placeDetails, aiRecommendations } = scanData;
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-success";
@@ -143,8 +143,50 @@ export const ScanResults = ({ scanData, onViewFullReport, onAiStatusChange }: Sc
         </div>
       </Card>
 
-      {/* AI Recommendations */}
-      <AIRecommendations scanId={scanData.scanId} onAiStatusChange={onAiStatusChange} />
+      {/* AI Recommendations - Now directly embedded with fallback support */}
+      {aiRecommendations && (
+        <Card className="p-6 bg-gradient-to-r from-brand-blue-light to-background border-brand-blue/10">
+          <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-success" />
+            AI-Powered Recommendations
+          </h4>
+          
+          {/* Quick Wins */}
+          <div className="mb-6">
+            <h5 className="font-medium text-foreground mb-3">Quick Wins (Start Here)</h5>
+            <div className="space-y-2">
+              {aiRecommendations.quickWins.map((win, index) => (
+                <div key={index} className="flex items-start gap-2 text-sm">
+                  <CheckCircle className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
+                  <span className="text-muted-foreground">{win}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Detailed Recommendations */}
+          <div className="mb-6">
+            <h5 className="font-medium text-foreground mb-3">Detailed Action Plan</h5>
+            <div className="space-y-4">
+              {aiRecommendations.recommendations.slice(0, 3).map((rec, index) => (
+                <div key={index} className="border-l-2 border-primary/20 pl-4">
+                  <div className="font-medium text-sm text-foreground">{rec.category}</div>
+                  <div className="text-sm text-muted-foreground mb-1">{rec.action}</div>
+                  <div className="text-xs text-muted-foreground">
+                    Impact: {rec.impact} • Timeline: {rec.timeframe}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Revenue Impact */}
+          <div className="bg-success/10 p-4 rounded-lg">
+            <p className="text-sm font-medium text-success mb-1">Potential Revenue Impact</p>
+            <p className="text-sm text-muted-foreground">{aiRecommendations.revenueImpact}</p>
+          </div>
+        </Card>
+      )}
 
       {/* CTA - Mobile Optimized */}
       <div className="text-center space-y-4">

@@ -28,6 +28,19 @@ export interface ScanData {
     hasPhone: boolean;
     hasHours: boolean;
   };
+  aiRecommendations?: {
+    priority: string;
+    quickWins: string[];
+    recommendations: Array<{
+      category: string;
+      action: string;
+      impact: string;
+      timeframe: string;
+      difficulty: string;
+    }>;
+    profileGaps: string;
+    revenueImpact: string;
+  };
 }
 
 export const BusinessScanSection = () => {
