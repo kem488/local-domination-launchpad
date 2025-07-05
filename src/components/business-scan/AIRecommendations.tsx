@@ -22,7 +22,7 @@ interface RecommendationsData {
   priority: string;
   recommendations: Recommendation[];
   quickWins: string[];
-  competitiveRisk: string;
+  profileGaps: string;
   revenueImpact: string;
 }
 
@@ -154,14 +154,14 @@ export const AIRecommendations = ({ scanId }: AIRecommendationsProps) => {
           </div>
         )}
 
-        {/* Competitive Risk */}
-        {recommendations.competitiveRisk && (
+        {/* Profile Gaps */}
+        {recommendations.profileGaps && (
           <div className="bg-gradient-to-r from-warning/10 to-destructive/10 p-4 rounded-lg">
             <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
               <AlertTriangle className="h-4 w-4 text-warning" />
-              Competitive Risk
+              Profile Optimization Opportunities
             </h4>
-            <p className="text-sm text-muted-foreground">{recommendations.competitiveRisk}</p>
+            <p className="text-sm text-muted-foreground">{recommendations.profileGaps}</p>
           </div>
         )}
       </Card>

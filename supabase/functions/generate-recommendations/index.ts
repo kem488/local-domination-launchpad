@@ -27,19 +27,19 @@ serve(async (req) => {
 
     console.log(`Generating AI recommendations for scan: ${scanId}`);
     
-    const prompt = `As a local SEO expert, analyze this UK business and provide specific actionable recommendations:
+    const prompt = `As a Google Business Profile optimization expert, analyze this UK business profile and provide specific actionable recommendations:
 
 Business: ${businessData.businessName}
 Location: ${businessData.businessLocation}
 
-Current Performance:
+Current Profile Performance:
 - Overall Score: ${scanResults.overallScore}/100
 - Reviews Score: ${scanResults.reviewsScore}/100
 - Completeness Score: ${scanResults.completenessScore}/100
 - Photos Score: ${scanResults.photosScore}/100
 - Engagement Score: ${scanResults.engagementScore}/100
 
-Business Details:
+Business Profile Details:
 - Rating: ${placeDetails.rating}/5 (${placeDetails.reviewCount} reviews)
 - Has Photos: ${placeDetails.hasPhotos}
 - Has Website: ${placeDetails.hasWebsite}
@@ -51,14 +51,14 @@ Provide recommendations in this exact JSON format:
   "quickWins": ["action 1", "action 2", "action 3"],
   "recommendations": [
     {
-      "category": "Reviews & Reputation",
+      "category": "Profile Optimization",
       "action": "specific action to take",
       "impact": "expected result and benefit",
       "timeframe": "1-2 weeks",
       "difficulty": "easy|medium|hard"
     }
   ],
-  "competitiveRisk": "explanation of what competitors might be doing better",
+  "profileGaps": "explanation of what's missing from their Google Business Profile",
   "revenueImpact": "estimated business impact and revenue potential"
 }
 
@@ -73,7 +73,7 @@ Focus on the lowest scoring areas first. Provide 4-6 specific, actionable recomm
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: 'You are a local SEO expert specializing in Google Business Profile optimization for UK tradespeople and service businesses. Always respond with valid JSON only.' },
+          { role: 'system', content: 'You are a Google Business Profile optimization expert helping UK tradespeople and service businesses improve their online presence. Focus on profile completeness, optimization opportunities, and actionable improvements. Always respond with valid JSON only.' },
           { role: 'user', content: prompt }
         ],
         temperature: 0.7,
@@ -96,25 +96,25 @@ Focus on the lowest scoring areas first. Provide 4-6 specific, actionable recomm
     } catch (parseError) {
       console.error('Failed to parse AI response as JSON:', parseError);
       // Fallback recommendations
-      recommendations = {
-        priority: scanResults.overallScore < 50 ? "critical" : scanResults.overallScore < 70 ? "high" : "medium",
-        quickWins: [
-          "Add high-quality photos of your work",
-          "Respond to recent customer reviews",
-          "Update business hours and contact information"
-        ],
-        recommendations: [
-          {
-            category: "Reviews & Reputation",
-            action: "Implement a systematic review collection process",
-            impact: "Increase customer trust and local search visibility",
-            timeframe: "2-4 weeks",
-            difficulty: "easy"
-          }
-        ],
-        competitiveRisk: "Competitors with better online presence are likely capturing your potential customers",
-        revenueImpact: "Improving your online presence could increase leads by 25-40% within 3 months"
-      };
+        recommendations = {
+          priority: scanResults.overallScore < 50 ? "critical" : scanResults.overallScore < 70 ? "high" : "medium",
+          quickWins: [
+            "Add high-quality photos of your work",
+            "Respond to recent customer reviews",
+            "Update business hours and contact information"
+          ],
+          recommendations: [
+            {
+              category: "Profile Optimization",
+              action: "Complete all missing profile information fields",
+              impact: "Increase profile completeness and local search visibility",
+              timeframe: "2-4 weeks",
+              difficulty: "easy"
+            }
+          ],
+          profileGaps: "Your Google Business Profile is missing key information that customers look for when choosing a service provider",
+          revenueImpact: "Optimizing your profile could increase leads by 25-40% within 3 months"
+        };
     }
 
     // Save recommendations to database

@@ -125,7 +125,7 @@ export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) =>
         <div className="space-y-2 text-sm">
           {scores.overall < 70 && (
             <p className="text-muted-foreground">
-              ⚠️ Your business profile needs attention. Competitors with better profiles are likely capturing your potential customers.
+              ⚠️ Your business profile needs attention. Missing optimization opportunities may be costing you potential customers.
             </p>
           )}
           {!placeDetails.hasPhotos && (
