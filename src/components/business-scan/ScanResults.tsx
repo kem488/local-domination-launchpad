@@ -2,9 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { ScanData } from "./BusinessScanSection";
-import { AIRecommendations } from "./AIRecommendations";
+import { ScoreCard } from "./ScoreCard";
+import { getScoreBadge, getScoreColor } from "@/utils/scoreCalculations";
 import { AlertTriangle, CheckCircle, Star, Users, Camera, FileText, ArrowRight } from "lucide-react";
 
 interface ScanResultsProps {
@@ -13,21 +13,8 @@ interface ScanResultsProps {
   onAiStatusChange?: (status: 'generating' | 'completed' | 'failed') => void;
 }
 
-export const ScanResults = ({ scanData, onViewFullReport, onAiStatusChange }: ScanResultsProps) => {
+export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) => {
   const { scores, placeDetails, aiRecommendations } = scanData;
-
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return "text-success";
-    if (score >= 60) return "text-warning";
-    return "text-destructive";
-  };
-
-  const getScoreBadge = (score: number) => {
-    if (score >= 80) return { label: "Excellent", variant: "default" as const, color: "bg-success" };
-    if (score >= 60) return { label: "Good", variant: "secondary" as const, color: "bg-warning" };
-    return { label: "Needs Work", variant: "destructive" as const, color: "bg-destructive" };
-  };
-
   const overallBadge = getScoreBadge(scores.overall);
 
   return (
@@ -59,59 +46,12 @@ export const ScanResults = ({ scanData, onViewFullReport, onAiStatusChange }: Sc
         </div>
       </div>
 
-      {/* Score Breakdown - Mobile Optimized Grid */}
+      {/* Score Breakdown */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-        <Card className="p-3 sm:p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Star className="h-4 w-4 text-primary flex-shrink-0" />
-            <span className="font-medium text-sm sm:text-base">Reviews & Rating</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Progress value={scores.reviews} className="flex-1 h-2" aria-label={`Reviews score: ${scores.reviews} out of 100`} />
-            <span className={`font-bold text-sm sm:text-base ${getScoreColor(scores.reviews)}`}>
-              {scores.reviews}
-            </span>
-          </div>
-        </Card>
-
-        <Card className="p-3 sm:p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Users className="h-4 w-4 text-primary flex-shrink-0" />
-            <span className="font-medium text-sm sm:text-base">Engagement</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Progress value={scores.engagement} className="flex-1 h-2" aria-label={`Engagement score: ${scores.engagement} out of 100`} />
-            <span className={`font-bold text-sm sm:text-base ${getScoreColor(scores.engagement)}`}>
-              {scores.engagement}
-            </span>
-          </div>
-        </Card>
-
-        <Card className="p-3 sm:p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Camera className="h-4 w-4 text-primary flex-shrink-0" />
-            <span className="font-medium text-sm sm:text-base">Photos & Media</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Progress value={scores.photos} className="flex-1 h-2" aria-label={`Photos score: ${scores.photos} out of 100`} />
-            <span className={`font-bold text-sm sm:text-base ${getScoreColor(scores.photos)}`}>
-              {scores.photos}
-            </span>
-          </div>
-        </Card>
-
-        <Card className="p-3 sm:p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <FileText className="h-4 w-4 text-primary flex-shrink-0" />
-            <span className="font-medium text-sm sm:text-base">Completeness</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Progress value={scores.completeness} className="flex-1 h-2" aria-label={`Completeness score: ${scores.completeness} out of 100`} />
-            <span className={`font-bold text-sm sm:text-base ${getScoreColor(scores.completeness)}`}>
-              {scores.completeness}
-            </span>
-          </div>
-        </Card>
+        <ScoreCard title="Reviews & Rating" score={scores.reviews} icon={Star} />
+        <ScoreCard title="Engagement" score={scores.engagement} icon={Users} />
+        <ScoreCard title="Photos & Media" score={scores.photos} icon={Camera} />
+        <ScoreCard title="Completeness" score={scores.completeness} icon={FileText} />
       </div>
 
       {/* Quick Insights */}
@@ -143,7 +83,7 @@ export const ScanResults = ({ scanData, onViewFullReport, onAiStatusChange }: Sc
         </div>
       </Card>
 
-      {/* AI Recommendations - Now directly embedded with fallback support */}
+      {/* AI Recommendations */}
       {aiRecommendations && (
         <Card className="p-6 bg-gradient-to-r from-brand-blue-light to-background border-brand-blue/10">
           <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
@@ -188,7 +128,7 @@ export const ScanResults = ({ scanData, onViewFullReport, onAiStatusChange }: Sc
         </Card>
       )}
 
-      {/* CTA - Mobile Optimized */}
+      {/* CTA */}
       <div className="text-center space-y-4">
         <h4 className="text-lg sm:text-xl font-semibold text-foreground px-4">
           Want our team to implement these improvements?
