@@ -12,50 +12,51 @@ export const Header = () => {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isScrolled 
-        ? 'bg-background/98 backdrop-blur-md border-b border-border shadow-sm py-1' 
-        : 'bg-background/95 backdrop-blur-sm border-b border-border py-2'
+        ? 'bg-gradient-card/95 backdrop-blur-xl border-b border-border/50 shadow-medium py-2' 
+        : 'bg-gradient-glass backdrop-blur-lg border-b border-white/10 py-3'
     }`}>
       <div className="max-w-7xl mx-auto mobile-padding">
-        <div className="flex items-center justify-between min-h-[60px]">
+        <div className="flex items-center justify-between min-h-[64px]">
           {/* Logo */}
           <div className="flex items-center flex-1">
-            <h1 className={`font-black bg-gradient-to-r from-brand-blue via-primary to-brand-orange bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-pointer tracking-tight ${
-              isScrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'
+            <h1 className={`font-black bg-gradient-to-r from-brand-blue via-primary to-brand-orange bg-clip-text text-transparent hover:scale-105 transition-all duration-300 cursor-pointer tracking-tight drop-shadow-sm ${
+              isScrolled ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'
             }`}>
               5-Star Digital
             </h1>
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-2">
             <button 
               onClick={() => handleNavClick('how-it-works')}
-              className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors touch-target"
+              className="text-foreground/80 hover:text-primary hover:bg-primary/10 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 touch-target border border-transparent hover:border-primary/20"
             >
               How It Works
             </button>
             <button 
               onClick={() => handleNavClick('pricing')}
-              className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors touch-target"
+              className="text-foreground/80 hover:text-primary hover:bg-primary/10 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 touch-target border border-transparent hover:border-primary/20"
             >
               Pricing
             </button>
             <button 
               onClick={() => handleNavClick('faq')}
-              className="text-foreground/80 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors touch-target"
+              className="text-foreground/80 hover:text-primary hover:bg-primary/10 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 touch-target border border-transparent hover:border-primary/20"
             >
               FAQ
             </button>
           </nav>
           
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden md:flex items-center space-x-4">
             <ConsultationPopup>
               <Button 
+                variant="premium"
                 size="sm"
-                className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground btn-hover-effect touch-target px-4"
+                className="btn-hover-effect touch-target px-6 py-2.5 text-sm font-semibold shadow-medium"
               >
                 Get Free Scan
               </Button>
@@ -63,11 +64,12 @@ export const Header = () => {
           </div>
 
           {/* Mobile Actions */}
-          <div className="flex md:hidden items-center space-x-2">
+          <div className="flex md:hidden items-center space-x-3">
             <ConsultationPopup>
               <Button
+                variant="premium"
                 size="sm"
-                className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground touch-target px-3 text-sm"
+                className="touch-target px-4 py-2 text-sm font-semibold shadow-soft"
               >
                 Scan
               </Button>
