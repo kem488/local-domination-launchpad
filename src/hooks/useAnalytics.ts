@@ -1,8 +1,9 @@
 import { useEffect, useCallback } from 'react';
 
-// Google Analytics 4 configuration - should be moved to environment variables
+// Google Analytics 4 configuration - use environment detection
 const GA_TRACKING_ID = 'G-JXQM8VZ2QK'; // Local Market Domination System GA4 ID
-const FB_PIXEL_ID = '743853124791247'; // Your Facebook Pixel ID - should be moved to environment variables
+// Facebook Pixel configuration - disable in development
+const FB_PIXEL_ID = import.meta.env.PROD ? '743853124791247' : null;
 
 declare global {
   interface Window {
@@ -62,7 +63,10 @@ export const useAnalytics = () => {
 
   // Initialize Facebook Pixel
   const initializeFacebookPixel = useCallback(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !FB_PIXEL_ID) return;
+
+    // Prevent double initialization
+    if ((window as any).fbq) return;
 
     // Facebook Pixel code
     (window as any).fbq = function() {
@@ -95,8 +99,8 @@ export const useAnalytics = () => {
       });
     }
 
-    // Facebook Pixel
-    if (window.fbq) {
+    // Facebook Pixel - only if enabled
+    if (window.fbq && FB_PIXEL_ID) {
       window.fbq('track', 'CustomEvent', {
         action: event.action,
         category: event.category,
@@ -104,8 +108,6 @@ export const useAnalytics = () => {
         value: event.value
       });
     }
-
-    // Analytics event logged
   }, []);
 
   // Track ecommerce events
@@ -120,8 +122,8 @@ export const useAnalytics = () => {
       });
     }
 
-    // Facebook Pixel Purchase
-    if (window.fbq) {
+    // Facebook Pixel Purchase - only if enabled
+    if (window.fbq && FB_PIXEL_ID) {
       window.fbq('track', 'Purchase', {
         value: data.value,
         currency: data.currency,
@@ -147,8 +149,8 @@ export const useAnalytics = () => {
       }
     });
 
-    // Facebook Pixel Lead
-    if (window.fbq) {
+    // Facebook Pixel Lead - only if enabled
+    if (window.fbq && FB_PIXEL_ID) {
       window.fbq('track', 'Lead', {
         content_name: leadData.lead_type,
         content_category: 'lead_generation',
@@ -177,7 +179,10 @@ export const useAnalytics = () => {
   // Initialize analytics on mount
   useEffect(() => {
     initializeGA4();
-    initializeFacebookPixel();
+    // Only initialize Facebook Pixel in production
+    if (FB_PIXEL_ID) {
+      initializeFacebookPixel();
+    }
   }, [initializeGA4, initializeFacebookPixel]);
 
   return {

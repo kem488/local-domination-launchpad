@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ScanData } from "../components/business-scan/BusinessScanSection";
+import { logger } from "@/utils/logger";
 
 type ScanState = 'form' | 'scanning' | 'results' | 'leadgate' | 'success';
 
@@ -44,13 +45,7 @@ export const useBusinessScan = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleScanStart = async (businessName: string, businessLocation: string) => {
-    console.log('🔥 DEPLOYMENT CHECK: Code version', Date.now(), 'Function executing at', new Date().toISOString());
-    console.log('🔥 CRITICAL: This MUST call scan-business endpoint, NOT capture-lead');
-    console.log('🔥 Input data:', { businessName, businessLocation });
-    
-    // Test scan-business endpoint availability immediately
-    const testUrl = 'https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/scan-business';
-    console.log('🔥 ENDPOINT TEST: About to call', testUrl);
+    logger.info('Business scan started', 'useBusinessScan', { businessName, businessLocation });
     setScanState('scanning');
     setProgress(0);
     setError(null);
@@ -71,12 +66,10 @@ export const useBusinessScan = () => {
     }, 600);
 
     try {
-      console.log('🔥 NETWORK REQUEST: Starting actual API call...');
+      logger.info('Starting business scan API call', 'useBusinessScan');
       // Enhanced business scan with retry logic
       const result = await withRetry(async () => {
         const scanUrl = 'https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/scan-business';
-        console.log('🔥 CALLING ENDPOINT:', scanUrl);
-        console.log('🔥 REQUEST TIMESTAMP:', new Date().toISOString());
         
         const response = await fetch(scanUrl, {
           method: 'POST',
@@ -89,12 +82,9 @@ export const useBusinessScan = () => {
           })
         });
 
-        console.log('🔍 Scan response status:', response.status);
-        console.log('🔍 Scan response headers:', Object.fromEntries(response.headers.entries()));
-
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('🔍 Scan request failed:', { 
+          logger.error('Scan request failed', 'useBusinessScan', { 
             status: response.status, 
             statusText: response.statusText,
             body: errorText 
@@ -103,27 +93,24 @@ export const useBusinessScan = () => {
         }
 
         const data = await response.json();
-        console.log('🔍 Scan response data:', data);
         
         if (!data.success) {
-          console.error('🔍 Scan returned unsuccessful result:', data);
+          logger.error('Scan returned unsuccessful result', 'useBusinessScan', data);
           throw new Error(data.error || 'Scan failed - no success flag');
         }
         
-        console.log('✅ Scan successful');
+        logger.info('Scan completed successfully', 'useBusinessScan');
         return data;
       });
 
-      console.log('🎉 All steps completed successfully, setting results...');
       setProgress(100);
       setScanData(result);
       setTimeout(() => {
-        console.log('🎉 Transitioning to results state');
         setScanState('results');
       }, 1000);
       
     } catch (error: any) {
-      console.error('❌ Scan error occurred:', {
+      logger.error('Scan error occurred', 'useBusinessScan', {
         error,
         message: error?.message,
         stack: error?.stack,
@@ -131,7 +118,6 @@ export const useBusinessScan = () => {
       });
       
       const errorMessage = getErrorMessage(error);
-      console.error('❌ Processed error message:', errorMessage);
       
       setError(errorMessage);
       setProgress(0);
@@ -149,7 +135,6 @@ export const useBusinessScan = () => {
       }
     } finally {
       clearInterval(progressInterval);
-      console.log('🏁 Scan process completed');
     }
   };
 

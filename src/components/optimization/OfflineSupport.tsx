@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AlertCircle, Wifi, WifiOff } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { logger } from '@/utils/logger';
 
 interface OfflineData {
   forms: Record<string, any>;
@@ -36,7 +37,7 @@ export const OfflineSupport = () => {
       };
       localStorage.setItem('offline_data', JSON.stringify(offlineData));
     } catch (error) {
-      console.error('Failed to save offline data:', error);
+      logger.error('Failed to save offline data', 'OfflineSupport', { error });
     }
   };
 
@@ -46,7 +47,7 @@ export const OfflineSupport = () => {
       const offlineData: OfflineData = JSON.parse(localStorage.getItem('offline_data') || '{}');
       return offlineData.cache[key]?.data || null;
     } catch (error) {
-      console.error('Failed to retrieve offline data:', error);
+      logger.error('Failed to retrieve offline data', 'OfflineSupport', { error });
       return null;
     }
   };
@@ -63,7 +64,7 @@ export const OfflineSupport = () => {
       localStorage.setItem('offline_data', JSON.stringify(offlineData));
       setPendingSyncs(prev => [...prev.filter(id => id !== formId), formId]);
     } catch (error) {
-      console.error('Failed to save form offline:', error);
+      logger.error('Failed to save form offline', 'OfflineSupport', { error });
     }
   };
 
@@ -90,13 +91,13 @@ export const OfflineSupport = () => {
             setPendingSyncs(prev => prev.filter(id => id !== formId));
           }
         } catch (syncError) {
-          console.error(`Failed to sync form ${formId}:`, syncError);
+          logger.error(`Failed to sync form ${formId}`, 'OfflineSupport', { syncError });
         }
       }
 
       localStorage.setItem('offline_data', JSON.stringify(offlineData));
     } catch (error) {
-      console.error('Failed to sync offline data:', error);
+      logger.error('Failed to sync offline data', 'OfflineSupport', { error });
     }
   };
 
@@ -109,13 +110,13 @@ export const OfflineSupport = () => {
         // Listen for service worker messages
         navigator.serviceWorker.addEventListener('message', (event) => {
           if (event.data.type === 'CACHE_UPDATED') {
-            console.log('Cache updated:', event.data.payload);
+            logger.info('Service worker cache updated', 'OfflineSupport', event.data.payload);
           }
         });
 
-        console.log('Enhanced service worker registered');
+        logger.info('Enhanced service worker registered', 'OfflineSupport');
       } catch (error) {
-        console.error('Service worker registration failed:', error);
+        logger.error('Service worker registration failed', 'OfflineSupport', { error });
       }
     }
   };
@@ -126,13 +127,13 @@ export const OfflineSupport = () => {
       setIsOnline(true);
       setShowOfflineAlert(false);
       syncOfflineData();
-      console.log('Back online - syncing data');
+      logger.info('Back online - syncing data', 'OfflineSupport');
     };
 
     const handleOffline = () => {
       setIsOnline(false);
       setShowOfflineAlert(true);
-      console.log('Gone offline - enabling offline mode');
+      logger.info('Gone offline - enabling offline mode', 'OfflineSupport');
     };
 
     window.addEventListener('online', handleOnline);
@@ -302,6 +303,5 @@ self.addEventListener('sync', (event) => {
 async function syncOfflineForms() {
   // This would sync forms stored in IndexedDB or localStorage
   // Implementation depends on the specific offline storage strategy
-  console.log('Syncing offline forms...');
 }
 `;

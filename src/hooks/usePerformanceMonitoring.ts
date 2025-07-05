@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from 'react';
+import { logger } from '@/utils/logger';
 
 interface PerformanceMetrics {
   lcp?: number;
@@ -12,9 +13,6 @@ export const usePerformanceMonitoring = () => {
   const metrics: PerformanceMetrics = {};
 
   const reportMetric = useCallback((name: string, value: number) => {
-    // In production, send to analytics
-    console.log(`Core Web Vital - ${name}:`, value);
-    
     // Track if metrics meet thresholds
     const thresholds = {
       lcp: 2500,  // 2.5s
@@ -25,7 +23,11 @@ export const usePerformanceMonitoring = () => {
     const threshold = thresholds[name as keyof typeof thresholds];
     if (threshold) {
       const status = value <= threshold ? 'GOOD' : 'NEEDS_IMPROVEMENT';
-      console.log(`${name.toUpperCase()} Status:`, status);
+      logger.info(`Core Web Vital ${name}`, 'usePerformanceMonitoring', { 
+        metric: name, 
+        value, 
+        status 
+      });
     }
   }, []);
 

@@ -91,10 +91,10 @@ export const FAQ = () => {
               Get in touch with our team for personalized answers.
             </p>
             <a 
-              href="mailto:support@5-star.digital" 
+              href="mailto:admin@gudmedia.co.uk" 
               className="text-primary hover:text-primary/80 font-medium"
             >
-              support@5-star.digital
+              admin@gudmedia.co.uk
             </a>
           </Card>
         </div>

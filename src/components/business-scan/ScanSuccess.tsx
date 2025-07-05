@@ -76,7 +76,7 @@ export const ScanSuccess = () => {
 
       <div className="pt-6 border-t border-border">
         <p className="text-xs text-muted-foreground">
-          Questions? Contact our team at support@5-star.digital
+          Questions? Contact our team at admin@gudmedia.co.uk
         </p>
       </div>
     </div>

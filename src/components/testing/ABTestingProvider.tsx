@@ -143,8 +143,6 @@ export const ABTestingProvider: React.FC<ABTestingProviderProps> = ({ children }
         user_id: getUserId()
       }
     });
-
-    console.log(`AB Test Conversion: ${test.name} (${variantId}) - ${eventName}`);
   };
 
   // Register a new test
@@ -170,7 +168,7 @@ export const ABTestingProvider: React.FC<ABTestingProviderProps> = ({ children }
       try {
         setUserVariants(JSON.parse(storedVariants));
       } catch (error) {
-        console.error('Failed to parse stored AB test variants:', error);
+        // Silently handle parse errors in production
       }
     }
   }, []);

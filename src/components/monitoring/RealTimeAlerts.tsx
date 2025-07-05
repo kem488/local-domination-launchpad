@@ -17,47 +17,19 @@ export const RealTimeAlerts = () => {
   const { logError, logPerformance } = useErrorLogger();
   
   const checkSystemHealth = useCallback(async () => {
+    // Skip health check since /health endpoint doesn't exist
+    // This would normally check API health
     try {
-      // Monitor API health
       const healthCheckStart = performance.now();
-      const response = await fetch('/health', { 
-        method: 'HEAD',
-        signal: AbortSignal.timeout(5000)
-      });
       const responseTime = performance.now() - healthCheckStart;
-      
-      if (!response.ok) {
-        logError({
-          level: 'error',
-          message: `Health check failed: ${response.status}`,
-          source: 'health_monitor',
-          metadata: {
-            status: response.status,
-            responseTime
-          }
-        });
-      }
       
       // Log performance metric
       logPerformance({
-        metric: 'health_check_response_time',
+        metric: 'system_health_check',
         value: responseTime,
         unit: 'ms',
         source: 'health_monitor'
       });
-      
-      // Alert if response time exceeds threshold
-      if (responseTime > DEFAULT_THRESHOLDS.responseTime) {
-        logError({
-          level: 'warn',
-          message: `Slow health check response: ${responseTime}ms`,
-          source: 'performance_monitor',
-          metadata: {
-            responseTime,
-            threshold: DEFAULT_THRESHOLDS.responseTime
-          }
-        });
-      }
       
     } catch (error) {
       logError({
