@@ -43,23 +43,23 @@ export const Hero = () => {
               Free AI-powered audit reveals exactly what's broken in your Google Business Profile and how to fix it. Built by local marketing veterans using proven optimization strategies.
             </p>
             
-            {/* Trust Signals */}
-            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 py-6">
-              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
-                <CheckCircle className="h-4 w-4 text-white/80" />
+            {/* Trust Signals - Mobile Optimized */}
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-8 py-6 max-w-4xl mx-auto">
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-4 py-3 w-full sm:w-auto min-h-[44px]">
+                <CheckCircle className="h-5 w-5 text-white/80 flex-shrink-0" />
                 <span className="text-sm font-medium text-white/90">100% Free, No Credit Card Required</span>
               </div>
-              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
-                <Cpu className="h-4 w-4 text-white/80" />
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-4 py-3 w-full sm:w-auto min-h-[44px]">
+                <Cpu className="h-5 w-5 text-white/80 flex-shrink-0" />
                 <span className="text-sm font-medium text-white/90">AI Analysis by Marketing Veterans</span>
               </div>
-              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
-                <Layers className="h-4 w-4 text-white/80" />
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-4 py-3 w-full sm:w-auto min-h-[44px]">
+                <Layers className="h-5 w-5 text-white/80 flex-shrink-0" />
                 <span className="text-sm font-medium text-white/90">Live Google Data Analysis</span>
               </div>
-              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
-                <Zap className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">Instant Improvement Plan in 30 Seconds</span>
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-4 py-3 w-full sm:w-auto min-h-[44px]">
+                <Zap className="h-5 w-5 text-white/80 flex-shrink-0" />
+                <span className="text-sm font-medium text-white/90">Instant Plan in 30 Seconds</span>
               </div>
             </div>
 
@@ -92,12 +92,15 @@ export const Hero = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
-          {features.map((feature, idx) => <div key={idx} className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl p-4 md:p-6 h-40 md:h-48 flex flex-col justify-start items-start space-y-2 md:space-y-3">
-              <feature.icon size={18} className="text-white/80 md:w-5 md:h-5" />
-              <h3 className="text-sm md:text-base font-medium">{feature.title}</h3>
-              <p className="text-xs md:text-sm text-neutral-400">{feature.description}</p>
-            </div>)}
+        {/* Mobile-Optimized Feature Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+          {features.map((feature, idx) => (
+            <div key={idx} className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl p-4 md:p-6 min-h-[160px] sm:h-40 md:h-48 flex flex-col justify-start items-start space-y-3 hover:bg-white/10 transition-colors">
+              <feature.icon size={20} className="text-white/80 md:w-6 md:h-6 flex-shrink-0" />
+              <h3 className="text-sm md:text-base font-semibold leading-tight">{feature.title}</h3>
+              <p className="text-xs md:text-sm text-neutral-400 leading-relaxed">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </div>
       <div className='absolute inset-0'>

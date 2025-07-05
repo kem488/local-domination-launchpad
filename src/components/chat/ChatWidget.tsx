@@ -94,47 +94,48 @@ export const ChatWidget = () => {
 
   return (
     <div data-chat-widget="true" data-chat-open={isOpen.toString()}>
-      {/* Chat Toggle Button */}
+      {/* Chat Toggle Button - Mobile Optimized */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 rounded-full w-14 h-14 bg-brand-orange hover:bg-brand-orange/90 text-white shadow-lg animate-scale-in"
-        aria-label="Open chat"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 rounded-full w-12 h-12 sm:w-14 sm:h-14 bg-brand-orange hover:bg-brand-orange/90 text-white shadow-lg animate-scale-in touch-manipulation"
+        aria-label={isOpen ? "Close chat" : "Open chat"}
       >
-        {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+        {isOpen ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />}
       </Button>
 
-      {/* Chat Window */}
+      {/* Chat Window - Mobile Responsive */}
       {isOpen && (
-        <Card className="fixed bottom-24 right-6 z-50 w-80 h-96 flex flex-col shadow-xl animate-fade-in bg-background/95 backdrop-blur-md border border-border/50">
-          <CardHeader className="pb-3 flex-row items-center justify-between space-y-0">
-            <div>
-              <CardTitle className="text-lg font-semibold text-foreground">
+        <Card className="fixed bottom-16 right-2 sm:bottom-24 sm:right-6 z-50 w-[calc(100vw-16px)] max-w-sm sm:w-80 h-80 sm:h-96 flex flex-col shadow-xl animate-fade-in bg-background/95 backdrop-blur-md border border-border/50">
+          <CardHeader className="pb-3 flex-row items-center justify-between space-y-0 px-4 py-3">
+            <div className="min-w-0 flex-1">
+              <CardTitle className="text-base sm:text-lg font-semibold text-foreground truncate">
                 Chat with us
               </CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Ask about our Local Market Domination System
+              <p className="text-xs sm:text-sm text-muted-foreground truncate">
+                Ask about our Profile Audit
               </p>
             </div>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
-              className="h-8 w-8 text-muted-foreground hover:text-foreground"
+              className="h-8 w-8 text-muted-foreground hover:text-foreground flex-shrink-0 ml-2"
+              aria-label="Close chat"
             >
               <X className="h-4 w-4" />
             </Button>
           </CardHeader>
           
-          <CardContent className="flex-1 flex flex-col p-4 pt-0 min-h-0">
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto space-y-3 pr-2 max-h-full">
+          <CardContent className="flex-1 flex flex-col p-3 sm:p-4 pt-0 min-h-0">
+            {/* Messages - Mobile Optimized */}
+            <div className="flex-1 overflow-y-auto space-y-2 sm:space-y-3 pr-1 sm:pr-2 max-h-full scrollbar-thin">
               {messages.map((message) => (
                 <div
                   key={message.id}
                   className={`flex ${message.isAssistant ? 'justify-start' : 'justify-end'}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-lg px-3 py-2 text-sm break-words ${
+                    className={`max-w-[85%] sm:max-w-[80%] rounded-lg px-3 py-2 text-sm break-words ${
                       message.isAssistant
                         ? 'bg-muted text-foreground'
                         : 'bg-primary text-primary-foreground'
@@ -155,21 +156,22 @@ export const ChatWidget = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input */}
-            <div className="flex gap-2">
+            {/* Input - Mobile Optimized */}
+            <div className="flex gap-2 mt-2">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
-                className="flex-1"
+                className="flex-1 text-sm sm:text-base min-h-[40px]"
                 disabled={isLoading}
               />
               <Button
                 onClick={sendMessage}
                 disabled={!input.trim() || isLoading}
                 size="sm"
-                className="bg-brand-orange hover:bg-brand-orange/90"
+                className="bg-brand-orange hover:bg-brand-orange/90 px-3 min-h-[40px] touch-manipulation"
+                aria-label="Send message"
               >
                 <Send className="h-4 w-4" />
               </Button>

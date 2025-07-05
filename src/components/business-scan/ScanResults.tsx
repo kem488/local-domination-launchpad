@@ -57,55 +57,55 @@ export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) =>
         </div>
       </div>
 
-      {/* Score Breakdown */}
-      <div className="grid grid-cols-2 gap-4">
-        <Card className="p-4">
+      {/* Score Breakdown - Mobile Optimized Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <Card className="p-3 sm:p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Star className="h-4 w-4 text-primary" />
-            <span className="font-medium">Reviews & Rating</span>
+            <Star className="h-4 w-4 text-primary flex-shrink-0" />
+            <span className="font-medium text-sm sm:text-base">Reviews & Rating</span>
           </div>
           <div className="flex items-center gap-3">
-            <Progress value={scores.reviews} className="flex-1 h-2" />
-            <span className={`font-bold ${getScoreColor(scores.reviews)}`}>
+            <Progress value={scores.reviews} className="flex-1 h-2" aria-label={`Reviews score: ${scores.reviews} out of 100`} />
+            <span className={`font-bold text-sm sm:text-base ${getScoreColor(scores.reviews)}`}>
               {scores.reviews}
             </span>
           </div>
         </Card>
 
-        <Card className="p-4">
+        <Card className="p-3 sm:p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Users className="h-4 w-4 text-primary" />
-            <span className="font-medium">Engagement</span>
+            <Users className="h-4 w-4 text-primary flex-shrink-0" />
+            <span className="font-medium text-sm sm:text-base">Engagement</span>
           </div>
           <div className="flex items-center gap-3">
-            <Progress value={scores.engagement} className="flex-1 h-2" />
-            <span className={`font-bold ${getScoreColor(scores.engagement)}`}>
+            <Progress value={scores.engagement} className="flex-1 h-2" aria-label={`Engagement score: ${scores.engagement} out of 100`} />
+            <span className={`font-bold text-sm sm:text-base ${getScoreColor(scores.engagement)}`}>
               {scores.engagement}
             </span>
           </div>
         </Card>
 
-        <Card className="p-4">
+        <Card className="p-3 sm:p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Camera className="h-4 w-4 text-primary" />
-            <span className="font-medium">Photos & Media</span>
+            <Camera className="h-4 w-4 text-primary flex-shrink-0" />
+            <span className="font-medium text-sm sm:text-base">Photos & Media</span>
           </div>
           <div className="flex items-center gap-3">
-            <Progress value={scores.photos} className="flex-1 h-2" />
-            <span className={`font-bold ${getScoreColor(scores.photos)}`}>
+            <Progress value={scores.photos} className="flex-1 h-2" aria-label={`Photos score: ${scores.photos} out of 100`} />
+            <span className={`font-bold text-sm sm:text-base ${getScoreColor(scores.photos)}`}>
               {scores.photos}
             </span>
           </div>
         </Card>
 
-        <Card className="p-4">
+        <Card className="p-3 sm:p-4">
           <div className="flex items-center gap-2 mb-2">
-            <FileText className="h-4 w-4 text-primary" />
-            <span className="font-medium">Completeness</span>
+            <FileText className="h-4 w-4 text-primary flex-shrink-0" />
+            <span className="font-medium text-sm sm:text-base">Completeness</span>
           </div>
           <div className="flex items-center gap-3">
-            <Progress value={scores.completeness} className="flex-1 h-2" />
-            <span className={`font-bold ${getScoreColor(scores.completeness)}`}>
+            <Progress value={scores.completeness} className="flex-1 h-2" aria-label={`Completeness score: ${scores.completeness} out of 100`} />
+            <span className={`font-bold text-sm sm:text-base ${getScoreColor(scores.completeness)}`}>
               {scores.completeness}
             </span>
           </div>
@@ -144,23 +144,24 @@ export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) =>
       {/* AI Recommendations */}
       <AIRecommendations scanId={scanData.scanId} />
 
-      {/* CTA */}
+      {/* CTA - Mobile Optimized */}
       <div className="text-center space-y-4">
-        <h4 className="text-xl font-semibold text-foreground">
+        <h4 className="text-lg sm:text-xl font-semibold text-foreground px-4">
           Want our team to implement these improvements?
         </h4>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground px-4 text-sm sm:text-base">
           Get your detailed report with AI-powered recommendations and actionable insights
         </p>
         <Button
           onClick={onViewFullReport}
           size="lg"
-          className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
+          className="bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg btn-hover-effect w-full sm:w-auto min-h-[48px] touch-manipulation"
+          aria-label="Get detailed profile audit report"
         >
           Get My Free Detailed Report
-          <ArrowRight className="ml-2 h-4 w-4" />
+          <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
         </Button>
-        <div className="text-xs text-muted-foreground">
+        <div className="text-xs text-muted-foreground px-4">
           100% Free • No Credit Card Required • Instant Access
         </div>
       </div>

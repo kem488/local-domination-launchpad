@@ -36,30 +36,40 @@ export const BusinessScanSection = () => {
     handleLeadCaptured,
     handleViewFullReport
   } = useBusinessScan();
-  return <section id="business-scan" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/20">
+  return (
+    <section id="business-scan" className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/20">
       <div className="max-w-7xl mx-auto">
         <ScanHeader />
 
-        {/* Main Content */}
+        {/* Main Content - Mobile Optimized */}
         <div className="max-w-7xl mx-auto">
-          {scanState === 'form' ? <div className="max-w-4xl mx-auto">
-              <Card className="p-8 border-border shadow-lg bg-slate-100">
+          {scanState === 'form' ? (
+            <div className="max-w-4xl mx-auto">
+              <Card className="p-4 sm:p-8 border-border shadow-lg bg-slate-100">
                 <ScanForm onScanStart={handleScanStart} />
               </Card>
-            </div> : <div className="max-w-4xl mx-auto">
-              <Card className="p-8 bg-card border-border shadow-lg">
+            </div>
+          ) : (
+            <div className="max-w-4xl mx-auto">
+              <Card className="p-4 sm:p-8 bg-card border-border shadow-lg">
                 {scanState === 'scanning' && <ScanProgress progress={progress} />}
                 
-                {scanState === 'results' && scanData && <ScanResults scanData={scanData} onViewFullReport={handleViewFullReport} />}
+                {scanState === 'results' && scanData && (
+                  <ScanResults scanData={scanData} onViewFullReport={handleViewFullReport} />
+                )}
                 
-                {scanState === 'leadgate' && scanData && <LeadGate scanData={scanData} onLeadCaptured={handleLeadCaptured} />}
+                {scanState === 'leadgate' && scanData && (
+                  <LeadGate scanData={scanData} onLeadCaptured={handleLeadCaptured} />
+                )}
                 
                 {scanState === 'success' && <ScanSuccess />}
               </Card>
-            </div>}
+            </div>
+          )}
         </div>
 
         <TrustIndicators />
       </div>
-    </section>;
+    </section>
+  );
 };
