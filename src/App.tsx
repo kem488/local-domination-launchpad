@@ -10,6 +10,11 @@ import { HeatmapTracking } from "@/components/optimization/HeatmapTracking";
 import { usePerformanceMonitoring } from "@/hooks/usePerformanceMonitoring";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useUTMTracking } from "@/hooks/useUTMTracking";
+import { useErrorLogger } from "@/hooks/useErrorLogger";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { CookieBanner } from "@/components/ui/cookie-banner";
+import { RealTimeAlerts } from "@/components/monitoring/RealTimeAlerts";
+import React from "react";
 
 const queryClient = new QueryClient();
 
@@ -18,19 +23,30 @@ const App = () => {
   usePerformanceMonitoring();
   useAnalytics();
   useUTMTracking();
+  
+  const { setupGlobalErrorHandling } = useErrorLogger();
+  
+  // Set up global error handling on app load
+  React.useEffect(() => {
+    setupGlobalErrorHandling();
+  }, [setupGlobalErrorHandling]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <CriticalCSS />
-        <ResourceHints />
-        <ServiceWorker />
-        <HeatmapTracking />
-        <Toaster />
-        <Sonner />
-        <Index />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <CriticalCSS />
+          <ResourceHints />
+          <ServiceWorker />
+          <HeatmapTracking />
+          <RealTimeAlerts />
+          <Toaster />
+          <Sonner />
+          <Index />
+          <CookieBanner />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 };
 

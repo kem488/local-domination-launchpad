@@ -220,7 +220,12 @@ export const ConsultationPopup = ({ children }: ConsultationPopupProps) => {
             disabled={isSubmitting}
             className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground disabled:opacity-50 touch-target font-semibold"
           >
-            {isSubmitting ? 'Submitting...' : (
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                Submitting...
+              </div>
+            ) : (
               <>
                 <Phone className="h-4 w-4 mr-2" />
                 <span className="hidden sm:inline">Request Free Consultation</span>

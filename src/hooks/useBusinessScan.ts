@@ -23,15 +23,18 @@ const withRetry = async <T>(
 // Enhanced error messages for better UX
 const getErrorMessage = (error: any): string => {
   if (error?.message?.includes('couldn\'t find')) {
-    return 'We couldn\'t find your business. Try using a more specific business name or location.';
+    return 'We couldn\'t find your business on Google. Please try:\n• Using your exact business name as it appears on Google\n• Including your city or postcode\n• Checking if your business has a Google Business Profile';
   }
   if (error?.message?.includes('API')) {
-    return 'Our scanning service is temporarily unavailable. Please try again in a moment.';
+    return 'Our scanning service is temporarily busy. This usually resolves quickly - please try again in 30 seconds.';
   }
   if (error?.name === 'TypeError' || error?.message?.includes('fetch')) {
-    return 'Connection error. Please check your internet connection and try again.';
+    return 'Connection issue detected. Please check your internet connection and try again. If the problem persists, try refreshing the page.';
   }
-  return 'Sorry, we couldn\'t scan your business at the moment. Please try again.';
+  if (error?.message?.includes('rate limit')) {
+    return 'Too many scan requests. Please wait 60 seconds before trying again to ensure accurate results.';
+  }
+  return 'Scan temporarily unavailable. Our technical team has been notified. Please try again in a few minutes or contact support if this continues.';
 };
 
 export const useBusinessScan = () => {

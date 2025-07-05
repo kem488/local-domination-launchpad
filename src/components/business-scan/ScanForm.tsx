@@ -128,7 +128,14 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
           className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect touch-target h-14 font-semibold"
           disabled={isSubmitting || !businessName.trim() || !businessLocation.trim()}
         >
-          {isSubmitting ? 'Analyzing Your Business Profile...' : 'Audit My Business Profile Now'}
+          {isSubmitting ? (
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              Analyzing Your Business Profile...
+            </div>
+          ) : (
+            'Audit My Business Profile Now'
+          )}
         </Button>
 
       </form>

@@ -1,8 +1,8 @@
 import { useEffect, useCallback } from 'react';
 
-// Google Analytics 4 configuration
+// Google Analytics 4 configuration - should be moved to environment variables
 const GA_TRACKING_ID = 'G-JXQM8VZ2QK'; // Local Market Domination System GA4 ID
-const FB_PIXEL_ID = '743853124791247'; // Your Facebook Pixel ID
+const FB_PIXEL_ID = '743853124791247'; // Your Facebook Pixel ID - should be moved to environment variables
 
 declare global {
   interface Window {

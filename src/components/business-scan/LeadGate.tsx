@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { ScanData } from "./BusinessScanSection";
 import { Mail, Phone, MapPin, FileText, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface LeadGateProps {
   scanData: ScanData;
@@ -17,6 +18,7 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
   const [phone, setPhone] = useState("");
   const [postcode, setPostcode] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,12 +64,22 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
       const result = await response.json();
       
       if (result.success) {
+        // Show success message
+        toast({
+          title: "Report Sent Successfully!",
+          description: "Check your email for your detailed business analysis report. It may take a few minutes to arrive.",
+        });
         onLeadCaptured();
       } else {
         throw new Error(result.error || 'Failed to capture lead');
       }
     } catch (error) {
       console.error('Lead capture error:', error);
+      toast({
+        title: "Unable to Send Report",
+        description: "There was a technical issue sending your report. Please try again or contact support if the problem continues.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -170,8 +182,17 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
           className="w-full bg-brand-orange hover:bg-brand-orange/90 text-brand-orange-foreground px-8 py-4 text-lg btn-hover-effect"
           disabled={isSubmitting || !email.trim()}
         >
-          {isSubmitting ? 'Sending Report...' : 'Send Me My Free Report'}
-          <ArrowRight className="ml-2 h-4 w-4" />
+          {isSubmitting ? (
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              Sending Report...
+            </div>
+          ) : (
+            <>
+              Send Me My Free Report
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </>
+          )}
         </Button>
       </form>
 

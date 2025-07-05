@@ -26,6 +26,7 @@ export const CalendarBooking = ({ children }: CalendarBookingProps) => {
     message: ""
   });
   const [step, setStep] = useState<'datetime' | 'details' | 'confirmation'>('datetime');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   // Available time slots
@@ -43,6 +44,8 @@ export const CalendarBooking = ({ children }: CalendarBookingProps) => {
       });
       return;
     }
+
+    setIsSubmitting(true);
 
     try {
       const appointmentDetails = {
@@ -91,6 +94,8 @@ export const CalendarBooking = ({ children }: CalendarBookingProps) => {
         description: "There was an error booking your call. Please try again.",
         variant: "destructive"
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -243,10 +248,20 @@ export const CalendarBooking = ({ children }: CalendarBookingProps) => {
                 </Button>
                 <Button
                   onClick={handleFormSubmit}
+                  disabled={isSubmitting}
                   className="bg-brand-orange hover:bg-brand-orange/90"
                 >
-                  <Phone className="h-4 w-4 mr-2" />
-                  Book Call
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      Booking...
+                    </div>
+                  ) : (
+                    <>
+                      <Phone className="h-4 w-4 mr-2" />
+                      Book Call
+                    </>
+                  )}
                 </Button>
               </div>
             </div>
