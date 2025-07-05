@@ -71,7 +71,19 @@ export const Hero = () => {
 
             <div className="flex flex-col items-center pt-4 space-y-4">
               <Button 
-                onClick={() => document.getElementById('business-scan')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => {
+                  const element = document.getElementById('business-scan');
+                  if (element) {
+                    const headerOffset = 80;
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
                 className="text-lg px-12 py-4 rounded-xl bg-brand-orange text-brand-orange-foreground border shadow-lg hover:bg-brand-orange/90 btn-hover-effect font-semibold w-full sm:w-auto min-w-[280px]"
               >
                 Show Me My Competitors' Secrets
