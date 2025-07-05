@@ -41,9 +41,13 @@ export const useBusinessScan = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleScanStart = async (businessName: string, businessLocation: string) => {
-    console.log('🚀 CACHE TEST: handleScanStart called at', new Date().toISOString());
-    console.log('🚀 Starting business scan for:', { businessName, businessLocation });
-    console.log('🚀 IMPORTANT: This should call scan-business NOT capture-lead');
+    console.log('🔥 DEPLOYMENT CHECK: Code version', Date.now(), 'Function executing at', new Date().toISOString());
+    console.log('🔥 CRITICAL: This MUST call scan-business endpoint, NOT capture-lead');
+    console.log('🔥 Input data:', { businessName, businessLocation });
+    
+    // Test scan-business endpoint availability immediately
+    const testUrl = 'https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/scan-business';
+    console.log('🔥 ENDPOINT TEST: About to call', testUrl);
     setScanState('scanning');
     setProgress(0);
     setError(null);
@@ -64,11 +68,12 @@ export const useBusinessScan = () => {
     }, 600);
 
     try {
-      console.log('🔍 Starting business scan...');
+      console.log('🔥 NETWORK REQUEST: Starting actual API call...');
       // Enhanced business scan with retry logic
       const result = await withRetry(async () => {
         const scanUrl = 'https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/scan-business';
-        console.log('🔍 Calling scan endpoint:', scanUrl);
+        console.log('🔥 CALLING ENDPOINT:', scanUrl);
+        console.log('🔥 REQUEST TIMESTAMP:', new Date().toISOString());
         
         const response = await fetch(scanUrl, {
           method: 'POST',
