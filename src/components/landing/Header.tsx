@@ -24,7 +24,7 @@ export const Header = () => {
             <h1 className={`font-black bg-gradient-to-r from-brand-blue via-primary to-brand-orange bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-pointer tracking-tight ${
               isScrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'
             }`}>
-              SyngularityLabs
+              5-Star Digital
             </h1>
           </div>
           

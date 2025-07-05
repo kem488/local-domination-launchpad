@@ -1,8 +1,8 @@
-// Agency configuration - hardcoded for Syngularity Labs
+// Agency configuration - hardcoded for 5-Star Digital
 export const AGENCY_CONFIG = {
   organizationId: "256083320097",
-  agencyEmail: "integrations@syngularitylabs.com",
-  companyName: "Syngularity Labs",
+  agencyEmail: "integrations@5-star.digital",
+  companyName: "5-Star Digital",
 } as const;
 
 // Make.com webhook configuration

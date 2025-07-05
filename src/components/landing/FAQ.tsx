@@ -91,10 +91,10 @@ export const FAQ = () => {
               Get in touch with our team for personalized answers.
             </p>
             <a 
-              href="mailto:support@syngularitylabs.com" 
+              href="mailto:support@5-star.digital" 
               className="text-primary hover:text-primary/80 font-medium"
             >
-              support@syngularitylabs.com
+              support@5-star.digital
             </a>
           </Card>
         </div>

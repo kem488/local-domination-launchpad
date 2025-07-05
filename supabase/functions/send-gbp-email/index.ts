@@ -25,9 +25,9 @@ serve(async (req) => {
     let htmlContent = '';
 
     if (type === 'welcome') {
-      subject = `Welcome to Syngularity Labs - Google Business Profile Setup for ${businessName}`;
+      subject = `Welcome to 5-Star Digital - Google Business Profile Setup for ${businessName}`;
       htmlContent = `
-        <h1>Welcome to Syngularity Labs!</h1>
+        <h1>Welcome to 5-Star Digital!</h1>
         <p>Thank you for choosing us to optimize your Google Business Profile for <strong>${businessName}</strong>.</p>
         
         <h2>Next Steps:</h2>
@@ -40,7 +40,7 @@ serve(async (req) => {
         <p>If you have any questions, please don't hesitate to reach out to our support team.</p>
         
         <p>Best regards,<br>
-        The Syngularity Labs Team</p>
+        The 5-Star Digital Team</p>
       `;
     } else if (type === 'follow_up') {
       subject = `Follow-up: Google Business Profile Access for ${businessName}`;
@@ -55,12 +55,12 @@ serve(async (req) => {
         <p>If you need assistance, please reply to this email and we'll help you through the process.</p>
         
         <p>Best regards,<br>
-        The Syngularity Labs Team</p>
+        The 5-Star Digital Team</p>
       `;
     }
 
     const emailResponse = await resend.emails.send({
-      from: "Syngularity Labs <noreply@syngularity-labs.com>", // You'll need to update this with your verified domain
+      from: "5-Star Digital <noreply@5-star.digital>", // You'll need to update this with your verified domain
       to: [recipientEmail],
       subject: subject,
       html: htmlContent,

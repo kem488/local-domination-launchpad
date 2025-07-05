@@ -76,7 +76,7 @@ export const ScanSuccess = () => {
 
       <div className="pt-6 border-t border-border">
         <p className="text-xs text-muted-foreground">
-          Questions? Contact our team at support@syngularitylabs.com
+          Questions? Contact our team at support@5-star.digital
         </p>
       </div>
     </div>

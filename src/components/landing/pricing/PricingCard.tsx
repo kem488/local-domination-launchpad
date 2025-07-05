@@ -67,7 +67,7 @@ export const PricingCard = () => {
             className="w-full text-lg py-4"
             onClick={() => {
               handlePricingCTA('email_contact');
-              window.location.href = 'mailto:support@syngularitylabs.com?subject=Business Growth Consultation';
+              window.location.href = 'mailto:support@5-star.digital?subject=Business Growth Consultation';
             }}
           >
             <Mail className="h-5 w-5 mr-2" />

@@ -18,7 +18,7 @@ serve(async (req) => {
     const webhookPayload = {
       timestamp: new Date().toISOString(),
       eventType: eventType,
-      source: 'syngularity-labs',
+      source: '5-star-digital',
       data: data
     };
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'syngularity-labs-v1';
+const CACHE_NAME = '5-star-digital-v1';
 const STATIC_ASSETS = [
   '/',
   '/src/main.tsx',

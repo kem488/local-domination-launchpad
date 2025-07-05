@@ -20,7 +20,7 @@ serve(async (req) => {
 
     const { message } = await req.json();
 
-    const systemMessage = `You are a helpful assistant for Syngularity Labs, helping UK local service businesses improve their Google Business Profile presence and get more reviews. Be friendly and focus on helping tradespeople grow their online presence.`;
+    const systemMessage = `You are a helpful assistant for 5-Star Digital, helping UK local service businesses improve their Google Business Profile presence and get more reviews. Be friendly and focus on helping tradespeople grow their online presence.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
