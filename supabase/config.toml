@@ -10,28 +10,28 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.generate-recommendations]
-verify_jwt = false
+verify_jwt = true
 
 [functions.error-logger]
-verify_jwt = false
+verify_jwt = true
 
 [functions.check-trial-status]
-verify_jwt = false
+verify_jwt = true
 
 [functions.create-trial-rate-lock-checkout]
-verify_jwt = false
+verify_jwt = true
 
 [functions.capture-lead]
 verify_jwt = false
 
 [functions.send-gbp-email]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-gbp-access-link]
-verify_jwt = false
+verify_jwt = true
 
 [functions.send-to-make-webhook]
 verify_jwt = false
 
 [functions.chat-assistant]
-verify_jwt = false
+verify_jwt = true
