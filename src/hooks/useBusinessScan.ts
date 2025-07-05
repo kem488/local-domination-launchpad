@@ -41,6 +41,7 @@ export const useBusinessScan = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleScanStart = async (businessName: string, businessLocation: string) => {
+    console.log('🚀 Starting business scan for:', { businessName, businessLocation });
     setScanState('scanning');
     setProgress(0);
     setError(null);
@@ -61,6 +62,7 @@ export const useBusinessScan = () => {
     }, 600);
 
     try {
+      console.log('📝 Step 1: Capturing lead...');
       // Enhanced lead capture with retry logic
       await withRetry(async () => {
         const leadResponse = await fetch('https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/capture-lead', {
@@ -75,15 +77,27 @@ export const useBusinessScan = () => {
           })
         });
 
+        console.log('📝 Lead capture response status:', leadResponse.status);
         if (!leadResponse.ok) {
-          throw new Error(`Lead capture failed: ${leadResponse.status}`);
+          const errorText = await leadResponse.text();
+          console.error('📝 Lead capture failed:', { 
+            status: leadResponse.status, 
+            statusText: leadResponse.statusText,
+            body: errorText 
+          });
+          throw new Error(`Lead capture failed: ${leadResponse.status} - ${errorText}`);
         }
+        console.log('✅ Lead capture successful');
         return leadResponse;
       });
 
+      console.log('🔍 Step 2: Starting business scan...');
       // Enhanced business scan with retry logic
       const result = await withRetry(async () => {
-        const response = await fetch('https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/scan-business', {
+        const scanUrl = 'https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/scan-business';
+        console.log('🔍 Calling scan endpoint:', scanUrl);
+        
+        const response = await fetch(scanUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -94,24 +108,50 @@ export const useBusinessScan = () => {
           })
         });
 
+        console.log('🔍 Scan response status:', response.status);
+        console.log('🔍 Scan response headers:', Object.fromEntries(response.headers.entries()));
+
         if (!response.ok) {
-          throw new Error(`Scan failed: ${response.status}`);
+          const errorText = await response.text();
+          console.error('🔍 Scan request failed:', { 
+            status: response.status, 
+            statusText: response.statusText,
+            body: errorText 
+          });
+          throw new Error(`Scan failed: ${response.status} - ${response.statusText}`);
         }
 
         const data = await response.json();
+        console.log('🔍 Scan response data:', data);
+        
         if (!data.success) {
-          throw new Error(data.error || 'Scan failed');
+          console.error('🔍 Scan returned unsuccessful result:', data);
+          throw new Error(data.error || 'Scan failed - no success flag');
         }
+        
+        console.log('✅ Scan successful');
         return data;
       });
 
+      console.log('🎉 All steps completed successfully, setting results...');
       setProgress(100);
       setScanData(result);
-      setTimeout(() => setScanState('results'), 1000);
+      setTimeout(() => {
+        console.log('🎉 Transitioning to results state');
+        setScanState('results');
+      }, 1000);
       
-    } catch (error) {
-      console.error('Scan error:', error);
+    } catch (error: any) {
+      console.error('❌ Scan error occurred:', {
+        error,
+        message: error?.message,
+        stack: error?.stack,
+        name: error?.name
+      });
+      
       const errorMessage = getErrorMessage(error);
+      console.error('❌ Processed error message:', errorMessage);
+      
       setError(errorMessage);
       setProgress(0);
       setScanState('form');
@@ -128,6 +168,7 @@ export const useBusinessScan = () => {
       }
     } finally {
       clearInterval(progressInterval);
+      console.log('🏁 Scan process completed');
     }
   };
 
