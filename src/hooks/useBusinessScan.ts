@@ -1,8 +1,10 @@
+
 import { useState } from "react";
 import { ScanData } from "../components/business-scan/BusinessScanSection";
 import { logger } from "@/utils/logger";
 
 type ScanState = 'form' | 'scanning' | 'results' | 'leadgate' | 'success';
+type AIGenerationStatus = 'pending' | 'generating' | 'completed' | 'failed';
 
 // Enhanced error handling with retry logic
 const withRetry = async <T>(
@@ -43,12 +45,14 @@ export const useBusinessScan = () => {
   const [scanData, setScanData] = useState<ScanData | null>(null);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [aiGenerationStatus, setAiGenerationStatus] = useState<AIGenerationStatus>('pending');
 
   const handleScanStart = async (businessName: string, businessLocation: string) => {
     logger.info('Business scan started', 'useBusinessScan', { businessName, businessLocation });
     setScanState('scanning');
     setProgress(0);
     setError(null);
+    setAiGenerationStatus('pending');
 
     // Enhanced progress tracking with more realistic simulation
     const progressInterval = setInterval(() => {
@@ -105,6 +109,11 @@ export const useBusinessScan = () => {
 
       setProgress(100);
       setScanData(result);
+      
+      // Start AI generation status tracking
+      setAiGenerationStatus('generating');
+      logger.info('Starting AI recommendation tracking', 'useBusinessScan', { scanId: result.scanId });
+
       setTimeout(() => {
         setScanState('results');
       }, 1000);
@@ -122,6 +131,7 @@ export const useBusinessScan = () => {
       setError(errorMessage);
       setProgress(0);
       setScanState('form');
+      setAiGenerationStatus('failed');
       
       // Use toast instead of alert for better UX
       if (typeof window !== 'undefined' && window.dispatchEvent) {
@@ -146,14 +156,20 @@ export const useBusinessScan = () => {
     setScanState('leadgate');
   };
 
+  const updateAiGenerationStatus = (status: AIGenerationStatus) => {
+    setAiGenerationStatus(status);
+  };
+
   return {
     scanState,
     scanData,
     progress,
     error,
+    aiGenerationStatus,
     handleScanStart,
     handleLeadCaptured,
     handleViewFullReport,
+    updateAiGenerationStatus,
     setScanState
   };
 };

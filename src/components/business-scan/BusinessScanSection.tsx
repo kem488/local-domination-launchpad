@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { ScanForm } from "./ScanForm";
 import { ScanProgress } from "./ScanProgress";
@@ -7,6 +8,7 @@ import { ScanHeader } from "./ScanHeader";
 import { TrustIndicators } from "./TrustIndicators";
 import { ScanSuccess } from "./ScanSuccess";
 import { useBusinessScan } from "@/hooks/useBusinessScan";
+
 export interface ScanData {
   scanId: string;
   scores: {
@@ -27,15 +29,19 @@ export interface ScanData {
     hasHours: boolean;
   };
 }
+
 export const BusinessScanSection = () => {
   const {
     scanState,
     scanData,
     progress,
+    aiGenerationStatus,
     handleScanStart,
     handleLeadCaptured,
-    handleViewFullReport
+    handleViewFullReport,
+    updateAiGenerationStatus
   } = useBusinessScan();
+
   return (
     <section id="business-scan" className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/20">
       <div className="max-w-7xl mx-auto">
@@ -55,7 +61,11 @@ export const BusinessScanSection = () => {
                 {scanState === 'scanning' && <ScanProgress progress={progress} />}
                 
                 {scanState === 'results' && scanData && (
-                  <ScanResults scanData={scanData} onViewFullReport={handleViewFullReport} />
+                  <ScanResults 
+                    scanData={scanData} 
+                    onViewFullReport={handleViewFullReport}
+                    onAiStatusChange={updateAiGenerationStatus}
+                  />
                 )}
                 
                 {scanState === 'leadgate' && scanData && (

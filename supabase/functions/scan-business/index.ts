@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.50.3";
 import { checkRateLimit, sanitizeString, logSecurityEvent } from "../_shared/security.ts";
@@ -242,8 +243,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Scan completed for ${businessName} with overall score: ${scores.overall}`);
 
-    // Generate AI recommendations
-    console.log(`Generating AI recommendations for scan ${scanData.id}`);
+    // Generate AI recommendations with better error handling
+    console.log(`Starting AI recommendations generation for scan ${scanData.id}`);
     try {
       const recommendationsResponse = await fetch(`${supabaseUrl}/functions/v1/generate-recommendations`, {
         method: 'POST',
@@ -276,13 +277,37 @@ const handler = async (req: Request): Promise<Response> => {
       });
 
       if (recommendationsResponse.ok) {
-        console.log(`AI recommendations generated successfully for scan ${scanData.id}`);
+        const recommendationsData = await recommendationsResponse.json();
+        console.log(`AI recommendations generated successfully for scan ${scanData.id}:`, recommendationsData.success);
       } else {
-        console.error(`Failed to generate AI recommendations: ${recommendationsResponse.status}`);
+        const errorText = await recommendationsResponse.text();
+        console.error(`Failed to generate AI recommendations: ${recommendationsResponse.status} - ${errorText}`);
+        
+        // Update scan status to indicate AI generation failed
+        await supabase
+          .from('business_scans')
+          .update({ 
+            ai_recommendations: JSON.stringify({
+              error: 'AI analysis temporarily unavailable',
+              timestamp: new Date().toISOString()
+            })
+          })
+          .eq('id', scanData.id);
       }
     } catch (error) {
       console.error('Error generating AI recommendations:', error);
-      // Continue without recommendations - non-blocking
+      
+      // Update scan status to indicate AI generation failed
+      await supabase
+        .from('business_scans')
+        .update({ 
+          ai_recommendations: JSON.stringify({
+            error: 'AI analysis failed',
+            timestamp: new Date().toISOString(),
+            details: error.message
+          })
+        })
+        .eq('id', scanData.id);
     }
 
     return new Response(JSON.stringify({

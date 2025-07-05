@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -9,9 +10,10 @@ import { AlertTriangle, CheckCircle, Star, Users, Camera, FileText, ArrowRight }
 interface ScanResultsProps {
   scanData: ScanData;
   onViewFullReport: () => void;
+  onAiStatusChange?: (status: 'generating' | 'completed' | 'failed') => void;
 }
 
-export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) => {
+export const ScanResults = ({ scanData, onViewFullReport, onAiStatusChange }: ScanResultsProps) => {
   const { scores, placeDetails } = scanData;
 
   const getScoreColor = (score: number) => {
@@ -142,7 +144,7 @@ export const ScanResults = ({ scanData, onViewFullReport }: ScanResultsProps) =>
       </Card>
 
       {/* AI Recommendations */}
-      <AIRecommendations scanId={scanData.scanId} />
+      <AIRecommendations scanId={scanData.scanId} onAiStatusChange={onAiStatusChange} />
 
       {/* CTA - Mobile Optimized */}
       <div className="text-center space-y-4">
