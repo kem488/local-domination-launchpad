@@ -22,13 +22,13 @@ export const Header = () => {
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-2">
-            <button onClick={() => handleNavClick('how-it-works')} className="hover:bg-primary/10 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 touch-target border border-transparent hover:border-primary/20 text-gray-200">
+            <button onClick={() => handleNavClick('how-it-works')} className="px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 touch-target border border-transparent hover:border-primary/20 text-slate-700 bg-slate-200 hover:bg-slate-100 mx-[17px]">
               How It Works
             </button>
-            <button onClick={() => handleNavClick('pricing')} className="text-foreground/80 hover:text-primary hover:bg-primary/10 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 touch-target border border-transparent hover:border-primary/20">
+            <button onClick={() => handleNavClick('pricing')} className="text-foreground/80 hover:text-primary px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 touch-target border border-transparent hover:border-primary/20 bg-slate-200 hover:bg-slate-100">
               Pricing
             </button>
-            <button onClick={() => handleNavClick('faq')} className="text-foreground/80 hover:text-primary hover:bg-primary/10 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 touch-target border border-transparent hover:border-primary/20">
+            <button onClick={() => handleNavClick('faq')} className="text-foreground/80 hover:text-primary py-2.5 rounded-lg text-sm font-medium transition-all duration-300 touch-target border border-transparent hover:border-primary/20 bg-slate-200 hover:bg-slate-100 px-[22px] mx-[20px]">
               FAQ
             </button>
           </nav>
@@ -36,7 +36,7 @@ export const Header = () => {
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
             <ConsultationPopup>
-              <Button variant="premium" size="sm" className="btn-hover-effect touch-target px-6 py-2.5 text-sm font-semibold shadow-medium">
+              <Button variant="premium" size="sm" className="btn-hover-effect touch-target px-6 py-2.5 text-sm font-semibold shadow-medium mx-[10px]">
                 Get Free Scan
               </Button>
             </ConsultationPopup>
