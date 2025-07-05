@@ -1,24 +1,24 @@
 import { Scene } from "@/components/ui/hero-section";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { LucideIcon, Cpu, ShieldCheck, Layers, Zap, Eye } from "lucide-react";
+import { LucideIcon, Cpu, ShieldCheck, Layers, Zap, Eye, CheckCircle } from "lucide-react";
 import heroImage from "@/assets/hero-image.png";
 const features = [{
   icon: Eye,
   title: "Profile Optimization Report",
-  description: "We'll show you exactly what's missing from your Google Business Profile and how to fix it to get more calls."
+  description: "Our AI identifies exactly what's missing from your Google Business Profile and provides specific recommendations to improve your local search visibility."
 }, {
   icon: ShieldCheck,
-  title: "Local Search Visibility Plan",
-  description: "Discover the key ranking factors and optimization opportunities to improve your Google Maps visibility."
+  title: "Local Search Improvement Plan",
+  description: "Discover the ranking factors you're missing and get a step-by-step plan to optimize your profile for better Google Maps visibility."
 }, {
   icon: Layers,
-  title: "Review Generation System",
-  description: "Learn proven strategies to generate more genuine reviews and improve your online reputation."
+  title: "Review Strategy Blueprint",
+  description: "Learn why customers aren't leaving reviews and get proven tactics to generate 25+ genuine reviews monthly."
 }, {
   icon: Zap,
   title: "Customer Conversion Analysis",
-  description: "Find out where you're losing potential customers and how to optimize your profile to convert more visitors into calls."
+  description: "Find out where you're losing potential customers in your profile and how to optimize for more phone calls and visits."
 }];
 export const Hero = () => {
   return <div className="min-h-svh w-screen bg-linear-to-br from-[#000] to-[#1A2428] text-white flex flex-col items-center justify-center p-8 relative overflow-hidden">
@@ -34,38 +34,32 @@ export const Hero = () => {
           
           <div className="space-y-6 flex items-center justify-center flex-col">
             <Badge variant="secondary" className="bg-brand-orange/10 text-brand-orange border-brand-orange/20 mb-4">
-              Business Profile Audit
+              Free Google Business Profile Audit
             </Badge>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl text-center leading-tight">
               Is Your Google Business Profile Costing You Customers?
             </h1>
             <p className="text-xl md:text-2xl text-neutral-300 max-w-3xl text-center leading-relaxed">
-              We'll analyze your Google Business Profile and reveal exactly what's holding you back 
-              from getting more calls. Most local businesses are missing these crucial optimization 
-              opportunities - is yours one of them?
+              Free AI-powered audit reveals exactly what's broken in your Google Business Profile and how to fix it. Built by local marketing veterans using proven optimization strategies.
             </p>
             
             {/* Trust Signals */}
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 py-6">
               <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
-                <ShieldCheck className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">Google Partner Certified</span>
-              </div>
-              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
-                <Eye className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">500+ Business Audits</span>
-              </div>
-              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
-                <Zap className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">7+ Years Experience</span>
+                <CheckCircle className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/90">100% Free, No Credit Card Required</span>
               </div>
               <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
                 <Cpu className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">90-Day Guarantee</span>
+                <span className="text-sm font-medium text-white/90">AI Analysis by Marketing Veterans</span>
               </div>
               <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
                 <Layers className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/90">Live Google Data</span>
+                <span className="text-sm font-medium text-white/90">Live Google Data Analysis</span>
+              </div>
+              <div className="flex items-center gap-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2">
+                <Zap className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/90">Instant Improvement Plan in 30 Seconds</span>
               </div>
             </div>
 
@@ -86,7 +80,7 @@ export const Hero = () => {
                 }}
                 className="text-lg px-12 py-4 rounded-xl bg-brand-orange text-brand-orange-foreground border shadow-lg hover:bg-brand-orange/90 btn-hover-effect font-semibold w-full sm:w-auto min-w-[280px]"
               >
-                Audit My Business Profile Now
+                Get My Free Profile Audit
               </Button>
               <button 
                 onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}

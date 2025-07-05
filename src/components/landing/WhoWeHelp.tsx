@@ -6,31 +6,31 @@ export const WhoWeHelp = () => {
   const serviceBlocks = [
     {
       icon: Search,
-      title: "Competitor Vulnerability Report",
-      description: "We'll show you exactly where your competitors are weak and how to exploit those gaps to steal their customers."
+      title: "Profile Optimization Report",
+      description: "Our AI identifies exactly what's missing from your Google Business Profile and provides specific recommendations to improve your local search visibility."
     },
     {
       icon: TrendingUp,
-      title: "Local Search Domination Plan", 
-      description: "Discover the hidden ranking factors your competitors use to appear first on Google Maps and local search."
+      title: "Local Search Improvement Plan", 
+      description: "Discover the ranking factors you're missing and get a step-by-step plan to optimize your profile for better Google Maps visibility."
     },
     {
       icon: Star,
-      title: "Review Generation System",
-      description: "The exact process top-ranking businesses use to generate 25+ genuine reviews monthly without chasing customers."
+      title: "Review Strategy Blueprint",
+      description: "Learn why customers aren't leaving reviews and get proven tactics to generate 25+ genuine reviews monthly."
     },
     {
       icon: Target,
-      title: "Customer Leak Detection",
-      description: "Find out where you're losing potential customers and how to plug those leaks before they call your competitors."
+      title: "Customer Conversion Analysis",
+      description: "Find out where you're losing potential customers in your profile and how to optimize for more phone calls and visits."
     }
   ];
 
   const stats = [
-    { number: "500+", label: "Local Businesses Analyzed" },
-    { number: "89%", label: "Miss This Critical Ranking Factor" },
-    { number: "30 Seconds", label: "Average Analysis Time" },
-    { number: "100%", label: "Free Forever" }
+    { number: "90%", label: "of customers check Google Business Profiles before visiting" },
+    { number: "89%", label: "of businesses have incomplete or poorly optimized profiles" },
+    { number: "73%", label: "won't call businesses with poor online presence" },
+    { number: "68%", label: "choose businesses based on Google Business Profile quality" }
   ];
 
   return (
@@ -38,12 +38,10 @@ export const WhoWeHelp = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Built for UK Tradespeople Who Want to Dominate Local Search
+            What Our AI Profile Audit Reveals
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Stop wondering why your competitors always appear first on Google. 
-            Our comprehensive analysis reveals their exact strategy and shows you 
-            how to beat them at their own game.
+            Our artificial intelligence system analyzes your Google Business Profile using the same factors Google uses to rank local businesses. Get actionable recommendations you can implement immediately.
           </p>
         </div>
 
@@ -79,10 +77,10 @@ export const WhoWeHelp = () => {
         <div className="text-center mt-12">
           <Card className="inline-block p-6 bg-gradient-to-r from-destructive/10 to-primary/10 border-destructive/20">
             <p className="text-lg font-semibold text-foreground mb-2">
-              Your competitors are getting stronger every day you wait
+              Every day your Google Business Profile isn't optimized is another day you're losing customers
             </p>
             <p className="text-base text-muted-foreground">
-              Every call they get should have been yours
+              The longer you wait, the further behind you fall in local search results
             </p>
           </Card>
         </div>

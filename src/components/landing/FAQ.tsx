@@ -9,16 +9,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export const FAQ = () => {
   const faqs = [
     {
-      question: "What exactly will I discover about my competitors?",
-      answer: "You'll see their exact review generation strategy, local SEO tactics, and the specific keywords they're targeting to outrank you. We'll reveal their Google Business Profile optimization secrets and show you the gaps you can exploit."
+      question: "What exactly will I discover about my Google Business Profile?",
+      answer: "You'll see your profile completeness score, missing information, photo quality assessment, review generation opportunities, and specific steps to improve your local search visibility and customer conversion rate."
     },
     {
       question: "How is this different from other analysis tools?",
-      answer: "We use live Google data and focus specifically on local search dominance strategies used by your direct competitors. Most tools give generic advice - we show you exactly what's working in your specific area and trade."
+      answer: "We use live Google data and focus specifically on profile optimization factors that directly impact your ranking and customer calls. Our AI provides specific, actionable recommendations rather than generic advice."
     },
     {
-      question: "What if I don't have any real competitors?",
-      answer: "Every local business has competitors - we'll identify businesses competing for your exact keywords and customer base. Even if you think you're unique, we'll find who's ranking for the terms your customers are searching."
+      question: "What if my profile is already complete?",
+      answer: "Even complete profiles often miss optimization opportunities. Our AI identifies advanced factors like photo optimization, review response strategies, and conversion improvements that most businesses overlook."
     },
     {
       question: "How quickly will I see results?",

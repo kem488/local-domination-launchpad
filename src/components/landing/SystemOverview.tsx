@@ -7,18 +7,18 @@ export const SystemOverview = () => {
   const systemFeatures = [
     {
       icon: <Zap className="h-6 w-6" />,
-      title: "AI-Powered Automation",
-      description: "Enterprise-grade review automation technology that works 24/7"
+      title: "Profile Completeness Score",
+      description: "Measures how complete your profile is vs Google's requirements"
     },
     {
       icon: <Shield className="h-6 w-6" />,
-      title: "Proven Methodology",
-      description: "6-phase system based on 200+ UK business analysis and market research"
+      title: "Local SEO Assessment",
+      description: "Analyzes your profile against Google's ranking factors"
     },
     {
       icon: <TrendingUp className="h-6 w-6" />,
-      title: "Quantifiable Results",
-      description: "Specific metrics: 25+ reviews, 4.5+ stars, 2x profile views in 90 days"
+      title: "Review Generation Analysis",
+      description: "Identifies why customers aren't leaving reviews"
     }
   ];
 
@@ -34,13 +34,13 @@ export const SystemOverview = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <Badge variant="secondary" className="mb-4 bg-brand-blue-light text-brand-blue border-brand-blue/20">
-            Enterprise-Level Technology for Local Businesses
+            AI-Powered Profile Analysis Built by Marketing Veterans
           </Badge>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Built on Proven Data & Industry Research
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Our system combines cutting-edge AI technology with deep understanding of UK local service markets, backed by extensive research and industry best practices.
+            Our artificial intelligence system analyzes your Google Business Profile using the same factors Google uses to rank local businesses. Developed by local marketing veterans with actionable recommendations.
           </p>
         </div>
 

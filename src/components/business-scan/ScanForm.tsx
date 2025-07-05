@@ -55,32 +55,29 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
     <div className="text-center">
       <div className="mb-8">
         <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-          Get Your Free Google Business Profile Audit
+          Get Your Free Google Business Profile Health Check
         </h3>
         <p className="text-muted-foreground text-base md:text-lg mb-6">
-          Our AI-powered analysis will scan your Google Business Profile and reveal 
-          exactly what's holding your business back from getting more calls. You'll 
-          discover the specific improvements needed and get a step-by-step optimization 
-          plan to maximize your local visibility.
+          Our veteran-developed AI analyzes your Google Business Profile and reveals exactly what's holding your business back from getting more calls. You'll get specific improvement recommendations and a step-by-step optimization plan.
         </p>
         
         {/* Trust Elements */}
         <div className="grid grid-cols-2 gap-2 text-xs text-success mb-6">
           <div className="flex items-center gap-1">
             <span className="text-success">✅</span>
-            <span>100% Free, No Credit Card Required</span>
+            <span>100% Free Profile Analysis</span>
           </div>
           <div className="flex items-center gap-1">
             <span className="text-success">✅</span>
-            <span>500+ Businesses Analyzed This Week</span>
+            <span>AI-Powered Recommendations</span>
           </div>
           <div className="flex items-center gap-1">
             <span className="text-success">✅</span>
-            <span>Live Google Data (Not Outdated Reports)</span>
+            <span>Live Google Business Profile Data</span>
           </div>
           <div className="flex items-center gap-1">
             <span className="text-success">✅</span>
-            <span>Instant Results in Under 30 Seconds</span>
+            <span>Instant Improvement Plan in 30 Seconds</span>
           </div>
         </div>
       </div>
@@ -95,7 +92,7 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
             <Input
               id="businessName"
               type="text"
-              placeholder="e.g. Joe's Plumbing Services"
+              placeholder="e.g. Manchester Plumbing Services"
               value={businessName}
               onChange={(e) => setBusinessName(e.target.value)}
               className="pl-10 h-12 text-base touch-target"
@@ -141,7 +138,7 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
       </form>
 
       <div className="mt-6 text-sm text-muted-foreground">
-        ✓ Live Google data analysis &nbsp; ✓ Profile optimization tips &nbsp; ✓ Instant insights
+        ✓ Live profile analysis &nbsp; ✓ AI improvement recommendations &nbsp; ✓ Instant optimization plan
       </div>
     </div>
   );
