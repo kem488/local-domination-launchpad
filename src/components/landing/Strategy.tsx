@@ -12,11 +12,10 @@ export const Strategy = () => {
       subtitle: "Step 1",
       description: "Our AI scans your Google Business Profile and analyzes every element against optimization best practices",
       features: [
-        "Google Business Profile completeness assessment",
-        "Photo quality and quantity analysis", 
-        "Review generation opportunity identification",
-        "Local SEO audit and keyword optimization",
-        "Customer conversion point analysis"
+        "Profile completeness assessment",
+        "Photo quality analysis", 
+        "Review opportunity identification",
+        "Local SEO audit"
       ]
     },
     {
@@ -28,8 +27,7 @@ export const Strategy = () => {
         "Missing information detection",
         "Photo optimization recommendations",
         "Review response strategy gaps",
-        "Local ranking factor analysis",
-        "Customer journey optimization points"
+        "Local ranking factor analysis"
       ]
     },
     {
@@ -41,8 +39,7 @@ export const Strategy = () => {
         "Prioritized improvement checklist",
         "Step-by-step optimization guide",
         "Photo and content recommendations",
-        "Review generation strategy plan",
-        "Local SEO improvement roadmap"
+        "Review generation strategy plan"
       ]
     },
     {
@@ -53,7 +50,6 @@ export const Strategy = () => {
       features: [
         "Monthly optimization updates",
         "New feature implementation guides",
-        "Competitive positioning advice",
         "Performance tracking recommendations",
         "Advanced local SEO strategies"
       ]

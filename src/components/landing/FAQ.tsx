@@ -22,7 +22,7 @@ export const FAQ = () => {
     },
     {
       question: "How quickly will I see results?",
-      answer: "Most clients see their first automated review requests within 7 days. Expect 25+ reviews, 4.5+ star average, and 2x profile views within 90 days. Many tradespeople see dramatic improvements in 30 days - our system works fast because it targets the exact moments when customers are most likely to leave positive reviews."
+      answer: "Most clients see first automated review requests within 7 days. Expect 25+ reviews, 4.5+ star average, and 2x profile views within 90 days. Our system works fast by targeting exact moments when customers are most likely to leave positive reviews."
     },
     {
       question: "Is this compliant with Google's guidelines?",
@@ -30,15 +30,15 @@ export const FAQ = () => {
     },
     {
       question: "What if I'm not tech-savvy?",
-      answer: "Perfect - this is designed for busy tradespeople, not tech experts. We handle 100% of the setup. You just keep doing great work, and the system automatically asks your happy customers for reviews. Simple dashboard shows your progress. If you can use WhatsApp, you can use this."
+      answer: "Perfect - designed for busy tradespeople, not tech experts. We handle 100% of setup. You keep doing great work, the system automatically asks happy customers for reviews. Simple dashboard shows progress."
     },
     {
       question: "How does the guarantee work?",
-      answer: "Simple: If you don't hit 25+ reviews, 4.5+ stars, 2x profile views, and 100% profile completion within 90 days, we work for free until you do. If we still can't deliver, full refund. We're that confident because this system works for every type of local business."
+      answer: "Simple: If you don't hit 25+ reviews, 4.5+ stars, 2x profile views, and 100% profile completion within 90 days, we work for free until you do. If we still can't deliver, full refund."
     },
     {
       question: "Why offer lifetime access for £97?",
-      answer: "We're building case studies across different UK trades to prove our system works universally. After July 31st, this goes to £247/month minimum. Your £97 rate is locked forever - even if we increase to £300-400+ later. This offer lets us quickly gather diverse success stories."
+      answer: "We're building case studies across UK trades to prove our system works universally. After July 31st, this goes to £247/month minimum. Your £97 rate is locked forever - even if we increase to £300-400+ later."
     },
     {
       question: "Will this work for my specific trade?",

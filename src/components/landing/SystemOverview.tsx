@@ -98,8 +98,7 @@ export const SystemOverview = () => {
               <h3 className="text-2xl font-bold text-foreground">90-Day Results Guarantee</h3>
             </div>
             <p className="text-lg text-muted-foreground mb-4 max-w-2xl">
-              We're so confident in our system that we guarantee specific results within 90 days. 
-              If you don't achieve 25+ reviews and 4.5+ stars, we'll work for free until you do.
+              Guaranteed results within 90 days: 25+ reviews, 4.5+ stars, 2x profile views, and complete profile optimization.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div className="flex items-center gap-2">

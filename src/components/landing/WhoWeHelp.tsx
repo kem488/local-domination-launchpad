@@ -7,12 +7,12 @@ export const WhoWeHelp = () => {
     {
       icon: Search,
       title: "Profile Optimization Report",
-      description: "Our AI identifies exactly what's missing from your Google Business Profile and provides specific recommendations to improve your local search visibility."
+      description: "AI identifies what's missing from your Google Business Profile and provides specific recommendations to improve local search visibility."
     },
     {
       icon: TrendingUp,
       title: "Local Search Improvement Plan", 
-      description: "Discover the ranking factors you're missing and get a step-by-step plan to optimize your profile for better Google Maps visibility."
+      description: "Discover missing ranking factors and get a step-by-step plan to optimize your profile for better Google Maps visibility."
     },
     {
       icon: Star,
@@ -22,7 +22,7 @@ export const WhoWeHelp = () => {
     {
       icon: Target,
       title: "Customer Conversion Analysis",
-      description: "Find out where you're losing potential customers in your profile and how to optimize for more phone calls and visits."
+      description: "Find where you're losing potential customers and how to optimize for more phone calls and visits."
     }
   ];
 
