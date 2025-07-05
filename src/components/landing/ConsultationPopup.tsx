@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Mail, Phone } from "lucide-react";
 import { useConversionTracking } from "@/hooks/useConversionTracking";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ConsultationPopupProps {
   children: React.ReactNode;
@@ -39,7 +40,22 @@ export const ConsultationPopup = ({ children }: ConsultationPopupProps) => {
         throw new Error('Please fill in all required fields');
       }
 
-      console.log('Submitting lead data:', formData);
+      // Send to Make.com webhook
+      const { error: webhookError } = await supabase.functions.invoke('send-to-make-webhook', {
+        body: {
+          eventType: 'consultation_request',
+          data: {
+            ...formData,
+            timestamp: new Date().toISOString(),
+            source: 'consultation_popup'
+          }
+        }
+      });
+
+      if (webhookError) {
+        console.error('Webhook error:', webhookError);
+        // Continue with success flow even if webhook fails
+      }
 
       // Track successful form completion
       trackFormCompletion('lead_capture', formData);

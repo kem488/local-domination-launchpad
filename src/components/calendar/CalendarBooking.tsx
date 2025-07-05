@@ -8,6 +8,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Badge } from "@/components/ui/badge";
 import { Calendar as CalendarIcon, Clock, Phone, CheckCircle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CalendarBookingProps {
   children: React.ReactNode;
@@ -44,16 +45,28 @@ export const CalendarBooking = ({ children }: CalendarBookingProps) => {
     }
 
     try {
-      // Here you would typically integrate with a calendar service like Calendly, Acuity, or Google Calendar
-      // For now, we'll just show a success message
-      
       const appointmentDetails = {
         date: selectedDate.toLocaleDateString(),
         time: selectedTime,
         ...formData
       };
 
-      console.log('Booking appointment:', appointmentDetails);
+      // Send to Make.com webhook
+      const { error: webhookError } = await supabase.functions.invoke('send-to-make-webhook', {
+        body: {
+          eventType: 'calendar_booking',
+          data: {
+            ...appointmentDetails,
+            timestamp: new Date().toISOString(),
+            source: 'calendar_booking'
+          }
+        }
+      });
+
+      if (webhookError) {
+        console.error('Webhook error:', webhookError);
+        // Continue with success flow even if webhook fails
+      }
 
       setStep('confirmation');
       
