@@ -105,7 +105,7 @@ export const useAnalytics = () => {
       });
     }
 
-    console.log('Analytics Event:', event);
+    // Analytics event logged
   }, []);
 
   // Track ecommerce events

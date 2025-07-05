@@ -10,8 +10,8 @@ export const Footer = () => {
               review automation and Google Business Profile optimization.
             </p>
             <div className="flex space-x-4">
-              <a href="mailto:support@5-star.digital" className="text-background/80 hover:text-background">
-                support@5-star.digital
+              <a href="mailto:admin@gudmedia.co.uk" className="text-background/80 hover:text-background">
+                admin@gudmedia.co.uk
               </a>
             </div>
           </div>
@@ -29,16 +29,16 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-background/80">
-              <li><a href="https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867f4a963f9ec35725caa45.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-background">Privacy Policy</a></li>
-              <li><a href="https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867f4a94f6d5ccd1e40c007.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-background">Terms of Service</a></li>
-              <li><a href="https://storage.googleapis.com/msgsndr/8eRvJowMThOa8MOenmMO/media/6867f4a92c6d3de506ed0642.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-background">Refund Policy</a></li>
-              <li><a href="mailto:support@5-star.digital" className="hover:text-background">Contact</a></li>
+              <li><a href="/privacy" className="hover:text-background">Privacy Policy</a></li>
+              <li><a href="/terms" className="hover:text-background">Terms of Service</a></li>
+              <li><a href="/cookies" className="hover:text-background">Cookie Policy</a></li>
+              <li><a href="mailto:admin@gudmedia.co.uk" className="hover:text-background">Contact</a></li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-background/20 mt-8 pt-8 text-center text-background/60">
-          <p>&copy; 2024 5-Star.Digital. All rights reserved.</p>
+          <p>&copy; 2025 GUD Media Limited. All rights reserved.</p>
           <p className="mt-2 text-sm">
             This site is not affiliated with Google LLC. Google Business Profile is a trademark of Google LLC.
           </p>

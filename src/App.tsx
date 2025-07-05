@@ -2,7 +2,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import Cookies from "./pages/Cookies";
+import NotFound from "./pages/NotFound";
 import { CriticalCSS } from "@/components/ui/critical-css";
 import { ResourceHints } from "@/components/optimization/ResourceHints";
 import { ServiceWorker } from "@/components/optimization/ServiceWorker";
@@ -40,18 +45,26 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <ABTestingProvider>
           <TooltipProvider>
-            <SecurityHeaders />
-            <CriticalCSS />
-            <ResourceHints />
-            <ServiceWorker />
-            <HeatmapTracking />
-            <PerformanceOptimizer />
-            <RealTimeAlerts />
-            <OfflineSupport />
-            <Toaster />
-            <Sonner />
-            <Index />
-            <CookieBanner />
+            <BrowserRouter>
+              <SecurityHeaders />
+              <CriticalCSS />
+              <ResourceHints />
+              <ServiceWorker />
+              <HeatmapTracking />
+              <PerformanceOptimizer />
+              <RealTimeAlerts />
+              <OfflineSupport />
+              <Toaster />
+              <Sonner />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/cookies" element={<Cookies />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <CookieBanner />
+            </BrowserRouter>
           </TooltipProvider>
         </ABTestingProvider>
       </QueryClientProvider>
