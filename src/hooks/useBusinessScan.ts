@@ -62,36 +62,7 @@ export const useBusinessScan = () => {
     }, 600);
 
     try {
-      console.log('📝 Step 1: Capturing lead...');
-      // Enhanced lead capture with retry logic
-      await withRetry(async () => {
-        const leadResponse = await fetch('https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/capture-lead', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            businessName,
-            businessLocation,
-            source: 'business-scan'
-          })
-        });
-
-        console.log('📝 Lead capture response status:', leadResponse.status);
-        if (!leadResponse.ok) {
-          const errorText = await leadResponse.text();
-          console.error('📝 Lead capture failed:', { 
-            status: leadResponse.status, 
-            statusText: leadResponse.statusText,
-            body: errorText 
-          });
-          throw new Error(`Lead capture failed: ${leadResponse.status} - ${errorText}`);
-        }
-        console.log('✅ Lead capture successful');
-        return leadResponse;
-      });
-
-      console.log('🔍 Step 2: Starting business scan...');
+      console.log('🔍 Starting business scan...');
       // Enhanced business scan with retry logic
       const result = await withRetry(async () => {
         const scanUrl = 'https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/scan-business';
