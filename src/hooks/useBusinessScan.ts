@@ -68,13 +68,16 @@ export const useBusinessScan = () => {
         setAiGenerationStatus('completed');
       }
 
-      // Fallback timeout
-      setTimeout(() => {
-        if (aiGenerationStatus === 'generating') {
-          const fallbackRecommendations = BusinessScanService.getFallbackRecommendations(result);
-          setScanData(prev => prev ? { ...prev, aiRecommendations: fallbackRecommendations } : null);
-          setAiGenerationStatus('completed');
-        }
+      // Fallback timeout - use a ref to get current status
+      const timeoutId = setTimeout(() => {
+        setScanData(prev => {
+          if (prev && !prev.aiRecommendations) {
+            const fallbackRecommendations = BusinessScanService.getFallbackRecommendations(result);
+            setAiGenerationStatus('completed');
+            return { ...prev, aiRecommendations: fallbackRecommendations };
+          }
+          return prev;
+        });
         if (channel) {
           supabase.removeChannel(channel);
         }
