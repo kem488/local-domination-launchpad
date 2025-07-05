@@ -14,6 +14,10 @@ import { useErrorLogger } from "@/hooks/useErrorLogger";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { CookieBanner } from "@/components/ui/cookie-banner";
 import { RealTimeAlerts } from "@/components/monitoring/RealTimeAlerts";
+import { SecurityHeaders } from "@/components/security/SecurityHeaders";
+import { PerformanceOptimizer } from "@/components/optimization/PerformanceOptimizer";
+import { OfflineSupport } from "@/components/optimization/OfflineSupport";
+import { ABTestingProvider } from "@/components/testing/ABTestingProvider";
 import React from "react";
 
 const queryClient = new QueryClient();
@@ -34,17 +38,22 @@ const App = () => {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <CriticalCSS />
-          <ResourceHints />
-          <ServiceWorker />
-          <HeatmapTracking />
-          <RealTimeAlerts />
-          <Toaster />
-          <Sonner />
-          <Index />
-          <CookieBanner />
-        </TooltipProvider>
+        <ABTestingProvider>
+          <TooltipProvider>
+            <SecurityHeaders />
+            <CriticalCSS />
+            <ResourceHints />
+            <ServiceWorker />
+            <HeatmapTracking />
+            <PerformanceOptimizer />
+            <RealTimeAlerts />
+            <OfflineSupport />
+            <Toaster />
+            <Sonner />
+            <Index />
+            <CookieBanner />
+          </TooltipProvider>
+        </ABTestingProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );

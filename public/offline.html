@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - 5 Star Digital</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            padding: 2rem;
+        }
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        p {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        .status {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            opacity: 0.7;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📡</div>
+        <h1>You're Offline</h1>
+        <p>It looks like you've lost your internet connection. Don't worry - your data is safe and will sync when you're back online.</p>
+        
+        <button class="btn" onclick="checkConnection()">Try Again</button>
+        
+        <div class="status">
+            <div id="connection-status" class="pulse">Checking connection...</div>
+        </div>
+    </div>
+
+    <script>
+        function checkConnection() {
+            const status = document.getElementById('connection-status');
+            status.textContent = 'Checking connection...';
+            status.className = 'pulse';
+            
+            // Try to fetch a small resource
+            fetch('/', { method: 'HEAD', cache: 'no-cache' })
+                .then(() => {
+                    status.textContent = 'Connection restored! Redirecting...';
+                    status.className = '';
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
+                })
+                .catch(() => {
+                    status.textContent = 'Still offline. We\'ll keep trying automatically.';
+                    status.className = '';
+                });
+        }
+
+        // Auto-check connection every 5 seconds
+        setInterval(checkConnection, 5000);
+        
+        // Check connection when page becomes visible
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                checkConnection();
+            }
+        });
+
+        // Initial connection check
+        setTimeout(checkConnection, 1000);
+    </script>
+</body>
+</html>
