@@ -33,7 +33,15 @@ export const AIRecommendations = ({ scanId }: AIRecommendationsProps) => {
 
   useEffect(() => {
     const fetchRecommendations = async () => {
+      if (!scanId) {
+        console.error('AIRecommendations: scanId is required');
+        setError('Invalid scan ID');
+        setLoading(false);
+        return;
+      }
+
       try {
+        console.log('AIRecommendations: Fetching recommendations for scanId:', scanId);
         const { data, error } = await supabase
           .from('business_scans')
           .select('ai_recommendations')
@@ -61,10 +69,10 @@ export const AIRecommendations = ({ scanId }: AIRecommendationsProps) => {
 
   const getPriorityColor = (priority: string) => {
     switch (priority?.toLowerCase()) {
-      case 'critical': return 'bg-destructive text-destructive-foreground';
-      case 'high': return 'bg-warning text-warning-foreground';
-      case 'medium': return 'bg-brand-blue text-brand-blue-foreground';
-      default: return 'bg-muted text-muted-foreground';
+      case 'critical': return 'destructive';
+      case 'high': return 'secondary';
+      case 'medium': return 'default';
+      default: return 'outline';
     }
   };
 
@@ -115,7 +123,7 @@ export const AIRecommendations = ({ scanId }: AIRecommendationsProps) => {
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-bold text-foreground">AI-Powered Recommendations</h3>
-          <Badge className={getPriorityColor(recommendations.priority)}>
+          <Badge variant={getPriorityColor(recommendations.priority) as any}>
             {recommendations.priority?.toUpperCase()} Priority
           </Badge>
         </div>
