@@ -23,27 +23,27 @@ export const ScanProgress = ({ progress }: ScanProgressProps) => {
   }, [progress]);
 
   return (
-    <div className="text-center py-8">
+    <div className="text-center py-8 px-4">
       <div className="mb-8">
-        <h3 className="text-2xl font-bold text-foreground mb-4">
+        <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
           Scanning Your Business Profile...
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-base sm:text-lg">
           We're analyzing your Google Business Profile using live data and AI
         </p>
       </div>
 
       <div className="max-w-md mx-auto space-y-8">
         {/* Progress Bar */}
-        <div className="space-y-2">
-          <Progress value={progress} className="h-3" />
-          <div className="text-sm text-muted-foreground">
+        <div className="space-y-3">
+          <Progress value={progress} className="h-4" />
+          <div className="text-sm text-muted-foreground font-medium">
             {Math.round(progress)}% Complete
           </div>
         </div>
 
         {/* Steps */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {scanSteps.map((step, index) => {
             const Icon = step.icon;
             const isCompleted = progress >= step.threshold;
@@ -52,38 +52,42 @@ export const ScanProgress = ({ progress }: ScanProgressProps) => {
             return (
               <div
                 key={index}
-                className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 ${
+                className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-500 ${
                   isCurrent 
-                    ? 'bg-primary/10 border border-primary/20' 
+                    ? 'bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 shadow-soft transform scale-105' 
                     : isCompleted 
-                    ? 'bg-success/10' 
-                    : 'bg-muted/30'
+                    ? 'bg-gradient-to-r from-success/10 to-success/5 border border-success/20' 
+                    : 'bg-gradient-card border border-border/30'
                 }`}
               >
-                <div className={`p-2 rounded-full ${
+                <div className={`p-3 rounded-full transition-all duration-300 ${
                   isCompleted 
-                    ? 'bg-success text-success-foreground' 
+                    ? 'bg-gradient-success text-white shadow-medium' 
                     : isCurrent 
-                    ? 'bg-primary text-primary-foreground animate-pulse' 
+                    ? 'bg-gradient-primary text-primary-foreground animate-pulse shadow-glow' 
                     : 'bg-muted text-muted-foreground'
                 }`}>
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-5 w-5" />
                 </div>
-                <span className={`text-sm font-medium ${
+                <span className={`text-sm font-medium flex-1 text-left ${
                   isCurrent ? 'text-primary' : isCompleted ? 'text-success' : 'text-muted-foreground'
                 }`}>
                   {step.label}
                 </span>
                 {isCompleted && (
-                  <CheckCircle className="h-4 w-4 text-success ml-auto" />
+                  <CheckCircle className="h-5 w-5 text-success flex-shrink-0 animate-scale-in" />
                 )}
               </div>
             );
           })}
         </div>
 
-        <div className="text-xs text-muted-foreground mt-6">
-          Analyzing live Google data • This may take up to 30 seconds
+        <div className="text-xs text-muted-foreground mt-8 p-4 bg-gradient-card rounded-lg border border-border/30">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            <span className="font-medium">Analyzing live Google data</span>
+          </div>
+          <p>This may take up to 30 seconds for comprehensive analysis</p>
         </div>
       </div>
     </div>

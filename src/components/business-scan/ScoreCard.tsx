@@ -13,18 +13,20 @@ interface ScoreCardProps {
 
 export const ScoreCard = ({ title, score, icon: Icon, className }: ScoreCardProps) => {
   return (
-    <Card className={`p-3 sm:p-4 ${className || ''}`}>
-      <div className="flex items-center gap-2 mb-2">
-        <Icon className="h-4 w-4 text-primary flex-shrink-0" />
-        <span className="font-medium text-sm sm:text-base">{title}</span>
+    <Card className="card-modern p-4 sm:p-6 group hover:scale-105 transition-all duration-300">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2 rounded-lg bg-gradient-primary text-primary-foreground shadow-soft">
+          <Icon className="h-5 w-5" />
+        </div>
+        <span className="font-semibold text-base sm:text-lg">{title}</span>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         <Progress 
           value={score} 
-          className="flex-1 h-2" 
+          className="flex-1 h-3" 
           aria-label={`${title} score: ${score} out of 100`} 
         />
-        <span className={`font-bold text-sm sm:text-base ${getScoreColor(score)}`}>
+        <span className={`font-bold text-xl ${getScoreColor(score)}`}>
           {score}
         </span>
       </div>

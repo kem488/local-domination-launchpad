@@ -48,10 +48,18 @@ All colors MUST be HSL.
     --warning: 43 96% 56%;
     --warning-foreground: 0 0% 0%;
     
-    /* Section background variants */
-    --section-light: 0 0% 99%;
-    --section-muted: 210 40% 98%;
-    --section-accent: 216 87% 97%;
+    /* Modern gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(216 87% 70%) 100%);
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand-orange)) 0%, hsl(16 90% 70%) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(var(--success)) 0%, hsl(142 76% 50%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(210 40% 99%) 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    
+    /* Modern shadows */
+    --shadow-soft: 0 2px 20px -2px hsl(var(--primary) / 0.08);
+    --shadow-medium: 0 8px 30px -5px hsl(var(--primary) / 0.15);
+    --shadow-strong: 0 20px 50px -10px hsl(var(--primary) / 0.25);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.15);
     
     /* Section background variants */
     --section-light: 0 0% 99%;
@@ -125,11 +133,29 @@ html {
 
 .btn-hover-effect:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-medium);
 }
 
 .btn-hover-effect:active {
   transform: translateY(0) scale(0.98);
+}
+
+/* Modern card effects */
+.card-glass {
+  background: var(--gradient-glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-modern {
+  background: var(--gradient-card);
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-modern:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
 }
 
 /* Smooth animations for all interactive elements */

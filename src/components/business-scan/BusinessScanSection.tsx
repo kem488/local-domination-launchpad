@@ -56,7 +56,7 @@ export const BusinessScanSection = () => {
   } = useBusinessScan();
 
   return (
-    <section id="business-scan" className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/20">
+    <section id="business-scan" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background via-section-light to-section-muted/30">
       <div className="max-w-7xl mx-auto">
         <ScanHeader />
 
@@ -64,13 +64,13 @@ export const BusinessScanSection = () => {
         <div className="max-w-7xl mx-auto">
           {scanState === 'form' ? (
             <div className="max-w-4xl mx-auto">
-              <Card className="p-4 sm:p-8 border-border shadow-lg bg-slate-100">
+              <Card className="card-modern p-6 sm:p-10 border-border/50 shadow-medium bg-gradient-card backdrop-blur-sm">
                 <ScanForm onScanStart={handleScanStart} />
               </Card>
             </div>
           ) : (
             <div className="max-w-4xl mx-auto">
-              <Card className="p-4 sm:p-8 bg-card border-border shadow-lg">
+              <Card className="card-modern p-6 sm:p-10 bg-gradient-card border-border/50 shadow-medium backdrop-blur-sm">
                 {scanState === 'scanning' && <ScanProgress progress={progress} />}
                 
                 {scanState === 'results' && scanData && (
