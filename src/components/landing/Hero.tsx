@@ -43,23 +43,23 @@ export const Hero = () => {
               Free AI-powered audit reveals exactly what's broken in your Google Business Profile and how to fix it. Built by local marketing veterans using proven optimization strategies.
             </p>
             
-            {/* Enhanced Trust Signals - Mobile Optimized */}
-            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 lg:gap-6 py-6 lg:py-8 max-w-5xl mx-auto">
-              <div className="flex items-center gap-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl px-4 sm:px-6 py-3 sm:py-4 w-full sm:w-auto min-h-[52px] shadow-soft hover:bg-white/15 transition-all duration-300">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-success flex-shrink-0" />
-                <span className="text-sm sm:text-base font-medium text-white/95">100% Free, No Credit Card Required</span>
+            {/* Enhanced Trust Signals - Responsive Layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 py-6 lg:py-8 max-w-6xl mx-auto">
+              <div className="flex items-center gap-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl px-4 lg:px-6 py-4 lg:py-5 min-h-[60px] shadow-soft hover:bg-white/15 transition-all duration-300 justify-center lg:justify-start">
+                <CheckCircle className="h-6 w-6 text-success flex-shrink-0" />
+                <span className="text-sm lg:text-base font-medium text-white/95 text-center lg:text-left">100% Free, No Credit Card Required</span>
               </div>
-              <div className="flex items-center gap-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl px-4 sm:px-6 py-3 sm:py-4 w-full sm:w-auto min-h-[52px] shadow-soft hover:bg-white/15 transition-all duration-300">
-                <Cpu className="h-5 w-5 sm:h-6 sm:w-6 text-primary flex-shrink-0" />
-                <span className="text-sm sm:text-base font-medium text-white/95">AI Analysis by Marketing Veterans</span>
+              <div className="flex items-center gap-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl px-4 lg:px-6 py-4 lg:py-5 min-h-[60px] shadow-soft hover:bg-white/15 transition-all duration-300 justify-center lg:justify-start">
+                <Cpu className="h-6 w-6 text-primary flex-shrink-0" />
+                <span className="text-sm lg:text-base font-medium text-white/95 text-center lg:text-left">AI Analysis by Marketing Veterans</span>
               </div>
-              <div className="flex items-center gap-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl px-4 sm:px-6 py-3 sm:py-4 w-full sm:w-auto min-h-[52px] shadow-soft hover:bg-white/15 transition-all duration-300">
-                <Layers className="h-5 w-5 sm:h-6 sm:w-6 text-brand-blue flex-shrink-0" />
-                <span className="text-sm sm:text-base font-medium text-white/95">Live Google Data Analysis</span>
+              <div className="flex items-center gap-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl px-4 lg:px-6 py-4 lg:py-5 min-h-[60px] shadow-soft hover:bg-white/15 transition-all duration-300 justify-center lg:justify-start">
+                <Layers className="h-6 w-6 text-brand-blue flex-shrink-0" />
+                <span className="text-sm lg:text-base font-medium text-white/95 text-center lg:text-left">Live Google Data Analysis</span>
               </div>
-              <div className="flex items-center gap-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl px-4 sm:px-6 py-3 sm:py-4 w-full sm:w-auto min-h-[52px] shadow-soft hover:bg-white/15 transition-all duration-300">
-                <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-brand-orange flex-shrink-0" />
-                <span className="text-sm sm:text-base font-medium text-white/95">Instant Plan in 30 Seconds</span>
+              <div className="flex items-center gap-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl px-4 lg:px-6 py-4 lg:py-5 min-h-[60px] shadow-soft hover:bg-white/15 transition-all duration-300 justify-center lg:justify-start">
+                <Zap className="h-6 w-6 text-brand-orange flex-shrink-0" />
+                <span className="text-sm lg:text-base font-medium text-white/95 text-center lg:text-left">Instant Plan in 30 Seconds</span>
               </div>
             </div>
 
@@ -95,14 +95,14 @@ export const Hero = () => {
         </div>
 
         {/* Enhanced Feature Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
           {features.map((feature, idx) => (
-            <div key={idx} className="card-glass rounded-xl p-4 sm:p-6 min-h-[180px] sm:h-48 lg:h-52 flex flex-col justify-start items-start space-y-4 hover:bg-white/15 transition-all duration-500 hover:shadow-medium group hover:scale-105">
-              <div className="p-3 rounded-lg bg-gradient-to-r from-white/20 to-white/10 shadow-soft group-hover:shadow-medium transition-all duration-300">
-                <feature.icon size={24} className="text-white/90 group-hover:text-white transition-colors duration-300" />
+            <div key={idx} className="card-glass rounded-xl p-6 lg:p-8 min-h-[200px] lg:min-h-[240px] flex flex-col justify-start items-start space-y-4 lg:space-y-6 hover:bg-white/15 transition-all duration-500 hover:shadow-medium group hover:scale-105">
+              <div className="p-4 rounded-xl bg-gradient-to-r from-white/20 to-white/10 shadow-soft group-hover:shadow-medium transition-all duration-300">
+                <feature.icon size={28} className="text-white/90 group-hover:text-white transition-colors duration-300 lg:w-8 lg:h-8" />
               </div>
-              <h3 className="text-sm sm:text-base lg:text-lg font-semibold leading-tight text-white/95">{feature.title}</h3>
-              <p className="text-xs sm:text-sm lg:text-base text-neutral-300 leading-relaxed group-hover:text-neutral-200 transition-colors duration-300">{feature.description}</p>
+              <h3 className="text-base lg:text-xl font-bold leading-tight text-white/95 group-hover:text-white transition-colors duration-300">{feature.title}</h3>
+              <p className="text-sm lg:text-base text-neutral-300 leading-relaxed group-hover:text-neutral-200 transition-colors duration-300 flex-1">{feature.description}</p>
             </div>
           ))}
         </div>
