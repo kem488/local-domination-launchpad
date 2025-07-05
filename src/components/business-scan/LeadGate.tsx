@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { ScanData } from "./BusinessScanSection";
 import { Mail, Phone, MapPin, FileText, ArrowRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface LeadGateProps {
   scanData: ScanData;
@@ -24,6 +25,27 @@ export const LeadGate = ({ scanData, onLeadCaptured }: LeadGateProps) => {
     setIsSubmitting(true);
 
     try {
+      // Send to unified webhook system
+      const { error: webhookError } = await supabase.functions.invoke('send-to-make-webhook', {
+        body: {
+          eventType: 'lead_captured',
+          data: {
+            scanId: scanData.scanId,
+            email: email.trim(),
+            phone: phone.trim() || null,
+            postcode: postcode.trim() || null,
+            timestamp: new Date().toISOString(),
+            source: 'lead_gate_form'
+          }
+        }
+      });
+
+      if (webhookError) {
+        console.error('Webhook error:', webhookError);
+        // Continue with lead capture even if webhook fails
+      }
+
+      // Also call the capture-lead function for database storage
       const response = await fetch('https://edfloyhwqovslovzvkrm.supabase.co/functions/v1/capture-lead', {
         method: 'POST',
         headers: {

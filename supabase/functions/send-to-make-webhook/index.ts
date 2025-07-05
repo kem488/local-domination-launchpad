@@ -5,7 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const MAKE_WEBHOOK_URL = Deno.env.get("MAKE_WEBHOOK_URL") || "https://hook.eu2.make.com/webhook-placeholder";
+const MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/fm9a9bzxfro522qej7zdu1zaa2tct481";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {

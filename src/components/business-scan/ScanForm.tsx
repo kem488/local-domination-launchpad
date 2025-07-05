@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Search, MapPin, User, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ScanFormProps {
   onScanStart: (businessName: string, businessLocation: string) => void;
@@ -21,6 +22,30 @@ export const ScanForm = ({ onScanStart }: ScanFormProps) => {
     if (!businessName.trim() || !businessLocation.trim()) return;
     
     setIsSubmitting(true);
+    
+    // Send webhook data for scan initiation
+    try {
+      const { error: webhookError } = await supabase.functions.invoke('send-to-make-webhook', {
+        body: {
+          eventType: 'business_scan_initiated',
+          data: {
+            businessName: businessName.trim(),
+            businessLocation: businessLocation.trim(),
+            timestamp: new Date().toISOString(),
+            source: 'business_scan_form'
+          }
+        }
+      });
+
+      if (webhookError) {
+        console.error('Webhook error:', webhookError);
+        // Continue with scan even if webhook fails
+      }
+    } catch (error) {
+      console.error('Failed to send webhook:', error);
+      // Continue with scan even if webhook fails
+    }
+
     await onScanStart(businessName.trim(), businessLocation.trim());
     setIsSubmitting(false);
   };
