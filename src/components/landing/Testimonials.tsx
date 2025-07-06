@@ -71,33 +71,36 @@ export const Testimonials = () => {
   ];
 
   return (
-    <section className="py-12 md:py-16 mobile-padding">
+    <section className="py-12 lg:py-16 mobile-padding">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 md:mb-4 px-2">
+        <div className="text-center mb-8 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 lg:mb-6">
             <span className="hidden sm:inline">Case Study Scenarios: Our Methodology in Action</span>
             <span className="sm:hidden">Methodology Case Studies</span>
           </h2>
-          <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto px-2">
+          <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             Example scenarios showing how our 6-phase system helps UK service businesses build stronger online presence and automated review collection.
           </p>
         </div>
 
-        {/* Case Studies Image */}
-        <div className="mb-8 md:mb-16">
-          <img 
-            src={testimonialsImage} 
-            alt="Case Study Examples and Business Scenarios"
-            className="w-full max-w-4xl mx-auto rounded-lg shadow-2xl"
-          />
+        {/* Enhanced Case Studies Image */}
+        <div className="mb-12 lg:mb-20">
+          <div className="relative">
+            <img 
+              src={testimonialsImage} 
+              alt="Case Study Examples and Business Scenarios"
+              className="w-full max-w-5xl mx-auto rounded-2xl shadow-strong hover:shadow-glow transition-all duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-2xl pointer-events-none"></div>
+          </div>
         </div>
 
-        {/* Mobile-optimized Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-8 md:mb-16">
+        {/* Enhanced Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 mb-12 lg:mb-20">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center touch-target">
-              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-1 md:mb-2">{stat.number}</div>
-              <div className="text-xs md:text-sm text-muted-foreground">{stat.label}</div>
+            <div key={index} className="text-center card-glass rounded-xl p-4 lg:p-6 hover:bg-white/15 transition-all duration-300 group">
+              <div className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2 lg:mb-3 group-hover:scale-105 transition-transform duration-300">{stat.number}</div>
+              <div className="text-xs md:text-sm lg:text-base text-muted-foreground leading-tight">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -105,13 +108,13 @@ export const Testimonials = () => {
         {/* Mobile-optimized Case Studies */}
         <MobileTestimonials testimonials={caseStudies} />
 
-        <div className="text-center mt-8 md:mt-12">
-          <Card className="inline-block p-4 md:p-6 bg-gradient-to-r from-success/10 to-primary/10 border-success/20 mx-2">
-            <p className="text-base md:text-lg font-semibold text-foreground mb-2">
+        <div className="text-center mt-12 lg:mt-16">
+          <Card className="inline-block p-6 lg:p-8 bg-gradient-to-r from-success/10 via-primary/10 to-success/10 border-success/20 shadow-medium hover:shadow-strong transition-all duration-300 max-w-4xl">
+            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-foreground mb-3 lg:mb-4">
               <span className="hidden sm:inline">Join 200+ UK Tradespeople Who've Broken the Feast-or-Famine Cycle</span>
               <span className="sm:hidden">Join 200+ UK Tradespeople</span>
             </p>
-            <p className="text-sm md:text-base text-muted-foreground">
+            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed">
               <span className="hidden sm:inline">While your competitors struggle with inconsistent leads, you'll have customers finding YOU first.</span>
               <span className="sm:hidden">Get customers finding YOU first.</span>
             </p>

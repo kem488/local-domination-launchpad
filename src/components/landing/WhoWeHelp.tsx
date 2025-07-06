@@ -34,52 +34,52 @@ export const WhoWeHelp = () => {
   ];
 
   return (
-    <section id="who-we-help" className="px-4 sm:px-6 lg:px-8">
+    <section id="who-we-help" className="mobile-padding">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-12 lg:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 lg:mb-6">
             What Our AI Profile Audit Reveals
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             Our artificial intelligence system analyzes your Google Business Profile using the same factors Google uses to rank local businesses. Get actionable recommendations you can implement immediately.
           </p>
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+        {/* Enhanced Stats Section */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 mb-16 lg:mb-20">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2">{stat.number}</div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
+            <div key={index} className="text-center card-glass rounded-xl p-4 lg:p-6 hover:bg-white/15 transition-all duration-300 group">
+              <div className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2 lg:mb-3 group-hover:scale-105 transition-transform duration-300">{stat.number}</div>
+              <div className="text-xs sm:text-sm lg:text-base text-muted-foreground leading-tight">{stat.label}</div>
             </div>
           ))}
         </div>
 
-        {/* Service Blocks Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Enhanced Service Blocks Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-16 lg:mb-20">
           {serviceBlocks.map((block, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <block.icon className="h-6 w-6 text-primary" />
+            <Card key={index} className="card-modern group hover:scale-105 transition-all duration-500">
+              <CardHeader className="pb-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 lg:w-14 lg:h-14 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow group-hover:shadow-strong transition-all duration-300">
+                    <block.icon className="h-6 w-6 lg:h-7 lg:w-7 text-primary-foreground" />
                   </div>
-                  <CardTitle className="text-xl">{block.title}</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl lg:text-2xl group-hover:text-primary transition-colors duration-300">{block.title}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">{block.description}</p>
+                <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">{block.description}</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <Card className="inline-block p-6 bg-gradient-to-r from-destructive/10 to-primary/10 border-destructive/20">
-            <p className="text-lg font-semibold text-foreground mb-2">
+        <div className="text-center">
+          <Card className="inline-block p-6 lg:p-8 bg-gradient-to-r from-destructive/10 via-primary/10 to-brand-orange/10 border-destructive/20 shadow-medium hover:shadow-strong transition-all duration-300 max-w-4xl">
+            <p className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-3 lg:mb-4">
               Every day your Google Business Profile isn't optimized is another day you're losing customers
             </p>
-            <p className="text-base text-muted-foreground">
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               The longer you wait, the further behind you fall in local search results
             </p>
           </Card>
